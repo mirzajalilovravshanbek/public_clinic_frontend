@@ -1,0 +1,8 @@
+node_modules/
+dist/
+package-lock.json
+/docs
+/dist
+
+#Electron-builder output
+/dist_electron
