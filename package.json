@@ -1,7 +1,12 @@
 {
-  "name": "vue-material-dashboard-x",
-  "version": "1.4.0",
+  "name": "oltiariq-klinika",
+  "productName": "Elektron Ambulator Karta",
+  "version": "1.0.0",
   "private": true,
+  "description": "Elektron Ambulator Karta dasturi BDM jamoasi tomonidan ishlab chiqilgan",
+  "author": {
+    "name": "Biznes Dasturlash Markazi"
+  },
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",

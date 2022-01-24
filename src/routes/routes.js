@@ -1,193 +1,155 @@
-import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
-
-import Dashboard from "@/pages/Dashboard.vue";
-import UserProfile from "@/pages/UserProfile.vue";
-import Typography from "@/pages/Typography.vue";
-import Notifications from "@/pages/Notifications.vue";
-
-import Login from "@/pages/Login.vue";
-import LoginUser from "@/pages/LoginUser.vue";
-
-import CheckPrint from "@/pages/Patient/CheckPrint.vue";
-import PatientIndex from "@/pages/Patient/Index.vue";
-import PatientCreate from "@/pages/Patient/Create.vue";
-import PatientUpdate from "@/pages/Patient/Update.vue";
-
-import EmployeesIndex from "@/pages/Employees/Index.vue";
-import EmployeesCreate from "@/pages/Employees/Create.vue";
-import EmployeesUpdate from "@/pages/Employees/Update.vue";
-
-import ReportsIndex from "@/pages/Reports/Index.vue";
-import ReportsKassa from "@/pages/Reports/Kassa.vue";
-import ReportsPatientXisobot from "@/pages/Reports/PatientXisobot.vue";
-import ReportsPatient from "@/pages/Reports/Patient.vue";
-import ReportsEmployeesXisobot from "@/pages/Reports/EmployeesXisobot.vue";
-import ReportsEmployees from "@/pages/Reports/Employees.vue";
-
-import RoomIndex from "@/pages/Room/Index.vue";
-import DoctorRoomIndex from "@/pages/Room/DoctorRoom/Index.vue";
-import DoctorRoomCreate from "@/pages/Room/DoctorRoom/Create.vue";
-import DoctorRoomUpdate from "@/pages/Room/DoctorRoom/Update.vue";
-
-import PatientRoomIndex from "@/pages/Room/PatientRoom/Index.vue";
-import PatientRoomCreate from "@/pages/Room/PatientRoom/Create.vue";
-import PatientRoomUpdate from "@/pages/Room/PatientRoom/Update.vue";
-
-import InspectionsIndex from "@/pages/Inspections/Index.vue";
-import InspectionsCreate from "@/pages/Inspections/Create.vue";
-import InspectionsUpdate from "@/pages/Inspections/Update.vue";
 const routes = [
   {
     path: "/",
-    component: DashboardLayout,
+    component: () => import("@/pages/Layout/DashboardLayout.vue"),
     redirect: "/dashboard",
     children: [
       {
         path: "dashboard",
         name: "Навбатлар Рўйҳати",
-        component: Dashboard
+        component: () => import("@/pages/Dashboard.vue")
       },
       {
         path: "/patient/index",
         name: "Регистрация",
-        component: PatientIndex
+        component: () => import("@/pages/Patient/Index.vue")
       },
       {
         path: "/employees/index",
         name: "Ҳодимлар",
-        component: EmployeesIndex
+        component: () => import("@/pages/Employees/Index.vue")
       },
       {
         path: "/employees/create",
         name: "Ҳодим Қўшиш",
-        component: EmployeesCreate
+        component: () => import("@/pages/Employees/Create.vue")
       },
       {
         path: "/employees/update/:id",
         name: "Ҳодимни таҳрирлаш",
-        component: EmployeesUpdate
+        component: () => import("@/pages/Employees/Update.vue")
       },
       {
         path: "/reports/index",
         name: "Ҳисоботлар",
-        component: ReportsIndex
+        component: () => import("@/pages/Reports/Index.vue")
       },
       {
         path: "/reports/kassa",
         name: "Касса Китоби",
-        component: ReportsKassa
+        component: () => import("@/pages/Reports/Kassa.vue")
       },
       {
         path: "/reports/patientxisobot",
         name: "Бемор Ҳисоботи",
-        component: ReportsPatientXisobot
+        component: () => import("@/pages/Reports/PatientXisobot.vue")
       },
       {
         path: "/reports/patient/:id",
         name: "Бемор Сверкаси",
-        component: ReportsPatient
+        component: () => import("@/pages/Reports/Patient.vue")
       },
       {
         path: "/reports/employeesxisobot",
         name: "Ҳодим Ҳисоботи",
-        component: ReportsEmployeesXisobot
+        component: () => import("@/pages/Reports/EmployeesXisobot.vue")
       },
       {
         path: "/reports/employees/:id",
         name: "Ҳодим Сверкаси",
-        component: ReportsEmployees
+        component: () => import("@/pages/Reports/Employees.vue")
       },
       {
         path: "/room/index",
         name: "Хоналар",
-        component: RoomIndex
+        component: () => import("@/pages/Room/Index.vue")
       },
       {
         path: "/room/doctorroom/index",
         name: "Шифокор Хоналари",
-        component: DoctorRoomIndex
+        component: () => import("@/pages/Room/DoctorRoom/Index.vue")
       },
       {
         path: "/room/doctorroom/create",
         name: "Хона Қўшиш ",
-        component: DoctorRoomCreate
+        component: () => import("@/pages/Room/DoctorRoom/Create.vue")
       },
       {
         path: "/room/doctorroom/update/:id",
         name: "Хонани таҳрирлаш ",
-        component: DoctorRoomUpdate
+        component: () => import("@/pages/Room/DoctorRoom/Update.vue")
       },
       {
         path: "/room/patientroom/index",
         name: "Бемор Хоналари",
-        component: PatientRoomIndex
+        component: () => import("@/pages/Room/PatientRoom/Index.vue")
       },
       {
         path: "/room/patientroom/create",
         name: "Хона Қўшиш",
-        component: PatientRoomCreate
+        component: () => import("@/pages/Room/PatientRoom/Create.vue")
       },
       {
         path: "/room/patientroom/update/:id",
         name: "Хонани таҳрирлаш",
-        component: PatientRoomUpdate
+        component: () => import("@/pages/Room/PatientRoom/Update.vue")
       },
       {
         path: "/inspections/index",
         name: "Текширувлар",
-        component: InspectionsIndex
+        component: () => import("@/pages/Inspections/Index.vue")
       },
       {
         path: "/inspections/create",
         name: "Текширув Қўшиш ",
-        component: InspectionsCreate
+        component: () => import("@/pages/Inspections/Create.vue")
       },
       {
         path: "/inspections/update/:id",
         name: "Текширувни таҳрирлаш ",
-        component: InspectionsUpdate
+        component: () => import("@/pages/Inspections/Update.vue")
       },
       {
         path: "user",
         name: "User Profile",
-        component: UserProfile
+        component: () => import("@/pages/UserProfile.vue")
       },
       {
         path: "typography",
         name: "Typography",
-        component: Typography
+        component: () => import("@/pages/Typography.vue")
       },
       {
         path: "notifications",
         name: "Notifications",
-        component: Notifications
+        component: () => import("@/pages/Notifications.vue")
       }
     ]
   },
   {
     path: "/login",
     name: "Login",
-    component: Login
+    component: () => import("@/pages/Login.vue")
   },
   {
     path: "/loginuser",
     name: "LoginUser",
-    component: LoginUser
+    component: () => import("@/pages/LoginUser.vue")
   },
   {
     path: "/patient/create",
     name: "Бемор Қўшиш",
-    component: PatientCreate
+    component: () => import("@/pages/Patient/Create.vue")
   },
   {
     path: "/patient/update/:id",
     name: "Регистрация хужжатини таҳрирлаш",
-    component: PatientUpdate
+    component: () => import("@/pages/Patient/Update.vue")
   },
   {
     path: "/patient/checkprint",
     name: "Чек",
-    component: CheckPrint
+    component: () => import("@/pages/Patient/CheckPrint.vue")
   }
 ];
 

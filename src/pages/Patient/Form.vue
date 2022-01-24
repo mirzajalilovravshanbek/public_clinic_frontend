@@ -18,19 +18,13 @@
       <span>{{ $store.state.errors }}</span>
     </div>
     <!-- alert end -->
+    <!-- button group start -->
     <b-row>
       <b-col sm="3" md="3" lg="3" xl="3">
         <b-button
           style="color: #fff;"
           variant="primary"
           @click="Save()"
-          v-if="
-            $cookies.get('user').position === $store.state.KASSA ||
-              $cookies.get('user').position === $store.state.ITMED ||
-              $cookies.get('user').position === $store.state.UZI ||
-              $cookies.get('user').position === $store.state.LABARATORY ||
-              $cookies.get('user').position === $store.state.DOCTOR
-          "
           :disabled="saving"
         >
           <b-spinner small v-if="saving"></b-spinner>
@@ -38,25 +32,18 @@
           Сақлаш ва беркитиш
         </b-button>
       </b-col>
-      <b-col
-        sm="7"
-        offset-sm="2"
-        md="7"
-        offset-md="2"
-        lg="7"
-        offset-lg="2"
-        xl="7"
-        offset-xl="2"
-      >
-        <b-button
-          style="color: #fff; float:right;"
-          variant="danger"
-          @click="Close()"
-          size="sm"
+      <b-col sm="2" md="2" lg="2" xl="2">
+        <b-form-checkbox
+          id="d-control"
+          name="d-control"
+          value="1"
+          unchecked-value="0"
+          class="mt-2"
         >
-          <b-icon icon="x"></b-icon>
-        </b-button>
-        &emsp;
+          Д-назорат
+        </b-form-checkbox>
+      </b-col>
+      <b-col sm="3" md="3" lg="3" xl="3">
         <b-button
           v-if="
             $cookies.get('user').position === $store.state.REGISTRATION ||
@@ -73,7 +60,22 @@
           Печат
         </b-button>
       </b-col>
+      <b-col sm="3" md="3" lg="3" xl="3">
+        <label for="tashxis-file" class="m-0">Ташхисларни юклаш</label>
+        <input type="file" id="tashxis-file" class="my-0" name="tashxis-file"/>
+      </b-col>
+      <b-col sm="1" md="1" lg="1" xl="1">
+        <b-button
+          style="color: #fff; float:right;"
+          variant="danger"
+          @click="Close()"
+          size="sm"
+        >
+          <b-icon icon="x"></b-icon>
+        </b-button>
+      </b-col>
     </b-row>
+    <!-- button group end -->
     <!-- document datas start -->
     <b-row class="rmk-card">
       <b-col sm="4" md="4" lg="4" xl="4">
@@ -196,7 +198,7 @@
         </b-modal>
         <!-- modal patient search end -->
       </b-col>
-      <b-col sm="3" md="3" lg="3" xl="3">
+      <b-col sm="4" md="4" lg="4" xl="4">
         <label for="operator" class="rmk-label">Оператор</label>
         <b-card no-body>
           <v-select
@@ -215,7 +217,7 @@
           >"Оператор"ни танлаш шарт</span
         >
       </b-col>
-      <b-col sm="3" md="3" lg="3" xl="3">
+      <b-col sm="4" md="4" lg="4" xl="4">
         <label for="type_service" class="rmk-label">Хизмат Тури</label>
         <b-card no-body>
           <v-select
@@ -227,18 +229,6 @@
             label="full_name"
           >
           </v-select>
-        </b-card>
-      </b-col>
-      <b-col sm="2" md="2" lg="2" xl="2">
-        <label for="price_must" class="rmk-label">Умумий Сумма</label>
-        <b-card no-body>
-          <b-form-input
-            id="price_must"
-            type="number"
-            readonly
-            v-model="data.payment_data.price_must"
-            class="form-control px-1"
-          ></b-form-input>
         </b-card>
       </b-col>
     </b-row>
@@ -254,8 +244,9 @@
     <!-- spinner end -->
     <!-- navbar start -->
     <b-container fluid class="mt-2" v-if="checkBody">
-      <b-card no-body style="height:528px;">
+      <b-card no-body style="height:535px;">
         <b-tabs v-model="tabIndex" card>
+          <!-- patient datas start -->
           <b-tab
             title="Бемор маълумотлари"
             :title-link-class="linkClass(0)"
@@ -363,12 +354,12 @@
                     </p>
                   </b-col>
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
-                    <label for="input-street">Кўча</label>
+                    <label for="input-address">Уй</label>
                     <b-form-input
-                      id="input-street"
+                      id="input-address"
                       type="text"
-                      v-model="patient_datas.street"
-                      placeholder="Кўчани тўлдиринг"
+                      v-model="patient_datas.home_address"
+                      placeholder="Уйни тўлдиринг"
                       class="form-control"
                     ></b-form-input>
                   </b-col>
@@ -383,14 +374,28 @@
                     ></b-form-input>
                   </b-col>
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
-                    <label for="input-address">Уй</label>
-                    <b-form-input
-                      id="input-address"
-                      type="text"
-                      v-model="patient_datas.home_address"
-                      placeholder="Уйни тўлдиринг"
-                      class="form-control"
-                    ></b-form-input>
+                    <b-row>
+                      <b-col sm="6" md="6" lg="6" xl="6">
+                        <label for="input-height">Бўйи</label>
+                        <b-form-input
+                          id="input-height"
+                          type="text"
+                          v-model="patient_datas.height"
+                          placeholder="Бўйини тўлдиринг"
+                          class="form-control"
+                        ></b-form-input>
+                      </b-col>
+                      <b-col sm="6" md="6" lg="6" xl="6">
+                        <label for="input-weight">Оғирлиги</label>
+                        <b-form-input
+                          id="input-weight"
+                          type="text"
+                          v-model="patient_datas.weight"
+                          placeholder="Оғирлигини тўлдиринг"
+                          class="form-control"
+                        ></b-form-input>
+                      </b-col>
+                    </b-row>
                   </b-col>
                   <b-col
                     sm="6"
@@ -420,6 +425,8 @@
               </b-container>
             </b-card-text>
           </b-tab>
+          <!-- patient datas end -->
+          <!-- ispections start -->
           <b-tab
             title="Текширувлар"
             :title-link-class="linkClass(1)"
@@ -448,6 +455,7 @@
               <button @click="$refs.fileInput.click()">Yuklash</button>
               <img :src="selectedFile" style="width: 100px">
               <button @click="onUpload">Upload</button>  -->
+              
               <!-- inspections modal start -->
               <b-modal
                 v-model="modalInspectionShow"
@@ -476,7 +484,6 @@
                         <table class="table table-bordered table-sm">
                           <tr>
                             <th>Номи</th>
-                            <th>Нархи</th>
                           </tr>
                           <tr
                             @click="AddInspectionList(index, indexx)"
@@ -485,7 +492,6 @@
                             style="cursor:pointer"
                           >
                             <td>{{ ins.full_name }}</td>
-                            <td>{{ ins.price }}</td>
                           </tr>
                         </table>
                       </b-card>
@@ -527,19 +533,6 @@
                             $cookies.get('user').position === $store.state.ITMED
                         "
                       ></b-icon>
-                      <span
-                        :id="'tooltip-button-variant' + index"
-                        class="badge badge-primary float-right"
-                        v-if="item.chekable == 0"
-                        >{{ item.price }}</span
-                      >
-                      <b-tooltip
-                        :target="'tooltip-button-variant' + index"
-                        variant="primary"
-                        placement="left"
-                        v-if="item.chekable == 0"
-                        >Сумма</b-tooltip
-                      >
                     </h5>
                     <!-- table start -->
                     <b-container fluid style="height: 312px; overflow-y: auto;">
@@ -554,7 +547,6 @@
                             <th>Натижа</th>
                             <!-- <th style="width: 100px;">Расм</th> -->
                             <th>Норма</th>
-                            <th>Нархи</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -614,7 +606,6 @@
                               </b-modal>
                             </td> -->
                             <td>{{ field.normative }}</td>
-                            <td>{{ field.price }}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -626,6 +617,8 @@
               <!-- inspections table end -->
             </b-card-text>
           </b-tab>
+          <!-- ispections end -->
+          <!-- doctors section start -->
           <b-tab
             title="Шифокор кўриги"
             :title-link-class="linkClass(2)"
@@ -691,7 +684,6 @@
                             <table class="table table-bordered table-sm">
                               <tr>
                                 <th>ФИШ</th>
-                                <th>Кўрик Нархи</th>
                               </tr>
                               <tr
                                 @click="AddDoctor(index, indexx, inds)"
@@ -700,7 +692,6 @@
                                 style="cursor:pointer"
                               >
                                 <td>{{ itm.full_name }}</td>
-                                <td>{{ itm.section.price }}</td>
                               </tr>
                             </table>
                           </b-card>
@@ -726,7 +717,6 @@
                       <th>Шифокор</th>
                       <th>Бўлим</th>
                       <th>Хона</th>
-                      <th>Кўрик Нархи</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -744,7 +734,6 @@
                         }}
                       </td>
                       <td>{{ item.doctor.room.full_name }}</td>
-                      <td>{{ item.doctor.section.price }}</td>
                       <td class="text-center">
                         <b-icon
                           icon="trash"
@@ -762,14 +751,12 @@
               <!-- table end -->
             </b-card-text>
           </b-tab>
+          <!-- doctors section end -->
+          <!-- room section start -->
           <b-tab
             title="Хона бириктириш"
             :title-link-class="linkClass(3)"
-            v-if="
-              $cookies.get('user').position === $store.state.REGISTRATION ||
-                $cookies.get('user').position === $store.state.DOCTOR ||
-                $cookies.get('user').position === $store.state.ITMED
-            "
+            v-if="$cookies.get('user').position === $store.state.ITMED"
           >
             <b-card-text>
               <b-row>
@@ -959,6 +946,8 @@
               <!-- table end -->
             </b-card-text>
           </b-tab>
+          <!-- room section end -->
+          <!-- diagnosis section start -->
           <b-tab
             title="Ташхис"
             :title-link-class="linkClass(4)"
@@ -981,7 +970,7 @@
                 active
                 class="pt-2"
               >
-                <b-container fluid style="height: 375px; overflow-y: auto;">
+                <b-container fluid style="height: 385px; overflow-y: auto;">
                   <b-row>
                     <b-col sm="1" md="1" lg="1" xl="1">
                       <b-button
@@ -1253,10 +1242,19 @@
                       </b-modal>
                       <!-- template modal end -->
                     </b-col>
+                    <!-- diagnosis fields start -->
                     <b-col sm="11" md="11" lg="11" xl="11">
+                      <v-select
+                        :clearable="true"
+                        :options="operators"
+                        :reduce="full_name => full_name.id"
+                        label="full_name"
+                        placeholder="Касаллик турини танланг..."
+                      >
+                      </v-select>
                       <label
                         for="textarea-patient-complaint"
-                        class="rmk-label-doctor"
+                        class="rmk-label-doctor mt-2"
                         >Жалоба больного</label
                       >
                       <b-form-textarea
@@ -1281,7 +1279,7 @@
                       <label
                         for="textarea-illness-history"
                         class="rmk-label-doctor"
-                        >История болезни</label
+                        >История болезни(Анамнез)</label
                       >
                       <b-form-textarea
                         id="textarea-illness-history"
@@ -1475,6 +1473,7 @@
                         :disabled="item.doctor.id !== $cookies.get('user').id"
                       ></b-form-textarea>
                     </b-col>
+                    <!-- diagnosis fields end -->
                     <!-- МКБ modal start -->
                     <b-modal
                       id="modal-mkb"
@@ -1490,6 +1489,8 @@
               </b-tab>
             </b-tabs>
           </b-tab>
+          <!-- diagnosis section end -->
+          <!-- recipe section start -->
           <b-tab
             title="Рецеп"
             :title-link-class="linkClass(5)"
@@ -1717,6 +1718,8 @@
               </b-tab>
             </b-tabs>
           </b-tab>
+          <!-- recipe section end -->
+          <!-- cash register start -->
           <b-tab
             title="Тўлов Ойнаси"
             :title-link-class="linkClass(6)"
@@ -1908,6 +1911,7 @@
               <!-- paytable end -->
             </b-card-text>
           </b-tab>
+          <!-- cash register end -->
         </b-tabs>
       </b-card>
     </b-container>
@@ -1933,7 +1937,9 @@ export default {
       district_id: null,
       quarter_id: null,
       street: null,
-      home_address: null
+      home_address: null,
+      height: null,
+      weight: null
     },
     data: {
       patient_id: null,
@@ -2178,6 +2184,7 @@ export default {
   methods: {
     Close(){
       this.$router.push({ path: "/patient/index" });
+      window.close();
     },
     Save() {
       let self = this;
@@ -2880,18 +2887,10 @@ export default {
 </script>
 <style scoped>
 .rmk-patient-form {
-  width: 100% !important;
-  max-width: 100% !important;
-  min-height: 100% !important;
+  width: 100vw;
   background-color: #d1e5f1 !important;
-  /* background-image: linear-gradient(
-    to top,
-    rgba(202, 111, 86, 0.84),
-    rgba(88, 135, 206, 0.534)
-  ) !important; */
-  /* margin-bottom: 10px; */
   padding: 8px 15px;
-  height: 100% !important;
+  height: 100vh;
 }
 .rmk-close-button {
   float: right;

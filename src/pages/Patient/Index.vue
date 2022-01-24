@@ -133,6 +133,7 @@
               </b-button>
 
               <b-button
+                style="display:none"
                 variant="outline-success"
                 v-b-tooltip.hover.right.v-success
                 size="sm"
@@ -271,21 +272,21 @@ export default {
     },
     rowClass(item, type) {
       if (!item || type !== "row") return;
-      if (item.status === 0) return "table-danger";
+      if (item.status === 0) return "table-success";
     }
   },
   computed: {
     filteredData() {
-      let self = this;
-      if (
-        self.$cookies.get("user").position === self.$store.state.DOCTOR ||
-        self.$cookies.get("user").position === self.$store.state.UZI ||
-        self.$cookies.get("user").position === self.$store.state.LABARATORY
-      ) {
-        return this.users.filter(users => users.status === 1);
-      } else {
-        return this.users;
-      }
+      // let self = this;
+      // if (
+      //   self.$cookies.get("user").position === self.$store.state.DOCTOR ||
+      //   self.$cookies.get("user").position === self.$store.state.UZI ||
+      //   self.$cookies.get("user").position === self.$store.state.LABARATORY
+      // ) {
+      //   return this.users.filter(users => users.status === 1);
+      // } else {
+      //   return this.users;
+      // }
       return this.users;
     }
   }

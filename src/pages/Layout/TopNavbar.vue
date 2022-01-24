@@ -45,10 +45,10 @@
               </div>
             </li>
 
-            <md-list-item href="#/user">
+            <!-- <md-list-item href="#/user">
               <b-icon icon="person-fill" font-scale="1.8"></b-icon>
               <p class="hidden-lg hidden-md">Profile</p>
-            </md-list-item>
+            </md-list-item> -->
           </md-list>
         </div>
       </div>

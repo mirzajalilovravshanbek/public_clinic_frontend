@@ -13,9 +13,10 @@ protocol.registerSchemesAsPrivileged([
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1300,
-    height: 700,
-    icon: __dirname + "/assets/img/ist.png",
+    width: 1400,
+    height: 800,
+    icon: "../build/icon.ico",
+    autoHideMenuBar: true,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
