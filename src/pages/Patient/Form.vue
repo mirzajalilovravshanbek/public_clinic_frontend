@@ -18,6 +18,7 @@
       <span>{{ $store.state.errors }}</span>
     </div>
     <!-- alert end -->
+
     <!-- button group start -->
     <b-row>
       <b-col sm="3" md="3" lg="3" xl="3">
@@ -32,23 +33,36 @@
           Сақлаш ва беркитиш
         </b-button>
       </b-col>
-      <b-col sm="2" md="2" lg="2" xl="2">
-        <b-form-checkbox
-          id="d-control"
-          name="d-control"
-          value="1"
-          unchecked-value="0"
-          class="mt-2"
-        >
-          Д-назорат
-        </b-form-checkbox>
-      </b-col>
       <b-col sm="3" md="3" lg="3" xl="3">
+        <b-row>
+          <b-col sm="6" md="6" lg="6" xl="6">
+            <b-form-checkbox
+              id="d-control"
+              name="d-control"
+              v-model="patient_datas.d_control"
+              class="mt-2"
+            >
+              Д-назорат
+            </b-form-checkbox>
+          </b-col>
+          <b-col sm="6" md="6" lg="6" xl="6">
+            <b-form-checkbox
+              id="disablity"
+              name="disablity"
+              v-model="patient_datas.disablity"
+              class="mt-2"
+            >
+              Ногиронлиги
+            </b-form-checkbox>
+          </b-col>
+        </b-row>
+      </b-col>
+      <b-col sm="2" md="2" lg="2" xl="2">
         <b-button
           v-if="
-            $cookies.get('user').position === $store.state.REGISTRATION ||
-              $cookies.get('user').position === $store.state.DOCTOR ||
-              $cookies.get('user').position === $store.state.ITMED
+            role === $store.state.REGISTRATION ||
+              role === $store.state.DOCTOR ||
+              role === $store.state.ITMED
           "
           style="color: #fff;"
           variant="primary"
@@ -62,7 +76,7 @@
       </b-col>
       <b-col sm="3" md="3" lg="3" xl="3">
         <label for="tashxis-file" class="m-0">Ташхисларни юклаш</label>
-        <input type="file" id="tashxis-file" class="my-0" name="tashxis-file"/>
+        <input type="file" id="tashxis-file" class="my-0" name="tashxis-file" />
       </b-col>
       <b-col sm="1" md="1" lg="1" xl="1">
         <b-button
@@ -76,6 +90,7 @@
       </b-col>
     </b-row>
     <!-- button group end -->
+
     <!-- document datas start -->
     <b-row class="rmk-card">
       <b-col sm="4" md="4" lg="4" xl="4">
@@ -206,15 +221,15 @@
             :clearable="true"
             :options="operators"
             v-model="data.staff_id"
-            :reduce="full_name => full_name.id"
-            label="full_name"
+            :reduce="username => username.id"
+            label="username"
             @input="CheckOperator()"
             placeholder="Операторни танланг..."
           >
           </v-select>
         </b-card>
-        <span style="color: red;" v-if="checkOperator"
-          >"Оператор"ни танлаш шарт</span
+        <small style="color: red;" v-if="checkOperator"
+          >"Оператор"ни танлаш шарт</small
         >
       </b-col>
       <b-col sm="4" md="4" lg="4" xl="4">
@@ -233,6 +248,7 @@
       </b-col>
     </b-row>
     <!-- document datas end -->
+
     <!-- spinner start -->
     <div class="text-center" v-if="checkSpinner">
       <b-spinner
@@ -242,6 +258,7 @@
       ></b-spinner>
     </div>
     <!-- spinner end -->
+
     <!-- navbar start -->
     <b-container fluid class="mt-2" v-if="checkBody">
       <b-card no-body style="height:535px;">
@@ -251,23 +268,44 @@
             title="Бемор маълумотлари"
             :title-link-class="linkClass(0)"
             active
+            class="pt-1"
           >
             <b-card-text>
               <b-container fluid>
                 <b-row>
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
-                    <label for="input-full-name">ФИШ</label>
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-0">
+                    <label for="input-lastname">Фамилия</label>
                     <b-form-input
-                      id="input-full-name"
+                      id="input-lastname"
                       type="text"
-                      v-model="patient_datas.full_name"
-                      placeholder="ФИШни тўлдиринг"
+                      v-model="patient_datas.lastname"
+                      placeholder="Фамилияни тўлдиринг"
+                      class="form-control"
+                    ></b-form-input>
+                  </b-col>
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-0">
+                    <label for="input-name">Исм</label>
+                    <b-form-input
+                      id="input-name"
+                      type="text"
+                      v-model="patient_datas.name"
+                      placeholder="Исмни тўлдиринг"
                       class="form-control"
                       @blur="CheckName()"
                     ></b-form-input>
-                    <span style="color: red;" v-if="checkName"
-                      >"ФИШ"ни тўлдириш шарт</span
+                    <small style="color: red;" v-if="checkName"
+                      >"Исм"ни тўлдириш шарт</small
                     >
+                  </b-col>
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
+                    <label for="input-patronymic">Отасини Исми</label>
+                    <b-form-input
+                      id="input-patronymic"
+                      type="text"
+                      v-model="patient_datas.patronymic"
+                      placeholder="Отасини Исмини тўлдиринг"
+                      class="form-control"
+                    ></b-form-input>
                   </b-col>
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <label for="region">Вилоят</label>
@@ -276,8 +314,8 @@
                       :clearable="true"
                       :options="regions"
                       v-model="patient_datas.region_id"
-                      :reduce="name_oz => name_oz.id"
-                      label="name_oz"
+                      :reduce="name => name.id"
+                      label="name"
                       placeholder="Вилоятни танланг..."
                       @input="GetDistricts()"
                     >
@@ -287,7 +325,7 @@
                     <label for="input-date">Туғилган сана</label><br />
                     <date-picker
                       id="input-date"
-                      v-model="patient_datas.birth_date"
+                      v-model="patient_datas.birthday"
                       format="DD.MM.YYYY"
                       value-type="X"
                       style="width: 100%"
@@ -303,10 +341,10 @@
                       :clearable="true"
                       :options="districts"
                       v-model="patient_datas.district_id"
-                      :reduce="name_oz => name_oz.id"
-                      label="name_oz"
+                      :reduce="name => name.id"
+                      label="name"
                       placeholder="Туманни танланг..."
-                      @input="GetQuarters()"
+                      @input="GetNeighboarhood()"
                     >
                     </v-select>
                   </b-col>
@@ -321,12 +359,12 @@
                     ></b-form-input>
                   </b-col>
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
-                    <label for="mahalla">МФЙ</label>
+                    <label for="neighboarhood">МФЙ</label>
                     <v-select
-                      id="mahalla"
+                      id="neighboarhood"
                       :clearable="true"
-                      :options="mahallas"
-                      v-model="patient_datas.quarter_id"
+                      :options="neighboarhoods"
+                      v-model="patient_datas.neighboarhood_id"
                       :reduce="name => name.id"
                       label="name"
                       placeholder="МФЙни танланг..."
@@ -358,7 +396,7 @@
                     <b-form-input
                       id="input-address"
                       type="text"
-                      v-model="patient_datas.home_address"
+                      v-model="patient_datas.address"
                       placeholder="Уйни тўлдиринг"
                       class="form-control"
                     ></b-form-input>
@@ -380,7 +418,7 @@
                         <b-form-input
                           id="input-height"
                           type="text"
-                          v-model="patient_datas.height"
+                          v-model="data.height"
                           placeholder="Бўйини тўлдиринг"
                           class="form-control"
                         ></b-form-input>
@@ -390,7 +428,7 @@
                         <b-form-input
                           id="input-weight"
                           type="text"
-                          v-model="patient_datas.weight"
+                          v-model="data.weight"
                           placeholder="Оғирлигини тўлдиринг"
                           class="form-control"
                         ></b-form-input>
@@ -404,9 +442,9 @@
                     xl="6"
                     class="pt-1"
                     v-if="
-                      $cookies.get('user').position === 'registration' ||
-                        $cookies.get('user').position === 'doctor' ||
-                        $cookies.get('user').position === 'itmed'
+                      role === $store.state.REGISTRATION ||
+                    role === $store.state.DOCTOR ||
+                    role === $store.state.ITMED
                     "
                   >
                     <b-button
@@ -431,7 +469,7 @@
             title="Текширувлар"
             :title-link-class="linkClass(1)"
             class="pt-2"
-            v-if="$cookies.get('user').position !== $store.state.KASSA"
+            v-if="role !== $store.state.KASSA"
           >
             <b-card-text>
               <b-button
@@ -442,9 +480,9 @@
                   modalInspectionShow = !modalInspectionShow;
                 "
                 v-if="
-                  $cookies.get('user').position === $store.state.REGISTRATION ||
-                    $cookies.get('user').position === $store.state.DOCTOR ||
-                    $cookies.get('user').position === $store.state.ITMED
+                  role === $store.state.REGISTRATION ||
+                    role === $store.state.DOCTOR ||
+                    role === $store.state.ITMED
                 "
               >
                 <b-icon icon="journal-medical"></b-icon>
@@ -455,7 +493,7 @@
               <button @click="$refs.fileInput.click()">Yuklash</button>
               <img :src="selectedFile" style="width: 100px">
               <button @click="onUpload">Upload</button>  -->
-              
+
               <!-- inspections modal start -->
               <b-modal
                 v-model="modalInspectionShow"
@@ -526,11 +564,11 @@
                         v-b-tooltip.hover.v-danger.top="'Текширувни Ўчириш'"
                         style="cursor:pointer"
                         v-if="
-                          $cookies.get('user').position ===
+                          role ===
                             $store.state.REGISTRATION ||
-                            $cookies.get('user').position ===
+                            role ===
                               $store.state.DOCTOR ||
-                            $cookies.get('user').position === $store.state.ITMED
+                            role === $store.state.ITMED
                         "
                       ></b-icon>
                     </h5>
@@ -574,7 +612,7 @@
                                 v-model="field.result"
                                 class="form-control"
                                 :readonly="
-                                  $cookies.get('user').position ===
+                                  role ===
                                     $store.state.REGISTRATION
                                 "
                               ></b-form-textarea>
@@ -624,9 +662,9 @@
             :title-link-class="linkClass(2)"
             class="pt-2"
             v-if="
-              $cookies.get('user').position === $store.state.REGISTRATION ||
-                $cookies.get('user').position === $store.state.DOCTOR ||
-                $cookies.get('user').position === $store.state.ITMED
+              role === $store.state.REGISTRATION ||
+                role === $store.state.DOCTOR ||
+                role === $store.state.ITMED
             "
           >
             <b-card-text>
@@ -756,7 +794,7 @@
           <b-tab
             title="Хона бириктириш"
             :title-link-class="linkClass(3)"
-            v-if="$cookies.get('user').position === $store.state.ITMED"
+            v-if="role === $store.state.ITMED"
           >
             <b-card-text>
               <b-row>
@@ -953,8 +991,8 @@
             :title-link-class="linkClass(4)"
             class="pt-2"
             v-if="
-              $cookies.get('user').position === $store.state.DOCTOR ||
-                $cookies.get('user').position === $store.state.ITMED
+              role === $store.state.DOCTOR ||
+                role === $store.state.ITMED
             "
           >
             <b-tabs
@@ -1496,8 +1534,8 @@
             :title-link-class="linkClass(5)"
             class="pt-1"
             v-if="
-              $cookies.get('user').position === $store.state.DOCTOR ||
-                $cookies.get('user').position === $store.state.ITMED
+              role === $store.state.DOCTOR ||
+                role === $store.state.ITMED
             "
           >
             <!-- <b-button variant="primary" class="m-1" @click="modalDrugShow = !modalDrugShow">
@@ -1646,7 +1684,9 @@
                                 variant="info"
                                 v-b-tooltip.hover.v-info.topright
                                 title="Қатор қўшиш"
-                                :disabled="item.doctor.id !== $cookies.get('user').id"
+                                :disabled="
+                                  item.doctor.id !== $cookies.get('user').id
+                                "
                                 >+</b-button
                               >
                             </th>
@@ -1705,7 +1745,9 @@
                                 v-b-tooltip.hover.v-danger.right="
                                   'Дорини Ўчириш'
                                 "
-                                :disabled="item.doctor.id !== $cookies.get('user').id"
+                                :disabled="
+                                  item.doctor.id !== $cookies.get('user').id
+                                "
                                 @click="RemoveDrug(index, index2)"
                               ></b-icon>
                             </td>
@@ -1724,8 +1766,8 @@
             title="Тўлов Ойнаси"
             :title-link-class="linkClass(6)"
             v-if="
-              $cookies.get('user').position === $store.state.KASSA ||
-                $cookies.get('user').position === $store.state.ITMED
+              role === $store.state.KASSA ||
+                role === $store.state.ITMED
             "
           >
             <b-card-text>
@@ -1925,26 +1967,31 @@ import moment from "moment";
 export default {
   components: { DatePicker },
   data: () => ({
+    role: null,
     checkBody: false,
     checkSpinner: false,
     patient_datas: {
-      full_name: null,
+      fullname: null,
+      name: null,
+      lastname: null,
+      patronymic: null,
+      d_control: false,
       phone: null,
-      birth_date: null,
+      birthday: null,
       gender: null,
       passport: null,
       region_id: null,
       district_id: null,
-      quarter_id: null,
-      street: null,
-      home_address: null,
-      height: null,
-      weight: null
+      neighboarhood_id: null,
+      address: null,
+      disablity: false
     },
     data: {
       patient_id: null,
       patient_name: null,
-      staff_id: null,
+      height: null,
+      weight: null,
+      staff_id: parseInt(localStorage.getItem('oid')),
       type_id: 1,
       inspection_list: [],
       staff_list: [],
@@ -1985,7 +2032,7 @@ export default {
     typeServices: [],
     regions: [],
     districts: [],
-    mahallas: [],
+    neighboarhoods: [],
     inspections: [],
     doctors: [],
     rooms: [],
@@ -2099,90 +2146,91 @@ export default {
     save_template: false,
     checkTemplateName: false
   }),
-  mounted() {
+  async mounted() {
     let self = this;
+    self.role = localStorage.getItem('role')
     self.checkBody = true;
-    //get list type of services => xizmat turlarini olish
-    axios({
-      url: "universal/registration_type_table_list",
-      method: "get"
-    }).then(function(response) {
-      self.typeServices = response.data.data;
-    });
-    //get list types of pay => to'lov turlarini olish
-    axios({
-      url: "universal/get_pay_type",
-      method: "get"
-    }).then(function(response) {
-      self.paytype = response.data.data;
-    });
-    self.GetOperators();
-    self.GetRegions();
-    self.GetDrug();
+    // //get list type of services => xizmat turlarini olish
+    // axios({
+    //   url: "universal/registration_type_table_list",
+    //   method: "get"
+    // }).then(function(response) {
+    //   self.typeServices = response.data.data;
+    // });
+    // //get list types of pay => to'lov turlarini olish
+    // axios({
+    //   url: "universal/get_pay_type",
+    //   method: "get"
+    // }).then(function(response) {
+    //   self.paytype = response.data.data;
+    // });
+    await self.GetOperators();
+    await self.GetRegions();
+    // self.GetDrug();
 
-    //update patient => bemorni tahrirlash
-    if (self.$route.path != "/patient/create") {
-      axios({
-        method: "get",
-        url: "universal/get_patient",
-        params: {
-          id: self.$route.params.id,
-          useful: 1
-        }
-      }).then(function(response) {
-        // console.log(response.data);
-        if (
-          self.$cookies.get("user").position === self.$store.state.REGISTRATION
-        ) {
-          self.checkSpinner = true;
-          self.AddUpdatePatient(response.data.data.registration.patient_id);
-          self.data.staff_id = response.data.data.registration.staff_id;
-          self.data.room = response.data.data.room;
-          self.data.inspection_list = response.data.data.inspection_list;
-          self.data.staff_list = response.data.data.staff_list;
-          self.data.payment_data = response.data.data.payment_data;
-          self.data.payment_list = response.data.data.payment_list;
-          self.checkSpinner = false;
-          self.checkBody = true;
-        } else if (
-          self.$cookies.get("user").position === self.$store.state.KASSA
-        ) {
-          self.checkSpinner = true;
-          self.AddUpdatePatient(response.data.data.registration.patient_id);
-          self.data.staff_id = response.data.data.registration.staff_id;
-          self.data.payment_data = response.data.data.payment_data;
-          self.data.payment_list = response.data.data.payment_list;
-          self.checkSpinner = false;
-          self.checkBody = true;
-        } else if (
-          self.$cookies.get("user").position === self.$store.state.UZI ||
-          self.$cookies.get("user").position === self.$store.state.LABARATORY
-        ) {
-          self.checkSpinner = true;
-          self.AddUpdatePatient(response.data.data.registration.patient_id);
-          self.data.staff_id = response.data.data.registration.staff_id;
-          self.data.inspection_list = response.data.data.inspection_list;
-          self.data.payment_data = response.data.data.payment_data;
-          self.checkSpinner = false;
-          self.checkBody = true;
-        } else if (
-          self.$cookies.get("user").position === self.$store.state.DOCTOR
-        ) {
-          self.checkSpinner = true;
-          self.AddUpdatePatient(response.data.data.registration.patient_id);
-          self.data.staff_id = response.data.data.registration.staff_id;
-          self.data.room = response.data.data.room;
-          self.data.inspection_list = response.data.data.inspection_list;
-          self.data.staff_list = response.data.data.staff_list;
-          self.data.payment_data = response.data.data.payment_data;
-          self.checkSpinner = false;
-          self.checkBody = true;
-        }
-      });
-    }
+    // //update patient => bemorni tahrirlash
+    // if (self.$route.path != "/patient/create") {
+    //   axios({
+    //     method: "get",
+    //     url: "universal/get_patient",
+    //     params: {
+    //       id: self.$route.params.id,
+    //       useful: 1
+    //     }
+    //   }).then(function(response) {
+    //     // console.log(response.data);
+    //     if (
+    //       self.$cookies.get("user").position === self.$store.state.REGISTRATION
+    //     ) {
+    //       self.checkSpinner = true;
+    //       self.AddUpdatePatient(response.data.data.registration.patient_id);
+    //       self.data.staff_id = response.data.data.registration.staff_id;
+    //       self.data.room = response.data.data.room;
+    //       self.data.inspection_list = response.data.data.inspection_list;
+    //       self.data.staff_list = response.data.data.staff_list;
+    //       self.data.payment_data = response.data.data.payment_data;
+    //       self.data.payment_list = response.data.data.payment_list;
+    //       self.checkSpinner = false;
+    //       self.checkBody = true;
+    //     } else if (
+    //       self.$cookies.get("user").position === self.$store.state.KASSA
+    //     ) {
+    //       self.checkSpinner = true;
+    //       self.AddUpdatePatient(response.data.data.registration.patient_id);
+    //       self.data.staff_id = response.data.data.registration.staff_id;
+    //       self.data.payment_data = response.data.data.payment_data;
+    //       self.data.payment_list = response.data.data.payment_list;
+    //       self.checkSpinner = false;
+    //       self.checkBody = true;
+    //     } else if (
+    //       self.$cookies.get("user").position === self.$store.state.UZI ||
+    //       self.$cookies.get("user").position === self.$store.state.LABARATORY
+    //     ) {
+    //       self.checkSpinner = true;
+    //       self.AddUpdatePatient(response.data.data.registration.patient_id);
+    //       self.data.staff_id = response.data.data.registration.staff_id;
+    //       self.data.inspection_list = response.data.data.inspection_list;
+    //       self.data.payment_data = response.data.data.payment_data;
+    //       self.checkSpinner = false;
+    //       self.checkBody = true;
+    //     } else if (
+    //       self.$cookies.get("user").position === self.$store.state.DOCTOR
+    //     ) {
+    //       self.checkSpinner = true;
+    //       self.AddUpdatePatient(response.data.data.registration.patient_id);
+    //       self.data.staff_id = response.data.data.registration.staff_id;
+    //       self.data.room = response.data.data.room;
+    //       self.data.inspection_list = response.data.data.inspection_list;
+    //       self.data.staff_list = response.data.data.staff_list;
+    //       self.data.payment_data = response.data.data.payment_data;
+    //       self.checkSpinner = false;
+    //       self.checkBody = true;
+    //     }
+    //   });
+    // }
   },
   methods: {
-    Close(){
+    Close() {
       this.$router.push({ path: "/patient/index" });
       window.close();
     },
@@ -2406,19 +2454,16 @@ export default {
         ? (self.checkOperator = true)
         : (self.checkOperator = false);
     },
-    GetOperators() {
+    async GetOperators() {
       let self = this;
-
       //get list of operators => operatorlarni olish
-      axios({
-        url: "staff/operator_list",
-        method: "get",
-        params: {
-          id: localStorage.getItem("branch_id")
-        }
-      }).then(function(response) {
-        self.operators = response.data.data;
-      });
+      let id = localStorage.getItem("branch_id");
+      try {
+        const response = await self.axios.get("api/user/branch/"+ id);
+        self.operators = response.data;
+      } catch (error) {
+        self.$store.state.errors = error;
+      }
     },
     print() {
       let self = this;
@@ -2540,8 +2585,11 @@ export default {
         if (key.chekable == 0) {
           Sum += parseFloat(key.price);
         } else if (key.chekable == 1) {
-          self.data.inspection_list[i].child_table.forEach(function(key, value){
-            if(key.checked == "1"){
+          self.data.inspection_list[i].child_table.forEach(function(
+            key,
+            value
+          ) {
+            if (key.checked == "1") {
               Sum += parseFloat(key.price);
             }
           });
@@ -2555,7 +2603,7 @@ export default {
       self.data.staff_list.forEach(function(key, value) {
         Sum += parseFloat(key.doctor.section.price);
       });
-      
+
       self.data.payment_data.price_must = Sum;
     },
     AddDoctor(index, indexx, inds) {
@@ -2609,7 +2657,7 @@ export default {
     },
     CheckName() {
       let self = this;
-      self.patient_datas.full_name == null
+      self.patient_datas.name == null
         ? (self.checkName = true)
         : (self.checkName = false);
     },
@@ -2619,7 +2667,7 @@ export default {
         ? (self.checkGender = true)
         : (self.checkGender = false);
     },
-    SavePatient() {
+    async SavePatient() {
       let self = this;
 
       self.CheckName();
@@ -2634,28 +2682,25 @@ export default {
           var msg = "Бемор маълумотлари таҳрирланди!";
         } else {
           var methods = "post";
-          var action = "patient/create";
+          var action = "api/patient";
           var id = "";
           var msg = "Бемор маълумотлари сақланди!";
         }
 
-        axios({
-          method: methods,
-          url: action,
-          data: self.patient_datas,
-          params: {
-            id: id
-          }
-        }).then(function(response) {
-          // console.log(response.data)
+        try {
+          const response = await self.axios({
+            url: action,
+            method: methods,
+            data: self.patient_datas
+          });
           self.patient_sending = false;
-          if (response.data.status == true) {
-            self.data.patient_id = parseInt(response.data.data.id);
-            self.data.patient_name = response.data.data.full_name;
-            self.$cookies.set("patient", response.data.data);
-            alert(msg);
-          }
-        });
+          localStorage.setItem('user',JSON.stringify(response.data));
+          self.data.patient_id = parseInt(response.data.id);
+          self.data.patient_name = response.data.fullname;
+          alert(msg);
+        } catch (error) {
+          self.$store.state.errors = error;
+        }
       }
     },
     async GetPatient() {
@@ -2752,10 +2797,10 @@ export default {
         // console.log(response.data.data)
         self.modalPatientShow = false;
         self.patient_datas = response.data.data;
-        self.patient_datas.birth_date = response.data.data.birth_date.toString();
+        self.patient_datas.birthday = response.data.data.birthday.toString();
         self.GetRegions();
         self.GetDistricts();
-        self.GetQuarters();
+        self.GetNeighboarhood();
         self.data.patient_name = response.data.data.full_name;
         self.data.patient_id = response.data.data.id;
       });
@@ -2774,10 +2819,10 @@ export default {
         // console.log(response.data);
         if (response.data.level === 1) {
           self.patient_datas = response.data.data;
-          self.patient_datas.birth_date = response.data.data.birth_date.toString();
+          self.patient_datas.birthday = response.data.data.birthday.toString();
           self.GetRegions();
           self.GetDistricts();
-          self.GetQuarters();
+          self.GetNeighboarhood();
           self.data.patient_name = response.data.data.full_name;
           self.data.patient_id = response.data.data.id;
         } else if (response.data.level === 2) {
@@ -2790,41 +2835,38 @@ export default {
         self.$store.state.errors = error;
       }
     },
-    GetRegions() {
+    async GetRegions() {
       let self = this;
       //get list of regions => viloyatlar ro'yhatinini olish
-      axios.get("universal/region_list").then(function(response) {
-        self.regions = response.data.data;
-      });
+      try {
+        const response = await self.axios.get("api/region");
+        self.regions = response.data;
+      } catch (error) {
+        self.$store.state.errors = error;
+      }
     },
-    GetDistricts() {
+    async GetDistricts() {
       let self = this;
       //get list of districts => tumanlar ro'yhatinini olish
       if (self.patient_datas.region_id != null) {
-        axios({
-          method: "get",
-          url: "universal/district_list",
-          params: {
-            id: self.patient_datas.region_id
-          }
-        }).then(function(response) {
-          self.districts = response.data.data;
-        });
+        try {
+          const response = await self.axios.get("api/district/region/"+self.patient_datas.region_id);
+          self.districts = response.data;
+        } catch (error) {
+          self.$store.state.errors = error;
+        }
       }
     },
-    GetQuarters() {
+    async GetNeighboarhood() {
       let self = this;
-      //get list of quarters => mahallalar ro'yhatini olish
+      //get list of neighboarhoods => mahallalar ro'yhatini olish
       if (self.patient_datas.district_id != null) {
-        axios({
-          method: "get",
-          url: "universal/quarter_list",
-          params: {
-            id: self.patient_datas.district_id
-          }
-        }).then(function(response) {
-          self.mahallas = response.data.data;
-        });
+        try {
+          const response = await self.axios.get("api/neighboarhood/district/"+self.patient_datas.district_id);
+          self.neighboarhoods = response.data;
+        } catch (error) {
+          self.$store.state.errors = error;
+        }
       }
     },
     onFileSelected(event) {

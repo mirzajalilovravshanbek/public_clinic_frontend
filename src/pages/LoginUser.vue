@@ -20,27 +20,41 @@
       </div>
     </div>
     <!-- alert end -->
+
     <b-container>
       <md-card class="rmk-login-box">
         <b-row>
-          <b-col md="12" sm="12" lg="12" xl="12">
-            <!-- <b-alert variant="success" show>Success Alert</b-alert> -->
-          </b-col>
-          <b-col md="12" sm="12" lg="12" xl="12" style="height: 180px">
-            <img src="../assets/img/isti.png" class="rmk-login-img" />
+          <b-col md="12" sm="12" lg="12" xl="12" style="height: 150px">
+            <img src="../assets/img/header.png" class="rmk-login-img" />
           </b-col>
           <b-col md="12" sm="12" lg="12" xl="12" class="rmk-label">
             <span>Кириш Ойнаси</span>
           </b-col>
           <b-col md="12" sm="12" lg="12" xl="12">
             <div class="rmk-district">
-              <md-card style="z-index: 10;" class="mb-1">
+              <md-card style="z-index: 11;" class="mb-0 mt-1">
+                <v-select
+                  :clearable="true"
+                  :options="branches"
+                  v-model="datas.branch_id"
+                  :reduce="name => name.id"
+                  label="name"
+                  placeholder="Филиални танланг..."
+                  @input="GetUsers()"
+                >
+                </v-select>
+              </md-card>
+            </div>
+          </b-col>
+          <b-col md="12" sm="12" lg="12" xl="12">
+            <div class="rmk-district">
+              <md-card style="z-index: 10;" class="my-1">
                 <v-select
                   :clearable="true"
                   :options="users"
-                  v-model="datas.full_name"
-                  :reduce="full_name => full_name.full_name"
-                  label="full_name"
+                  v-model="datas.username"
+                  :reduce="username => username.username"
+                  label="username"
                   placeholder="Ходимни танланг..."
                   @input="CheckUser()"
                 >
@@ -99,7 +113,7 @@
               variant="outline-danger"
               block
               style="color:#000"
-              :to="{ path: '/login' }"
+              @click="Clear()"
             >
               Бекор Қилиш
             </b-button>
@@ -113,33 +127,42 @@
 export default {
   data: () => ({
     datas: {
-      full_name: null,
+      branch_id: null,
+      username: null,
       password: null
     },
+    branches: [],
     users: [],
+    checkBranch: false,
     checkUser: false,
     checkPassword: false,
     sending: false
   }),
-  mounted() {
+  async mounted() {
     let self = this;
-    if (localStorage.branch_id) {
-      //get list of users => foydalanuvchilar ro'yhatinini olish
-      axios({
-        url: "staff/list",
-        method: "get",
-        params: {
-          id: parseInt(localStorage.branch_id)
-        }
-      }).then(function(response) {
-        self.users = response.data.data;
-      });
+    //filiallar ro'yhati
+    try {
+      const response = await self.axios.get("api/branch");
+      self.branches = response.data;
+    } catch (error) {
+      self.$store.state.errors = error;
     }
   },
   methods: {
+    async GetUsers() {
+      let self = this;
+      localStorage.setItem("branch_id", self.datas.branch_id);
+      //usernamelar ro'yhati
+      try {
+        const response = await self.axios.get("api/user/branch/"+ self.datas.branch_id);
+        self.users = response.data;
+      } catch (error) {
+        self.$store.state.errors = error;
+      }
+    },
     CheckUser() {
       let self = this;
-      self.datas.full_name == null
+      self.datas.username == null
         ? (self.checkUser = true)
         : (self.checkUser = false);
     },
@@ -149,30 +172,32 @@ export default {
         ? (self.checkPassword = true)
         : (self.checkPassword = false);
     },
-    Send() {
+    async Send() {
       let self = this;
       self.CheckUser();
       self.CheckPassword();
       if (self.checkUser == false && self.checkPassword == false) {
         self.sending = true;
-        axios({
-          method: "post",
-          url: "staff/login",
-          data: self.datas
-        }).then(function(response) {
-          self.sending = false;
-          // console.log(response.data)
-          if (response.data.status == true) {
-            self.$cookies.set("user", response.data.data);
-            self.$store.state.role = response.data.data.position;
-            self.$router.push({ path: "dashboard" });
-          } else {
-            // console.log(response.data)
-            self.$store.state.errors = response.data.message;
-            self.datas.password = null;
+        try {
+          const response = await axios.post("api/user/login", self.datas);
+          if (response) {
+            localStorage.setItem("oid", response.data.id);
+            localStorage.setItem("username", response.data.username);
+            localStorage.setItem("role", response.data.role);
+            localStorage.setItem("token", response.data.token);
+            self.$router.push({ path: "/patient/index" });
+            self.sending = false;
           }
-        });
+        } catch (e) {
+          self.$store.state.errors = e + "";
+          self.datas.password = null;
+        }
       }
+    },
+    Clear(){
+      this.datas.branch_id = null,
+      this.datas.username = null,
+      this.datas.password = null
     }
   }
 };
@@ -194,7 +219,7 @@ export default {
   background-color: #7579ff !important;
 }
 .rmk-login-img {
-  width: 260px;
+  width: 280px;
   position: absolute;
   top: 34%;
   left: 18%;

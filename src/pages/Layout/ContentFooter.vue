@@ -4,8 +4,8 @@
       <div class="copyright text-center">
         &copy; {{ new Date().getFullYear() }}
         Дастур
-        <a href="http://www.isti.uz" target="_blank"
-          >Intellectual Software Technology LLC</a
+        <a href="http://www.bdm.uz" target="_blank"
+          >Biznes Dasturlash Markazi</a
         >
         томонидан ишлаб чиқилган
       </div>

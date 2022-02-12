@@ -37,6 +37,10 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import VueCookies from "vue-cookies";
 Vue.use(VueCookies);
 Vue.$cookies.config("1d");
+//session
+import VueSession from 'vue-session';
+Vue.use(VueSession);
+
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin
@@ -62,12 +66,11 @@ Vue.use(GlobalDirectives);
 Vue.use(Notifications);
 import { store } from "./store";
 window.axios = require("axios");
-window.axios.defaults.baseURL = "http://localhost:8081/";
+window.axios.defaults.baseURL = "http://localhost:3000/";
 // window.axios.defaults.baseURL = 'http://192.168.0.126:8081/';
 
 window.axios.interceptors.request.use(req => {
-  req.headers.token =
-    Vue.$cookies.get("user") != null ? Vue.$cookies.get("user").token : "";
+  req.headers.authorization = "Bearer "+localStorage.getItem('token');
   req.headers.contentType = "application/json";
   return req;
 });
@@ -77,11 +80,11 @@ window.axios.interceptors.response.use(
     return response;
   },
   error => {
-    console.log(error + "");
+    // console.log(error + "");
 
     if (error.response.status == 401) {
       store.state.errors = error.message;
-      router.push("/login");
+      router.push("/loginuser");
     } else if (error.response.status == 400) {
       store.state.errors = error.response.data.message;
     } else if (error.response.status == 404) {

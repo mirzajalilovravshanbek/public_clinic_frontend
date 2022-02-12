@@ -5,8 +5,8 @@
 <script>
 export default {
   mounted() {
-    if (!this.$cookies.isKey("user")) {
-      this.$router.push({ name: "Login" }).catch(error => {
+    if (!localStorage.getItem('token')) {
+      this.$router.push({ name: "LoginUser" }).catch(error => {
         if (error.name != "NavigationDuplicated") {
           throw error;
         }

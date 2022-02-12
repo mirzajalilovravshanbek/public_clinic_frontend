@@ -100,10 +100,20 @@
                     <th></th>
                   </thead>
                   <tbody>
-                    <tr v-for="(item, index) in row.item.children" :key="index" style="cursor:pointer;">
-                      <th @click="UpdateInspection(item.id)">{{ index + 1 }}</th>
-                      <td @click="UpdateInspection(item.id)">{{ item.full_name }}</td>
-                      <td @click="UpdateInspection(item.id)">{{ item.price }}</td>
+                    <tr
+                      v-for="(item, index) in row.item.children"
+                      :key="index"
+                      style="cursor:pointer;"
+                    >
+                      <th @click="UpdateInspection(item.id)">
+                        {{ index + 1 }}
+                      </th>
+                      <td @click="UpdateInspection(item.id)">
+                        {{ item.full_name }}
+                      </td>
+                      <td @click="UpdateInspection(item.id)">
+                        {{ item.price }}
+                      </td>
                       <td>
                         <b-button-group>
                           <b-button

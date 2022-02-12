@@ -216,8 +216,7 @@ export default {
       self.employees_kassa.forEach(function(key, value) {
         self.calculated +=
           parseFloat(key.price) > 0 ? parseFloat(key.price) : 0;
-        self.paid +=
-          parseFloat(key.price) < 0 ? parseFloat(key.price) : 0;
+        self.paid += parseFloat(key.price) < 0 ? parseFloat(key.price) : 0;
       });
     }
   },

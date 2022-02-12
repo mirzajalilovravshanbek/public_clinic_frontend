@@ -3,7 +3,7 @@
     <div class="md-toolbar-row">
       <div class="md-toolbar-section-start">
         <!-- <h3 class="md-title">{{ $route.name }}</h3> -->
-        <h3 class="md-title">{{ $cookies.get("user").full_name }}</h3>
+        <h3 class="md-title">{{ username }}</h3>
       </div>
       <div class="md-toolbar-section-end">
         <md-button
@@ -60,6 +60,7 @@
 export default {
   data() {
     return {
+      username: null,
       selectedEmployee: null,
       employees: [
         "Jim Halpert",
@@ -74,19 +75,22 @@ export default {
     };
   },
   beforeCreate() {
-    // console.log($store.state.role)
-    if (!this.$cookies.isKey("user")) {
-      this.$router.push("/login");
+    if (!localStorage.getItem('token')) {
+      this.$router.push("/loginuser");
     }
+  },
+  mounted(){
+    this.username = localStorage.getItem('username');
   },
   methods: {
     toggleSidebar() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
     },
     Logout() {
-      this.$cookies.remove("user");
-      localStorage.clear();
-      this.$router.push("/login");
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
+      localStorage.removeItem('role');
+      this.$router.push("/loginuser");
     }
   }
 };

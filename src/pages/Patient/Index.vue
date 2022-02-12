@@ -8,9 +8,9 @@
         lg="2"
         xl="2"
         v-if="
-          $cookies.get('user').position === $store.state.REGISTRATION ||
-            $cookies.get('user').position === $store.state.DOCTOR ||
-            $cookies.get('user').position === $store.state.ITMED
+          role === $store.state.REGISTRATION ||
+            role === $store.state.DOCTOR ||
+            role === $store.state.ITMED
         "
       >
         <b-button
@@ -43,9 +43,9 @@
         lg="2"
         xl="2"
         v-if="
-          $cookies.get('user').position === $store.state.KASSA ||
-            $cookies.get('user').position === $store.state.LABARATORY ||
-            $cookies.get('user').position === $store.state.UZI
+          role === $store.state.KASSA ||
+            role === $store.state.LABARATORY ||
+            role === $store.state.UZI
         "
       >
       </b-col>
@@ -108,8 +108,8 @@
             <b-button-group>
               <b-button
                 v-if="
-                  $cookies.get('user').position === $store.state.DOCTOR ||
-                    $cookies.get('user').position === $store.state.ITMED
+                  role === $store.state.DOCTOR ||
+                    role === $store.state.ITMED
                 "
                 variant="outline-danger"
                 size="sm"
@@ -140,11 +140,11 @@
                 title="Печат"
                 @click="Print(row.item.id)"
                 v-if="
-                  $cookies.get('user').position === $store.state.DOCTOR ||
-                    $cookies.get('user').position === $store.state.ITMED ||
-                    $cookies.get('user').position ===
+                  role === $store.state.DOCTOR ||
+                    role === $store.state.ITMED ||
+                    role ===
                       $store.state.REGISTRATION ||
-                    $cookies.get('user').position === $store.state.KASSA
+                    role === $store.state.KASSA
                 "
               >
                 <b-icon icon="printer-fill"></b-icon>
@@ -171,6 +171,7 @@ import moment from "moment";
 export default {
   name: "patient-index",
   data: () => ({
+    role: null,
     users: [],
     filter: null,
     totalRows: 1,
@@ -206,7 +207,8 @@ export default {
     ]
   }),
   mounted() {
-    this.Data();
+    this.role = localStorage.getItem('role');
+    // this.Data();
   },
   methods: {
     Data() {

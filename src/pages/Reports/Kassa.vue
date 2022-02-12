@@ -135,7 +135,7 @@ export default {
   },
   mounted() {
     let self = this;
-   
+
     //get list types of pay => to'lov turlarini olish
     axios({
       url: "universal/get_pay_type",
@@ -147,13 +147,12 @@ export default {
   methods: {
     Send() {
       let self = this;
-      
+
       axios({
         method: "post",
         url: "report/cash_sverka",
         data: self.datas
-      })
-      .then(function(response) {
+      }).then(function(response) {
         //console.log(response.data.data);
         self.type_pay_name = response.data.data.full_data[0]
           ? response.data.data.full_data[0].pay_type.full_name

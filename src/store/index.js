@@ -6,7 +6,7 @@ export const store = new Vuex.Store({
     ITMED: "itmed",
     KASSA: "kassa",
     DOCTOR: "doctor",
-    REGISTRATION: "registration",
+    REGISTRATION: "Register",
     LABARATORY: "labaratory",
     UZI: "uzi",
     errors: ""

@@ -19,37 +19,40 @@
         </p>
         <p>Регистрация</p>
       </sidebar-link>
-      <div class="mt-2" v-if="$cookies.get('user').position === $store.state.ITMED">
-      <sidebar-link to="/reports/index">
-        <p class="mr-2"><b-icon icon="journals" font-scale="1.7"></b-icon></p>
-        <p>Ҳисоботлар</p>
-      </sidebar-link>
-      <sidebar-link to="/employees/index">
-        <p class="rmk-margin">
-          <b-icon icon="person-fill" font-scale="1.7"></b-icon>
-        </p>
-        <p>Ҳодимлар</p>
-      </sidebar-link>
-      <sidebar-link to="/room/index">
-        <p class="mr-2">
-          <b-icon icon="door-open-fill" font-scale="1.7"></b-icon>
-        </p>
-        <p>Хоналар</p>
-      </sidebar-link>
-      <sidebar-link to="/inspections/index">
-        <p class="mr-2">
-          <b-iconstack font-scale="1.7">
-            <b-icon
-              stacked
-              icon="card-checklist"
-              scale="0.60"
-              shift-v="-1"
-            ></b-icon>
-            <b-icon stacked icon="clipboard"></b-icon>
-          </b-iconstack>
-        </p>
-        <p>Текширувлар</p>
-      </sidebar-link>
+      <div
+        class="mt-2"
+        v-if="role === $store.state.ITMED"
+      >
+        <sidebar-link to="/reports/index">
+          <p class="mr-2"><b-icon icon="journals" font-scale="1.7"></b-icon></p>
+          <p>Ҳисоботлар</p>
+        </sidebar-link>
+        <sidebar-link to="/employees/index">
+          <p class="rmk-margin">
+            <b-icon icon="person-fill" font-scale="1.7"></b-icon>
+          </p>
+          <p>Ҳодимлар</p>
+        </sidebar-link>
+        <sidebar-link to="/room/index">
+          <p class="mr-2">
+            <b-icon icon="door-open-fill" font-scale="1.7"></b-icon>
+          </p>
+          <p>Хоналар</p>
+        </sidebar-link>
+        <sidebar-link to="/inspections/index">
+          <p class="mr-2">
+            <b-iconstack font-scale="1.7">
+              <b-icon
+                stacked
+                icon="card-checklist"
+                scale="0.60"
+                shift-v="-1"
+              ></b-icon>
+              <b-icon stacked icon="clipboard"></b-icon>
+            </b-iconstack>
+          </p>
+          <p>Текширувлар</p>
+        </sidebar-link>
       </div>
       <!-- <sidebar-link to="/typography">
         <md-icon>library_books</md-icon>
@@ -107,9 +110,13 @@ export default {
   },
   data() {
     return {
+      role: null,
       sidebarBackground: "green",
       sidebarBackgroundImage: require("@/assets/img/12.jpg")
     };
+  },
+  mounted() {
+    this.role = localStorage.getItem('role');
   }
 };
 </script>
