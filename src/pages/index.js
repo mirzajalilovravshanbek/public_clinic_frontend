@@ -8,6 +8,8 @@ import PatientForm from "../pages/Patient/Form.vue";
 
 import EmployeesForm from "../pages/Employees/Form.vue";
 
+import DoctorCategoryForm from "../pages/DoctorCategory/Form.vue";
+
 import DoctorRoomForm from "../pages/Room/DoctorRoom/Form.vue";
 
 import PatientRoomForm from "../pages/Room/PatientRoom/Form.vue";
@@ -21,5 +23,6 @@ export {
   EmployeesForm,
   DoctorRoomForm,
   PatientRoomForm,
-  InspectionsForm
+  InspectionsForm,
+  DoctorCategoryForm,
 };

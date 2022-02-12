@@ -30,6 +30,21 @@ const routes = [
         component: () => import("@/pages/Employees/Update.vue")
       },
       {
+        path: "/doctorcategory/index",
+        name: "Шифокор Бўлимлари",
+        component: () => import("@/pages/DoctorCategory/Index.vue")
+      },
+      {
+        path: "/doctorcategory/create",
+        name: "Шифокор Бўлим Қўшиш",
+        component: () => import("@/pages/DoctorCategory/Create.vue")
+      },
+      {
+        path: "/doctorcategory/update/:id",
+        name: "Шифокор Бўлимни таҳрирлаш",
+        component: () => import("@/pages/DoctorCategory/Update.vue")
+      },
+      {
         path: "/reports/index",
         name: "Ҳисоботлар",
         component: () => import("@/pages/Reports/Index.vue")

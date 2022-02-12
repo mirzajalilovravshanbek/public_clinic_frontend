@@ -19,7 +19,7 @@
             &nbsp;
             <b-button
               size="md"
-              @click="Refresh()"
+              @click="Data()"
               v-b-tooltip.hover.v-primary
               variant="primary"
               title="Янгилаш"
@@ -74,10 +74,10 @@
               {{ row.index + 1 }}
             </template>
             <template #cell(items)="row">
-              {{ row.value.full_name }}
-              {{ row.value.position.full_name }}
+              {{ row.value.username }}
+              <!-- {{ row.value.position.full_name }}
               {{ row.value.section.full_name }}
-              {{ row.value.password }}
+              {{ row.value.password }} -->
             </template>
             <template #cell(actions)="row">
               <span class="h5 mb-2">
@@ -118,7 +118,7 @@
                 </b-button-group>
               </span>
             </template>
-            <template #row-details="row">
+            <!-- <template #row-details="row">
               <b-card>
                 <table class="table table-bordered table-sm">
                   <tbody>
@@ -141,7 +141,7 @@
                   </tbody>
                 </table>
               </b-card>
-            </template>
+            </template> -->
           </b-table>
         </div>
         <b-col sm="5" md="6" class="my-1">
@@ -175,52 +175,49 @@ export default {
         sortable: false
       },
       {
-        key: "full_name",
-        label: "ФИШ",
+        key: "username",
+        label: "Username",
         sortable: true
       },
-      {
-        key: "position.full_name",
-        label: "Ҳуқуқи",
-        sortable: true
-      },
-      {
-        key: "section.full_name",
-        label: "Бўлим",
-        sortable: true
-        // Variant applies to the whole column, including the header and footer
-        // variant: 'danger'
-      },
-      {
-        key: "password",
-        label: "Парол",
-        sortable: true
-      },
+      // {
+      //   key: "position.full_name",
+      //   label: "Ҳуқуқи",
+      //   sortable: true
+      // },
+      // {
+      //   key: "section.full_name",
+      //   label: "Бўлим",
+      //   sortable: true
+      //   // Variant applies to the whole column, including the header and footer
+      //   // variant: 'danger'
+      // },
+      // {
+      //   key: "password",
+      //   label: "Парол",
+      //   sortable: true
+      // },
       {
         key: "actions",
         label: ""
       }
     ]
   }),
-  mounted() {
-    this.Data();
+  async mounted() {
+    await this.Data();
   },
   methods: {
-    Data() {
+    async Data() {
       let self = this;
       //get list of staff => hodimlarni olish
-      axios({
-        url: "universal/staff_list",
-        method: "get",
-        params: {
-          id: localStorage.getItem("branch_id")
-        }
-      }).then(function(response) {
-        self.users = response.data.data;
+      try {
+        const response = await self.axios.get("api/user/branch/"+localStorage.getItem("branch_id"));
+        self.users = response.data;
         self.totalRows = self.users.length;
-      });
+      } catch (error) {
+        self.$store.state.errors = error;
+      }
     },
-    Delete(id) {
+    async Delete(id) {
       this.$bvModal
         .msgBoxConfirm("Ҳақиқатан ҳам ўчиришни хоҳлайсизми?", {
           title: "Илтимос тасдиқланг!",
@@ -237,13 +234,10 @@ export default {
           let self = this;
           if (response === true) {
             axios({
-              method: "get",
-              url: "staff/delete_staff",
-              params: {
-                id: id
-              }
+              method: "delete",
+              url: "api/user/id/"+id
             }).then(function(response) {
-              self.Data();
+             self.Data();
             });
           }
         })
@@ -254,9 +248,6 @@ export default {
     UpdateEmployee(item) {
       let self = this;
       self.$router.push({ path: "/employees/update/" + item.id });
-    },
-    Refresh() {
-      this.Data();
     }
   }
 };

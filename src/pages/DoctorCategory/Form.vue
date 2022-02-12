@@ -5,7 +5,7 @@
         <b-row>
           <b-col md="4" sm="4" lg="4" xl="4">
             <b-button
-              :to="{ path: '/room/doctorroom/index' }"
+              :to="{ path: 'doctorcategory/index' }"
               size="md"
               variant="info"
               v-b-tooltip.hover.v-info
@@ -15,7 +15,7 @@
             </b-button>
           </b-col>
           <b-col md="4" sm="4" lg="4" xl="4" class="text-center">
-            <h4 class="title">Хона қўшиш</h4>
+            <h4 class="title">Бўлим қўшиш</h4>
           </b-col>
           <b-col md="4" sm="4" lg="4" xl="4"> </b-col>
         </b-row>
@@ -27,22 +27,17 @@
               <md-field>
                 <b-icon icon="door-open-fill" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>Хона Рақами</label>
+                <label>Бўлим номи</label>
                 <md-input v-model="datas.name" md-dense></md-input>
               </md-field>
             </b-col>
             <b-col md="6" sm="6" lg="6" xl="6">
-              <b-icon icon="person-fill" font-scale="1.6"></b-icon>
-              <md-icon></md-icon>
-              <label>Филиал</label>
-              <v-select
-                :clearable="true"
-                :options="branches"
-                v-model="datas.branch_id"
-                :reduce="name => name.id"
-                label="name"
-              >
-              </v-select>
+              <md-field>
+                <b-icon icon="cash" font-scale="1.6"></b-icon>
+                <md-icon></md-icon>
+                <label>Нархи</label>
+                <md-input v-model="datas.price"  md-dense></md-input>
+              </md-field>
             </b-col>
           </b-row>
           <b-row class="my-1">
@@ -80,29 +75,20 @@
 export default {
   data: () => ({
     datas: {
-      name: "",
-      branch_id: null
+      name: null,
+      price: null
     },
-    branches: [],
     sending: false
   }),
   async mounted() {
     let self = this;
 
-    //filiallar ro'yhati
-    try {
-      const response = await self.axios.get("api/branch");
-      self.branches = response.data;
-    } catch (error) {
-      self.$store.state.errors = error;
-    }
-
     //update room => xonani tahrirlash
-    if (self.$route.path != "/room/doctorroom/create") {
+    if (self.$route.path != "/doctorcategory/create") {
       let id = self.$route.params.id;
 
       try {
-        const response = await self.axios.get("api/room/id/"+id);
+        const response = await self.axios.get("api/doctor_category/id/"+id);
         self.datas = response.data;
       } catch (error) {
         self.$store.state.errors = error;
@@ -113,12 +99,12 @@ export default {
     async Save() {
       let self = this;
       self.sending = true;
-      if (self.$route.path == "/room/doctorroom/create") {
+      if (self.$route.path == "/doctorcategory/create") {
         var methods = "post";
-        var action = "api/room";
+        var action = "api/doctor_category";
       } else {
         var methods = "patch";
-        var action = "api/room/id/" + self.$route.params.id;
+        var action = "api/doctor_category/id/" + self.$route.params.id;
       }
       try {
         const response = await axios({
@@ -127,14 +113,14 @@ export default {
           data: self.datas
         });
         self.sending = false;
-        self.$router.push("/room/doctorroom/index");
+        self.$router.push("/doctorcategory/index");
       } catch(error){
         self.$store.state.errors = error;
       }
     },
     Cancel() {
-      this.datas.name = "";
-      this.datas.branch_id = null;
+      this.datas.name = null;
+      this.datas.price = null;
     }
   }
 };

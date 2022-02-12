@@ -21,11 +21,25 @@
       </sidebar-link>
       <div
         class="mt-2"
-        v-if="role === $store.state.ITMED"
       >
+        <!-- v-if="role === $store.state.ITMED" -->
         <sidebar-link to="/reports/index">
           <p class="mr-2"><b-icon icon="journals" font-scale="1.7"></b-icon></p>
           <p>Ҳисоботлар</p>
+        </sidebar-link>
+        <sidebar-link to="/doctorcategory/index">
+          <p class="mr-2">
+            <b-iconstack font-scale="1.7">
+              <b-icon
+                stacked
+                icon="card-checklist"
+                scale="0.60"
+                shift-v="-1"
+              ></b-icon>
+              <b-icon stacked icon="clipboard"></b-icon>
+            </b-iconstack>
+          </p>
+          <p>Шифокор Бўлими</p>
         </sidebar-link>
         <sidebar-link to="/employees/index">
           <p class="rmk-margin">

@@ -28,7 +28,7 @@
                 <b-icon icon="person" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
                 <label>ФИШ</label>
-                <md-input v-model="datas.full_name" md-dense></md-input>
+                <md-input v-model="datas.username" md-dense></md-input>
               </md-field>
             </b-col>
             <b-col md="4" sm="4" lg="4" xl="4">
@@ -143,7 +143,7 @@
 export default {
   data: () => ({
     datas: {
-      full_name: "",
+      username: "",
       position_id: null,
       section_id: null,
       password: null,
@@ -159,36 +159,36 @@ export default {
   mounted() {
     let self = this;
 
-    //get list of sections => bo'limlarni olish
-    axios({
-      url: "universal/section_list",
-      method: "get",
-      params: {
-        id: localStorage.getItem("branch_id")
-      }
-    }).then(function(response) {
-      self.sections = response.data.data;
-    });
+    // //get list of sections => bo'limlarni olish
+    // axios({
+    //   url: "universal/section_list",
+    //   method: "get",
+    //   params: {
+    //     id: localStorage.getItem("branch_id")
+    //   }
+    // }).then(function(response) {
+    //   self.sections = response.data.data;
+    // });
 
-    //get list of positions => rollarni olish
-    axios.get("universal/position_list").then(function(response) {
-      self.positions = response.data.data;
-    });
+    // //get list of positions => rollarni olish
+    // axios.get("universal/position_list").then(function(response) {
+    //   self.positions = response.data.data;
+    // });
 
-    //update patient => xodimni tahrirlash
-    if (self.$route.path != "/employees/create") {
-      let id = self.$route.params.id;
+    // //update patient => xodimni tahrirlash
+    // if (self.$route.path != "/employees/create") {
+    //   let id = self.$route.params.id;
 
-      axios({
-        method: "get",
-        url: "staff/get_staff",
-        params: {
-          id: id
-        }
-      }).then(function(response) {
-        self.datas = response.data.data;
-      });
-    }
+    //   axios({
+    //     method: "get",
+    //     url: "staff/get_staff",
+    //     params: {
+    //       id: id
+    //     }
+    //   }).then(function(response) {
+    //     self.datas = response.data.data;
+    //   });
+    // }
   },
   methods: {
     Save() {

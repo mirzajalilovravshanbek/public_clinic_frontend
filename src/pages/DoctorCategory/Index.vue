@@ -2,17 +2,17 @@
   <b-container fluid="sm" style="height: 600px;">
     <md-card>
       <md-card-header data-background-color="green">
-        <h4 class="title">Хоналар рўйҳати</h4>
+        <h4 class="title">Шифокор Бўлимлари</h4>
       </md-card-header>
       <md-card-content>
         <b-row>
           <b-col>
             <b-button
-              :to="{ path: '/room/doctorroom/create' }"
+              :to="{ path: '/doctorcategory/create' }"
               style="color: #ffffff;"
               variant="success"
               v-b-tooltip.hover.v-success.topright
-              title="Хона қўшиш"
+              title="Бўлим қўшиш"
             >
               <b-icon icon="plus" font-scale="1.3"></b-icon>
             </b-button>
@@ -60,14 +60,14 @@
             sticky-header="500px"
             striped
             hover
-            :items="doctor_rooms"
+            :items="doctor_category"
             :fields="fields"
             :filter="filter"
             :current-page="currentPage"
             :per-page="perPage"
             small
             bordered
-            @row-clicked="UpdateDoctorRoom"
+            @row-clicked="UpdateDoctorCategory"
             style="cursor:pointer"
           >
             <template #cell(index)="row">
@@ -75,14 +75,14 @@
             </template>
             <template #cell(items)="row">
               {{ row.value.name }}
-              {{ row.value.branch_id }}
+              {{ row.value.price }}
             </template>
             <template #cell(actions)="row">
               <b-button-group>
                 <b-button
                   variant="outline-primary"
                   size="sm"
-                  :to="{ path: '/room/doctorroom/update/' + row.item.id }"
+                  :to="{ path: '/doctorcategory/update/' + row.item.id }"
                   v-b-tooltip.hover.left.v-primary
                   style="color: #1E90FF"
                   title="Таҳрирлаш"
@@ -120,9 +120,9 @@
 <script>
 const axios = require("axios");
 export default {
-  name: "doctor-room-index",
+  name: "doctor-category-index",
   data: () => ({
-    doctor_rooms: [],
+    doctor_category: [],
     filter: null,
     totalRows: 1,
     currentPage: 1,
@@ -135,12 +135,12 @@ export default {
       },
       {
         key: "name",
-        label: "Хона Рақами",
+        label: "Бўлим номи",
         sortable: true
       },
       {
-        key: "branch_id",
-        label: "Филиал",
+        key: "price",
+        label: "Нархи",
         sortable: true
       },
       {
@@ -155,11 +155,11 @@ export default {
   methods: {
     async Data() {
       let self = this;
-      //get list of doctor_rooms => xonalar ro'yhatini olish
+      //get list of doctor_category => bo'limlar ro'yhatini olish
       try {
-        const response = await self.axios.get("api/room");
-        self.doctor_rooms = response.data;
-        self.totalRows = self.doctor_rooms.length;
+        const response = await self.axios.get("api/doctor_category");
+        self.doctor_category = response.data;
+        self.totalRows = self.doctor_category.length;
       } catch (error) {
         self.$store.state.errors = error;
       }
@@ -184,7 +184,7 @@ export default {
           if (response === true) {
             axios({
               method: "delete",
-              url: "api/room/id/" + id
+              url: "api/doctor_category/id/" + id
             }).then(function(response) {
               self.Data();
             });
@@ -194,9 +194,9 @@ export default {
           // An error occurred
         });
     },
-    UpdateDoctorRoom(item) {
+    UpdateDoctorCategory(item) {
       let self = this;
-      self.$router.push({ path: "/room/doctorroom/update/" + item.id });
+      self.$router.push({ path: "/doctorcategory/update/" + item.id });
     }
   }
 };
