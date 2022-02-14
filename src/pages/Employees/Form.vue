@@ -1,6 +1,7 @@
 <template>
   <b-container fluid="lg">
     <md-card>
+      <!-- card header start -->
       <md-card-header data-background-color="green">
         <b-row>
           <b-col md="4" sm="4" lg="4" xl="4">
@@ -20,10 +21,14 @@
           <b-col md="4" sm="4" lg="4" xl="4"> </b-col>
         </b-row>
       </md-card-header>
+      <!-- card header end -->
+
+      <!-- card content start -->
       <md-card-content>
         <form>
           <b-row class="my-1">
-            <b-col md="4" sm="4" lg="4" xl="4">
+            <!-- username input start -->
+            <b-col md="6" sm="6" lg="6" xl="6">
               <md-field>
                 <b-icon icon="person" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
@@ -31,35 +36,10 @@
                 <md-input v-model="datas.username" md-dense></md-input>
               </md-field>
             </b-col>
-            <b-col md="4" sm="4" lg="4" xl="4">
-              <b-icon icon="card-list" font-scale="1.6"></b-icon>
-              <md-icon></md-icon>
-              <label>Бўлим</label>
-              <v-select
-                :clearable="true"
-                :options="sections"
-                v-model="datas.section_id"
-                :reduce="full_name => full_name.id"
-                label="full_name"
-              >
-              </v-select>
-            </b-col>
-            <b-col md="4" sm="4" lg="4" xl="4">
-              <b-icon icon="bookmark-star" font-scale="1.6"></b-icon>
-              <md-icon></md-icon>
-              <label>Ҳуқуқи</label>
-              <v-select
-                :clearable="true"
-                :options="positions"
-                v-model="datas.position_id"
-                :reduce="full_name => full_name.id"
-                label="full_name"
-              >
-              </v-select>
-            </b-col>
-          </b-row>
-          <b-row class="my-1">
-            <b-col md="4" sm="4" lg="4" xl="4">
+            <!-- username input end -->
+
+            <!-- password input start -->
+            <b-col md="6" sm="6" lg="6" xl="6">
               <md-field>
                 <b-icon icon="shield-lock" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
@@ -67,48 +47,124 @@
                 <md-input v-model="datas.password" md-dense></md-input>
               </md-field>
             </b-col>
-            <b-col md="4" sm="4" lg="4" xl="4">
-              <md-field>
-                <b-icon icon="percent" font-scale="1.6"></b-icon>
-                <md-icon></md-icon>
-                <label>Асосий Улуши (%)</label>
-                <md-input v-model="datas.percent_price" md-dense></md-input>
-              </md-field>
-            </b-col>
-            <b-col md="4" sm="4" lg="4" xl="4">
-              <md-field>
-                <b-icon icon="percent" font-scale="1.6"></b-icon>
-                <md-icon></md-icon>
-                <label>Хонадан Оладиган Улуши (%)</label>
-                <md-input v-model="datas.percent_room" md-dense></md-input>
-              </md-field>
-            </b-col>
+            <!-- password input end -->
           </b-row>
           <b-row class="my-1">
-            <b-col md="4" sm="4" lg="4" xl="4">
-              <md-field>
-                <b-icon icon="percent" font-scale="1.6"></b-icon>
-                <md-icon></md-icon>
-                <label>Консультациядан Оладиган Улуши (%)</label>
-                <md-input
-                  v-model="datas.percent_consultation"
-                  md-dense
-                ></md-input>
-              </md-field>
+            <!-- branch input start -->
+            <b-col md="6" sm="6" lg="6" xl="6">
+              <b-icon icon="card-list" font-scale="1.6"></b-icon>
+              <md-icon></md-icon>
+              <label>Филиал</label>
+              <v-select
+                :clearable="true"
+                :options="branches"
+                v-model="datas.branch_id"
+                :reduce="name => name.id"
+                label="name"
+                placeholder="Филиални танланг..."
+              >
+              </v-select>
             </b-col>
-            <b-col md="4" sm="4" lg="4" xl="4">
-              <md-field>
-                <b-icon icon="percent" font-scale="1.6"></b-icon>
-                <md-icon></md-icon>
-                <label>Текширувлардан Оладиган Улуши (%)</label>
-                <md-input
-                  v-model="datas.percent_inspection"
-                  md-dense
-                ></md-input>
-              </md-field>
+            <!-- branch input end -->
+
+            <!-- room input start -->
+            <b-col md="6" sm="6" lg="6" xl="6">
+              <b-icon icon="door-open" font-scale="1.6"></b-icon>
+              <label>Хона</label>
+              <v-select
+                :clearable="true"
+                :options="rooms"
+                v-model="datas.room_id"
+                :reduce="name => name.id"
+                label="name"
+                placeholder="Хонани танланг..."
+              >
+              </v-select>
             </b-col>
+            <!-- room input end -->
           </b-row>
-          <b-row class="my-1">
+          <b-row class="mt-3">
+            <!-- role input start -->
+            <b-col md="6" sm="6" lg="6" xl="6">
+              <b-icon icon="bookmark-star" font-scale="1.6"></b-icon>
+              <label>Ҳуқуқи</label>
+              <v-select
+                :clearable="true"
+                :options="positions"
+                v-model="datas.role"
+                :reduce="label => label.name"
+                label="label"
+                placeholder="Ҳуқуқини танланг..."
+              >
+              </v-select>
+            </b-col>
+            <!-- role input end -->
+
+            <!-- doctor input start -->
+            <b-col md="6" sm="6" lg="6" xl="6" v-if="datas.role == 'Doctor'">
+              <b-icon icon="person" font-scale="1.6"></b-icon>
+              <label>Шифокор</label>
+              <v-select
+                :clearable="true"
+                :options="doctors"
+                v-model="datas.doctor_id"
+                :reduce="name => name.id"
+                label="name"
+                placeholder="Шифокорни танланг..."
+                @input="DisInspection()"
+              >
+              </v-select>
+            </b-col>
+            <!-- doctor input end -->
+
+            <!-- inspection input start -->
+            <b-col md="6" sm="6" lg="6" xl="6" v-if="datas.role == 'Inspector'">
+              <b-icon icon="journal-medical" font-scale="1.6"></b-icon>
+              <label>Текширув Бўлими</label>
+              <v-select
+                :clearable="true"
+                :options="inspection_category"
+                v-model="datas.inspection_category_id"
+                :reduce="name => name.id"
+                label="name"
+                placeholder="Бўлимни танланг..."
+                @input="DisDoctor()"
+              >
+              </v-select>
+            </b-col>
+            <!-- room input end -->
+
+          </b-row>
+          <b-row class="mt-3">
+            <!-- type input start -->
+            <b-col md="6" sm="6" lg="6" xl="6">
+              <b-icon icon="cash" font-scale="1.6"></b-icon>
+              <md-icon></md-icon>
+              <label>Тўлов Тури</label>
+              <v-select
+                :clearable="true"
+                :options="types"
+                v-model="datas.type"
+                :reduce="label => label.name"
+                label="label"
+                placeholder="Тўлов Турини танланг..."
+              >
+              </v-select>
+            </b-col>
+            <!-- type input end -->
+
+            <!-- salary input start -->
+            <b-col md="6" sm="6" lg="6" xl="6" v-if="datas.type == 'salary'">
+              <md-field>
+                <b-icon icon="cash" font-scale="1.6"></b-icon>
+                <md-icon></md-icon>
+                <label>Ойлик</label>
+                <md-input v-model="datas.salary" md-dense></md-input>
+              </md-field>
+            </b-col>
+            <!-- salary input end -->
+          </b-row>
+          <b-row class="mt-3">
             <b-col md="4" sm="4" lg="4" xl="4">
               <b-button
                 size="md"
@@ -136,6 +192,7 @@
           </b-row>
         </form>
       </md-card-content>
+      <!-- card content end -->
     </md-card>
   </b-container>
 </template>
@@ -143,83 +200,117 @@
 export default {
   data: () => ({
     datas: {
-      username: "",
-      position_id: null,
-      section_id: null,
+      username: null,
+      role: null,
+      doctor_id: null,
+      inspection_category_id: null,
+      room_id: null,
       password: null,
-      percent_price: null,
-      percent_room: null,
-      percent_consultation: null,
-      percent_inspection: null
+      type: null,
+      salary: null,
+      branch_id: null
     },
-    positions: [],
-    sections: [],
+    positions: [
+      {'name':'Register','label': 'Регистратор'},
+      {'name':'Doctor','label': 'Шифокор'},
+      {'name':'Inspector','label': 'Лаборант'}
+    ],
+    branches: [],
+    doctors: [],
+    inspection_category: [],
+    rooms: [],
+    types: [
+      {'name':'percent','label': 'Фоиз'},
+      {'name':'salary','label': 'Ойлик'}
+    ], 
     sending: false
   }),
-  mounted() {
+  async mounted() {
     let self = this;
 
-    // //get list of sections => bo'limlarni olish
-    // axios({
-    //   url: "universal/section_list",
-    //   method: "get",
-    //   params: {
-    //     id: localStorage.getItem("branch_id")
-    //   }
-    // }).then(function(response) {
-    //   self.sections = response.data.data;
-    // });
+    //filiallar ro'yhati
+    try {
+      const response = await self.axios.get("api/branch");
+      self.branches = response.data;
+    } catch (error) {
+      self.$store.state.errors = error;
+    }
 
-    // //get list of positions => rollarni olish
-    // axios.get("universal/position_list").then(function(response) {
-    //   self.positions = response.data.data;
-    // });
+    //get list of doctors => shifokorlar ro'yhatini olish
+    try {
+      const response = await self.axios.get("api/doctor");
+      self.doctors = response.data;
+    } catch (error) {
+      self.$store.state.errors = error;
+    }
 
-    // //update patient => xodimni tahrirlash
-    // if (self.$route.path != "/employees/create") {
-    //   let id = self.$route.params.id;
+    //get list of inspections category => tekshiruv bo'limlari ro'yhatini olish
+    try {
+      const response = await self.axios.get("api/inspection_category");
+      self.inspection_category = response.data;
+    } catch (error) {
+      self.$store.state.errors = error;
+    }
 
-    //   axios({
-    //     method: "get",
-    //     url: "staff/get_staff",
-    //     params: {
-    //       id: id
-    //     }
-    //   }).then(function(response) {
-    //     self.datas = response.data.data;
-    //   });
-    // }
+    //get list of doctor_rooms => xonalar ro'yhatini olish
+    try {
+      const response = await self.axios.get("api/room");
+      self.rooms = response.data;
+    } catch (error) {
+      self.$store.state.errors = error;
+    }
+
+    //update employees => xodimni tahrirlash
+    if (self.$route.path != "/employees/create") {
+      let id = self.$route.params.id;
+
+      try {
+        const response = await self.axios.get("api/user/id/"+id);
+        self.datas = response.data;
+      } catch (error) {
+        self.$store.state.errors = error;
+      }
+    }
   },
   methods: {
-    Save() {
+    async Save() {
       let self = this;
       self.sending = true;
       if (self.$route.path == "/employees/create") {
         var methods = "post";
-        var action = "staff/create_staff";
-        self.datas.branch_id = localStorage.getItem("branch_id");
+        var action = "api/user";
       } else {
-        var methods = "post";
-        var action = "staff/update_staff?id=" + self.$route.params.id;
+        var methods = "patch";
+        var action = "api/user/id/" + self.$route.params.id;
       }
-      axios({
-        method: methods,
-        url: action,
-        data: self.datas
-      }).then(function(response) {
+      try {
+        const response = await axios({
+          method: methods,
+          url: action,
+          data: self.datas
+        });
         self.sending = false;
         self.$router.push("/employees/index");
-      });
+      } catch(error){
+        self.$store.state.errors = error;
+      }
     },
     Cancel() {
-      (this.datas.full_name = ""),
-        (this.datas.position_id = null),
-        (this.datas.section_id = null),
-        (this.datas.password = null),
-        (this.datas.percent_price = null),
-        (this.datas.percent_room = null),
-        (this.datas.percent_consultation = null),
-        (this.datas.percent_inspection = null);
+      this.datas.username = null;
+      this.datas.role = null;
+      this.datas.doctor_id = null;
+      this.datas.inspection_category_id = null;
+      this.datas.room_id = null;
+      this.datas.password = null;
+      this.datas.type = null;
+      this.datas.salary = null;
+      this.datas.branch_id = null;    
+    },
+    DisDoctor(){
+      this.datas.doctor_id = null;
+    },
+    DisInspection(){
+      this.datas.inspection_category_id = null;
     }
   }
 };

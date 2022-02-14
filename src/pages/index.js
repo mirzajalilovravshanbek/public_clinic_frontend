@@ -1,20 +1,17 @@
 // Cards
 import UserCard from "../pages/UserProfile/UserCard.vue";
-
 // Forms
 import EditProfileForm from "../pages/UserProfile/EditProfileForm.vue";
-
 import PatientForm from "../pages/Patient/Form.vue";
-
 import EmployeesForm from "../pages/Employees/Form.vue";
-
 import DoctorCategoryForm from "../pages/DoctorCategory/Form.vue";
-
+import InspectionCategoryForm from "../pages/InspectionCategory/Form.vue";
+import DoctorForm from "../pages/Doctor/Form.vue";
 import DoctorRoomForm from "../pages/Room/DoctorRoom/Form.vue";
-
 import PatientRoomForm from "../pages/Room/PatientRoom/Form.vue";
-
 import InspectionsForm from "../pages/Inspections/Form.vue";
+import PillForm from "../pages/Pill/Form.vue";
+import BranchForm from "../pages/Branch/Form.vue";
 
 export {
   UserCard,
@@ -23,6 +20,10 @@ export {
   EmployeesForm,
   DoctorRoomForm,
   PatientRoomForm,
+  InspectionCategoryForm,
   InspectionsForm,
   DoctorCategoryForm,
+  DoctorForm,
+  PillForm,
+  BranchForm
 };

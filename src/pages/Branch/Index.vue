@@ -1,20 +1,20 @@
 <template>
-  <b-container fluid="sm" class="all-div-height">
+  <b-container fluid="sm" style="height: 600px;">
     <md-card>
       <md-card-header data-background-color="green">
-        <h4 class="title">Ҳодимлар рўйҳати</h4>
+        <h4 class="title">Филиаллар</h4>
       </md-card-header>
       <md-card-content>
         <b-row>
           <b-col>
             <b-button
-              :to="{ path: '/employees/create' }"
+              :to="{ path: '/branch/create' }"
               style="color: #ffffff;"
               variant="success"
               v-b-tooltip.hover.v-success.topright
-              title="Ҳодим қўшиш"
+              title="Филиал қўшиш"
             >
-              <b-icon icon="person-plus"></b-icon>
+              <b-icon icon="plus" font-scale="1.3"></b-icon>
             </b-button>
             &nbsp;
             <b-button
@@ -60,87 +60,46 @@
             sticky-header="500px"
             striped
             hover
-            :items="users"
+            :items="branches"
             :fields="fields"
             :filter="filter"
             :current-page="currentPage"
             :per-page="perPage"
             small
             bordered
-            @row-clicked="UpdateEmployee"
+            @row-clicked="UpdateBranch"
             style="cursor:pointer"
           >
             <template #cell(index)="row">
               {{ row.index + 1 }}
             </template>
             <template #cell(items)="row">
-              {{ row.value.username }}
-              {{ row.value.role }}
-              {{ row.value.branch.name }}
-              {{ row.value.room.name }}
+              {{ row.value.name }}
+              {{ row.value.district.name }}
             </template>
             <template #cell(actions)="row">
-              <span class="h5 mb-2">
-                <b-button-group>
-                  <b-button
-                    variant="outline-primary"
-                    size="sm"
-                    :to="{ path: '/employees/update/' + row.item.id }"
-                    v-b-tooltip.hover.left.v-primary
-                    style="color: #1E90FF"
-                    title="Таҳрирлаш"
-                  >
-                    <b-icon icon="Pencil" font-scale="0.9"></b-icon>
-                  </b-button>
+              <b-button-group>
+                <b-button
+                  variant="outline-primary"
+                  size="sm"
+                  :to="{ path: '/branch/update/' + row.item.id }"
+                  v-b-tooltip.hover.left.v-primary
+                  style="color: #1E90FF"
+                  title="Таҳрирлаш"
+                >
+                  <b-icon icon="Pencil" font-scale="0.9"></b-icon>
+                </b-button>
 
-                  <b-button
-                    size="sm"
-                    variant="outline-success"
-                    @click="row.toggleDetails"
-                    v-b-tooltip.hover.bottomright.v-success
-                    :title="row.detailsShowing ? 'Беркитиш' : 'Кўриш'"
-                  >
-                    <b-icon
-                      :icon="row.detailsShowing ? 'eye-slash' : 'eye'"
-                      font-scale="0.9"
-                    ></b-icon>
-                  </b-button>
-
-                  <b-button
-                    size="sm"
-                    @click="Delete(row.item.id)"
-                    variant="outline-danger"
-                    v-b-tooltip.hover.right.v-danger
-                    title="Ўчириш"
-                  >
-                    <b-icon icon="trash" font-scale="0.9"></b-icon>
-                  </b-button>
-                </b-button-group>
-              </span>
-            </template>
-            <template #row-details="row">
-              <b-card>
-                <table class="table table-bordered table-sm">
-                  <tbody>
-                    <tr>
-                      <th>Шифокор:</th>
-                      <td>{{ row.item.doctor != null ? row.item.doctor.name : "" }}</td>
-                    </tr>
-                    <tr>
-                      <th>Текширув Бўлими:</th>
-                      <td>{{ row.item.inspection_category != null ? row.item.inspection_category.name : "" }}</td>
-                    </tr>
-                    <tr>
-                      <th>Тўлов Тури:</th>
-                      <td>{{ row.item.type == 'salary' ? "Ойлик" : "Фоиз" }}</td>
-                    </tr>
-                    <tr>
-                      <th>Ойлик:</th>
-                      <td>{{ row.item.salary }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </b-card>
+                <b-button
+                  size="sm"
+                  @click="Delete(row.item.id)"
+                  variant="outline-danger"
+                  v-b-tooltip.hover.right.v-danger
+                  title="Ўчириш"
+                >
+                  <b-icon icon="trash" font-scale="0.9"></b-icon>
+                </b-button>
+              </b-button-group>
             </template>
           </b-table>
         </div>
@@ -161,9 +120,9 @@
 <script>
 const axios = require("axios");
 export default {
-  name: "employees-index",
+  name: "branch-index",
   data: () => ({
-    users: [],
+    branches: [],
     filter: null,
     totalRows: 1,
     currentPage: 1,
@@ -175,25 +134,13 @@ export default {
         sortable: false
       },
       {
-        key: "username",
-        label: "ФИШ",
-        sortable: true
-      },
-      {
-        key: "role",
-        label: "Ҳуқуқи",
-        sortable: true
-      },
-      {
-        key: "branch.name",
+        key: "name",
         label: "Филиал",
         sortable: true
-        // Variant applies to the whole column, including the header and footer
-        // variant: 'danger'
       },
       {
-        key: "room.name",
-        label: "Хона",
+        key: "district.name",
+        label: "Туман",
         sortable: true
       },
       {
@@ -208,24 +155,26 @@ export default {
   methods: {
     async Data() {
       let self = this;
-      //get list of staff => hodimlarni olish
+      //get list of doctors => shifokorlar ro'yhatini olish
       try {
-        const response = await self.axios.get("api/user");
-        self.users = response.data;
-        self.totalRows = self.users.length;
+        const response = await self.axios.get("api/branch");
+        self.branches = response.data;
+        self.totalRows = self.branches.length;
       } catch (error) {
         self.$store.state.errors = error;
       }
     },
-    async Delete(id) {
+    Delete(id) {
       this.$bvModal
         .msgBoxConfirm("Ҳақиқатан ҳам ўчиришни хоҳлайсизми?", {
           title: "Илтимос тасдиқланг!",
           size: "md",
+          buttonSize: "md",
           okVariant: "outline-danger",
           okTitle: "Ҳа",
           cancelTitle: "Йўқ",
           cancelVariant: "info",
+          footerClass: "p-2",
           hideHeaderClose: false,
           centered: false
         })
@@ -235,9 +184,9 @@ export default {
           if (response === true) {
             axios({
               method: "delete",
-              url: "api/user/id/"+id
+              url: "api/branch/id/" + id
             }).then(function(response) {
-             self.Data();
+              self.Data();
             });
           }
         })
@@ -245,9 +194,9 @@ export default {
           // An error occurred
         });
     },
-    UpdateEmployee(item) {
+    UpdateBranch(item) {
       let self = this;
-      self.$router.push({ path: "/employees/update/" + item.id });
+      self.$router.push({ path: "/branch/update/" + item.id });
     }
   }
 };
@@ -258,6 +207,6 @@ export default {
   max-width: 300px;
 }
 .table-height {
-  height: 370px;
+  height: 430px;
 }
 </style>

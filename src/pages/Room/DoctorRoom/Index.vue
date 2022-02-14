@@ -75,7 +75,7 @@
             </template>
             <template #cell(items)="row">
               {{ row.value.name }}
-              {{ row.value.branch_id }}
+              {{ row.value.branch.name }}
             </template>
             <template #cell(actions)="row">
               <b-button-group>
@@ -139,7 +139,7 @@ export default {
         sortable: true
       },
       {
-        key: "branch_id",
+        key: "branch.name",
         label: "Филиал",
         sortable: true
       },

@@ -26,7 +26,7 @@ const routes = [
       },
       {
         path: "/employees/update/:id",
-        name: "Ҳодимни таҳрирлаш",
+        name: "Ҳодимни Таҳрирлаш",
         component: () => import("@/pages/Employees/Update.vue")
       },
       {
@@ -41,8 +41,68 @@ const routes = [
       },
       {
         path: "/doctorcategory/update/:id",
-        name: "Шифокор Бўлимни таҳрирлаш",
+        name: "Шифокор Бўлимни Таҳрирлаш",
         component: () => import("@/pages/DoctorCategory/Update.vue")
+      },
+      {
+        path: "/inspectioncategory/index",
+        name: "Текширув Бўлимлари",
+        component: () => import("@/pages/InspectionCategory/Index.vue")
+      },
+      {
+        path: "/inspectioncategory/create",
+        name: "Текширув Бўлими Қўшиш",
+        component: () => import("@/pages/InspectionCategory/Create.vue")
+      },
+      {
+        path: "/inspectioncategory/update/:id",
+        name: "Текширув Бўлимни Таҳрирлаш",
+        component: () => import("@/pages/InspectionCategory/Update.vue")
+      },
+      {
+        path: "/doctor/index",
+        name: "Шифокорлар",
+        component: () => import("@/pages/Doctor/Index.vue")
+      },
+      {
+        path: "/doctor/create",
+        name: "Шифокор Қўшиш",
+        component: () => import("@/pages/Doctor/Create.vue")
+      },
+      {
+        path: "/doctor/update/:id",
+        name: "Шифокорни Таҳрирлаш",
+        component: () => import("@/pages/Doctor/Update.vue")
+      },
+      {
+        path: "/branch/index",
+        name: "Филиаллар",
+        component: () => import("@/pages/Branch/Index.vue")
+      },
+      {
+        path: "/branch/create",
+        name: "Филиал Қўшиш",
+        component: () => import("@/pages/Branch/Create.vue")
+      },
+      {
+        path: "/branch/update/:id",
+        name: "Филиални Таҳрирлаш",
+        component: () => import("@/pages/Branch/Update.vue")
+      },
+      {
+        path: "/pill/index",
+        name: "Дорилар",
+        component: () => import("@/pages/Pill/Index.vue")
+      },
+      {
+        path: "/pill/create",
+        name: "Дори Қўшиш",
+        component: () => import("@/pages/Pill/Create.vue")
+      },
+      {
+        path: "/pill/update/:id",
+        name: "Дорини Таҳрирлаш",
+        component: () => import("@/pages/Pill/Update.vue")
       },
       {
         path: "/reports/index",
@@ -91,7 +151,7 @@ const routes = [
       },
       {
         path: "/room/doctorroom/update/:id",
-        name: "Хонани таҳрирлаш ",
+        name: "Хонани Таҳрирлаш ",
         component: () => import("@/pages/Room/DoctorRoom/Update.vue")
       },
       {
@@ -106,7 +166,7 @@ const routes = [
       },
       {
         path: "/room/patientroom/update/:id",
-        name: "Хонани таҳрирлаш",
+        name: "Хонани Таҳрирлаш",
         component: () => import("@/pages/Room/PatientRoom/Update.vue")
       },
       {
@@ -121,7 +181,7 @@ const routes = [
       },
       {
         path: "/inspections/update/:id",
-        name: "Текширувни таҳрирлаш ",
+        name: "Текширувни Таҳрирлаш ",
         component: () => import("@/pages/Inspections/Update.vue")
       },
       {
@@ -158,7 +218,7 @@ const routes = [
   },
   {
     path: "/patient/update/:id",
-    name: "Регистрация хужжатини таҳрирлаш",
+    name: "Регистрация хужжатини Таҳрирлаш",
     component: () => import("@/pages/Patient/Update.vue")
   },
   {

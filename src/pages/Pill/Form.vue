@@ -5,7 +5,7 @@
         <b-row>
           <b-col md="4" sm="4" lg="4" xl="4">
             <b-button
-              :to="{ path: '/doctorcategory/index' }"
+              :to="{ path: '/pill/index' }"
               size="md"
               variant="info"
               v-b-tooltip.hover.v-info
@@ -15,7 +15,7 @@
             </b-button>
           </b-col>
           <b-col md="4" sm="4" lg="4" xl="4" class="text-center">
-            <h4 class="title">Бўлим қўшиш</h4>
+            <h4 class="title">Дори қўшиш</h4>
           </b-col>
           <b-col md="4" sm="4" lg="4" xl="4"> </b-col>
         </b-row>
@@ -23,20 +23,12 @@
       <md-card-content>
         <form>
           <b-row class="my-1">
-            <b-col md="6" sm="6" lg="6" xl="6">
+            <b-col md="12" sm="12" lg="12" xl="12">
               <md-field>
-                <b-icon icon="door-open-fill" font-scale="1.6"></b-icon>
+                <b-icon icon="circle-half" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>Бўлим номи</label>
+                <label>Дори номи</label>
                 <md-input v-model="datas.name" md-dense></md-input>
-              </md-field>
-            </b-col>
-            <b-col md="6" sm="6" lg="6" xl="6">
-              <md-field>
-                <b-icon icon="cash" font-scale="1.6"></b-icon>
-                <md-icon></md-icon>
-                <label>Нархи</label>
-                <md-input v-model="datas.price"  md-dense></md-input>
               </md-field>
             </b-col>
           </b-row>
@@ -75,20 +67,19 @@
 export default {
   data: () => ({
     datas: {
-      name: null,
-      price: null
+      name: null
     },
     sending: false
   }),
   async mounted() {
     let self = this;
 
-    //update room => xonani tahrirlash
-    if (self.$route.path != "/doctorcategory/create") {
+    //update pill => dorini tahrirlash
+    if (self.$route.path != "/pill/create") {
       let id = self.$route.params.id;
 
       try {
-        const response = await self.axios.get("api/doctor_category/id/"+id);
+        const response = await self.axios.get("api/pill/id/"+id);
         self.datas = response.data;
       } catch (error) {
         self.$store.state.errors = error;
@@ -99,12 +90,12 @@ export default {
     async Save() {
       let self = this;
       self.sending = true;
-      if (self.$route.path == "/doctorcategory/create") {
+      if (self.$route.path == "/pill/create") {
         var methods = "post";
-        var action = "api/doctor_category";
+        var action = "api/pill";
       } else {
         var methods = "patch";
-        var action = "api/doctor_category/id/" + self.$route.params.id;
+        var action = "api/pill/id/" + self.$route.params.id;
       }
       try {
         const response = await axios({
@@ -113,14 +104,13 @@ export default {
           data: self.datas
         });
         self.sending = false;
-        self.$router.push("/doctorcategory/index");
+        self.$router.push("/pill/index");
       } catch(error){
         self.$store.state.errors = error;
       }
     },
     Cancel() {
       this.datas.name = null;
-      this.datas.price = null;
     }
   }
 };

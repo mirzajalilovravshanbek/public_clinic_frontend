@@ -27,6 +27,10 @@
           <p class="mr-2"><b-icon icon="journals" font-scale="1.7"></b-icon></p>
           <p>Ҳисоботлар</p>
         </sidebar-link>
+        <sidebar-link to="/branch/index">
+          <p class="mr-2"><b-icon icon="building" font-scale="1.7"></b-icon></p>
+          <p>Филиаллар</p>
+        </sidebar-link>
         <sidebar-link to="/doctorcategory/index">
           <p class="mr-2">
             <b-iconstack font-scale="1.7">
@@ -40,6 +44,12 @@
             </b-iconstack>
           </p>
           <p>Шифокор Бўлими</p>
+        </sidebar-link>
+        <sidebar-link to="/doctor/index">
+          <p class="rmk-margin">
+            <b-icon icon="people-fill" font-scale="1.7"></b-icon>
+          </p>
+          <p>Шифокорлар</p>
         </sidebar-link>
         <sidebar-link to="/employees/index">
           <p class="rmk-margin">
@@ -66,6 +76,18 @@
             </b-iconstack>
           </p>
           <p>Текширувлар</p>
+        </sidebar-link>
+        <sidebar-link to="/inspectioncategory/index">
+          <p class="mr-2">
+            <b-icon icon="journal-medical" font-scale="1.7"></b-icon>
+          </p>
+          <p>Текширув Бўлимлари</p>
+        </sidebar-link>
+        <sidebar-link to="/pill/index">
+          <p class="mr-2">
+            <b-icon icon="circle-half" font-scale="1.7"></b-icon>
+          </p>
+          <p>Дорилар</p>
         </sidebar-link>
       </div>
       <!-- <sidebar-link to="/typography">
