@@ -187,7 +187,7 @@ export default {
     ]
   }),
   mounted() {
-    this.Data();
+    // this.Data();
   },
   methods: {
     Data() {

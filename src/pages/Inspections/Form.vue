@@ -154,15 +154,15 @@ export default {
   }),
   mounted() {
     let self = this;
-    axios({
-      url: "inspection/inspection_section",
-      method: "get",
-      params: {
-        id: localStorage.getItem("branch_id")
-      }
-    }).then(function(response) {
-      self.id = response.data.data[0].id;
-    });
+    // axios({
+    //   url: "inspection/inspection_section",
+    //   method: "get",
+    //   params: {
+    //     id: localStorage.getItem("branch_id")
+    //   }
+    // }).then(function(response) {
+    //   self.id = response.data.data[0].id;
+    // });
 
     // tekshiruvni tahrirlash
     if (self.$route.path != "/inspections/create") {
