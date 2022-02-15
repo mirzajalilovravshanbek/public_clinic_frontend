@@ -12,6 +12,7 @@ import PatientRoomForm from "../pages/Room/PatientRoom/Form.vue";
 import InspectionsForm from "../pages/Inspections/Form.vue";
 import PillForm from "../pages/Pill/Form.vue";
 import BranchForm from "../pages/Branch/Form.vue";
+import PatientCrudForm from "../pages/PatientCrud/Form.vue";
 
 export {
   UserCard,
@@ -25,5 +26,6 @@ export {
   DoctorCategoryForm,
   DoctorForm,
   PillForm,
-  BranchForm
+  BranchForm,
+  PatientCrudForm
 };

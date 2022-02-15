@@ -5,6 +5,7 @@
         <h4 class="title">Текширув Бўлими</h4>
       </md-card-header>
       <md-card-content>
+        <!-- button group and search section start -->
         <b-row>
           <b-col>
             <b-button
@@ -54,8 +55,12 @@
               </b-input-group>
             </b-form-group>
           </b-col>
-        </b-row>
+        </b-row><!-- button group and search section end -->
+        <!-- table section start -->
         <div class="table-height mt-2">
+          <div class="d-flex justify-content-center mb-3" v-if="checkTable">
+            <b-spinner variant="info" style="width: 3rem; height: 3rem;" type="grow" label="Spinning"></b-spinner>
+          </div>
           <b-table
             sticky-header="500px"
             striped
@@ -103,6 +108,8 @@
             </template>
           </b-table>
         </div>
+        <!-- table section end -->
+        <!-- pagination section start -->
         <b-col sm="5" md="6" class="my-1">
           <b-pagination
             v-model="currentPage"
@@ -112,6 +119,7 @@
             class="my-0"
           ></b-pagination>
         </b-col>
+        <!-- pagination section end -->
       </md-card-content>
     </md-card>
   </b-container>
@@ -126,6 +134,7 @@ export default {
     filter: null,
     totalRows: 1,
     currentPage: 1,
+    checkTable: false,
     perPage: 20,
     fields: [
       {
@@ -155,11 +164,13 @@ export default {
   methods: {
     async Data() {
       let self = this;
+      self.checkTable = true;
       //get list of inspections category => tekshiruv bo'limlari ro'yhatini olish
       try {
         const response = await self.axios.get("api/inspection_category");
         self.inspections = response.data;
         self.totalRows = self.inspections.length;
+        self.checkTable = false;
       } catch (error) {
         self.$store.state.errors = error;
       }

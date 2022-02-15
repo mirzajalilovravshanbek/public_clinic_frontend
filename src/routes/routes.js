@@ -105,6 +105,21 @@ const routes = [
         component: () => import("@/pages/Pill/Update.vue")
       },
       {
+        path: "/patientcrud/index",
+        name: "Беморлар",
+        component: () => import("@/pages/PatientCrud/Index.vue")
+      },
+      {
+        path: "/patientcrud/create",
+        name: "Бемор Қўшиш",
+        component: () => import("@/pages/PatientCrud/Create.vue")
+      },
+      {
+        path: "/patientcrud/update/:id",
+        name: "Беморни Таҳрирлаш",
+        component: () => import("@/pages/PatientCrud/Update.vue")
+      },
+      {
         path: "/reports/index",
         name: "Ҳисоботлар",
         component: () => import("@/pages/Reports/Index.vue")
@@ -213,7 +228,7 @@ const routes = [
   },
   {
     path: "/patient/create",
-    name: "Бемор Қўшиш",
+    name: "Регистрация Ойнаси",
     component: () => import("@/pages/Patient/Create.vue")
   },
   {
