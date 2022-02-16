@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid="sm" style="height: 600px;">
+  <b-container fluid="sm" class="all-div-height">
     <md-card>
       <md-card-header data-background-color="green">
         <h4 class="title">Текширув Бўлими</h4>
@@ -216,8 +216,5 @@ export default {
 <style lang="scss" scoped>
 .md-field {
   max-width: 300px;
-}
-.table-height {
-  height: 430px;
 }
 </style>

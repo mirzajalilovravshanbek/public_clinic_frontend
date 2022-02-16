@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid="sm" class="cont-height">
+  <b-container fluid="sm" class="all-div-height">
     <!-- button panel start -->
     <b-row>
       <b-col
@@ -295,9 +295,6 @@ export default {
 };
 </script>
 <style scoped>
-.cont-height {
-  height: 600px;
-}
 .card-margin {
   margin: 0;
 }

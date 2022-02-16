@@ -108,22 +108,24 @@
       <top-navbar></top-navbar>
 
       <!-- alert start -->
-      <div class="row justify-content-md-center">
-        <div
-          class="col-lg-11 col-md-11 col-sm-11 col-xl-11 alert alert-danger text-center p-1"
-          style="z-index: 5;"
-          v-if="$store.state.errors != ''"
-        >
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="$store.state.errors = ''"
+      <div class="container-fluid">
+        <div class="row justify-content-md-center">
+          <div
+            class="col-lg-11 col-md-11 col-sm-11 col-xl-11 alert alert-danger text-center p-1"
+            style="z-index: 5;"
+            v-if="$store.state.errors != ''"
           >
-            ×
-          </button>
-          <p><i class="fas fa-exclamation-triangle"></i>&nbsp; Хатолик</p>
-          <span>{{ $store.state.errors }}</span>
+            <button
+              type="button"
+              aria-hidden="true"
+              class="close"
+              @click="$store.state.errors = ''"
+            >
+              ×
+            </button>
+            <p><i class="fas fa-exclamation-triangle"></i>&nbsp; Хатолик</p>
+            <span>{{ $store.state.errors }}</span>
+          </div>
         </div>
       </div>
       <!-- alert end -->

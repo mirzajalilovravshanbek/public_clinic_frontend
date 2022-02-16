@@ -269,7 +269,4 @@ export default {
 .md-field {
   max-width: 300px;
 }
-.table-height {
-  height: 370px;
-}
 </style>
