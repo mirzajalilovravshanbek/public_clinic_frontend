@@ -60,6 +60,21 @@ const routes = [
         component: () => import("@/pages/InspectionCategory/Update.vue")
       },
       {
+        path: "/inspectionfolder/index",
+        name: "Текширув Папкалари",
+        component: () => import("@/pages/InspectionFolder/Index.vue")
+      },
+      {
+        path: "/inspectionfolder/create",
+        name: "Текширув Папка Қўшиш",
+        component: () => import("@/pages/InspectionFolder/Create.vue")
+      },
+      {
+        path: "/inspectionfolder/update/:id",
+        name: "Текширув Папкани Таҳрирлаш",
+        component: () => import("@/pages/InspectionFolder/Update.vue")
+      },
+      {
         path: "/doctor/index",
         name: "Шифокорлар",
         component: () => import("@/pages/Doctor/Index.vue")

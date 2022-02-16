@@ -2,18 +2,18 @@
   <b-container fluid="sm" class="all-div-height">
     <md-card>
       <md-card-header data-background-color="green">
-        <h4 class="title">Текширувлар рўйҳати</h4>
+        <h4 class="title">Текширув Папкалари</h4>
       </md-card-header>
       <md-card-content>
         <!-- button group and search section start -->
         <b-row>
           <b-col>
             <b-button
-              :to="{ path: '/inspections/create' }"
+              :to="{ path: '/inspectionfolder/create' }"
               style="color: #ffffff;"
               variant="success"
               v-b-tooltip.hover.v-success.topright
-              title="Текширув қўшиш"
+              title="Папка қўшиш"
             >
               <b-icon icon="plus" font-scale="1.3"></b-icon>
             </b-button>
@@ -63,34 +63,32 @@
             <b-spinner variant="info" style="width: 3rem; height: 3rem;" type="grow" label="Spinning"></b-spinner>
           </div>
           <b-table
-            sticky-header="420px"
+            sticky-header="500px"
             striped
             hover
-            :items="inspections"
+            :items="inspections_folder"
             :fields="fields"
             :filter="filter"
             :current-page="currentPage"
             :per-page="perPage"
             small
             bordered
-            @row-clicked="UpdateInspection"
+            @row-clicked="UpdateInspectionsFolder"
             style="cursor:pointer"
           >
             <template #cell(index)="row">
               {{ row.index + 1 }}
             </template>
             <template #cell(items)="row">
-              {{ row.value.name != null ? row.value.name : "" }}
-              {{ row.value.category != null ? row.value.category.name : "" }}
-              {{ row.value.user != null ? row.value.user.username : "" }}
-              {{ row.value.branch != null ? row.value.branch.name : "" }}
+              {{ row.value.name }}
+              {{ row.value.branch ? row.value.branch.name : ""}}
             </template>
             <template #cell(actions)="row">
               <b-button-group>
                 <b-button
                   variant="outline-primary"
                   size="sm"
-                  :to="{ path: '/inspections/update/' + row.item.id }"
+                  :to="{ path: '/inspectionfolder/update/' + row.item.id }"
                   v-b-tooltip.hover.left.v-primary
                   style="color: #1E90FF"
                   title="Таҳрирлаш"
@@ -131,9 +129,9 @@
 <script>
 const axios = require("axios");
 export default {
-  name: "inspections-index",
+  name: "inspection-folder-index",
   data: () => ({
-    inspections: [],
+    inspections_folder: [],
     filter: null,
     totalRows: 1,
     currentPage: 1,
@@ -147,17 +145,7 @@ export default {
       },
       {
         key: "name",
-        label: "Номи",
-        sortable: true
-      },
-      {
-        key: "category.name",
-        label: "Текширув Бўлими",
-        sortable: true
-      },
-      {
-        key: "user.username",
-        label: "Ходим",
+        label: "Папка Номи",
         sortable: true
       },
       {
@@ -178,11 +166,11 @@ export default {
     async Data() {
       let self = this;
       self.checkTable = true;
-      //get list of inspections => tekshiruvlar ro'yhatini olish
+      //get list of inspections category => tekshiruv bo'limlari ro'yhatini olish
       try {
-        const response = await self.axios.get("api/inspection");
-        self.inspections = response.data;
-        self.totalRows = self.inspections.length;
+        const response = await self.axios.get("api/inspection_folder");
+        self.inspections_folder = response.data;
+        self.totalRows = self.inspections_folder.length;
         self.checkTable = false;
       } catch (error) {
         self.$store.state.errors = error;
@@ -208,7 +196,7 @@ export default {
           if (response === true) {
             axios({
               method: "delete",
-              url: "api/inspection/id/" + id
+              url: "api/inspection_folder/id/" + id
             }).then(function(response) {
               self.Data();
             });
@@ -218,9 +206,9 @@ export default {
           // An error occurred
         });
     },
-    UpdateInspection(item) {
+    UpdateInspectionsFolder(item) {
       let self = this;
-      self.$router.push({ path: "/inspections/update/" + item.id });
+      self.$router.push({ path: "/inspectionfolder/update/" + item.id });
     }
   }
 };

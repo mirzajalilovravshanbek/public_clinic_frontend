@@ -67,6 +67,18 @@
           </p>
           <p>Хоналар</p>
         </sidebar-link>
+        <sidebar-link to="/inspectioncategory/index">
+          <p class="mr-2">
+            <b-icon icon="journal-medical" font-scale="1.7"></b-icon>
+          </p>
+          <p>Текширув Бўлимлари</p>
+        </sidebar-link>
+        <sidebar-link to="/inspectionfolder/index">
+          <p class="mr-2">
+            <b-icon icon="folder-fill" font-scale="1.7"></b-icon>
+          </p>
+          <p>Текширув Папкалари</p>
+        </sidebar-link>
         <sidebar-link to="/inspections/index">
           <p class="mr-2">
             <b-iconstack font-scale="1.7">
@@ -80,12 +92,6 @@
             </b-iconstack>
           </p>
           <p>Текширувлар</p>
-        </sidebar-link>
-        <sidebar-link to="/inspectioncategory/index">
-          <p class="mr-2">
-            <b-icon icon="journal-medical" font-scale="1.7"></b-icon>
-          </p>
-          <p>Текширув Бўлимлари</p>
         </sidebar-link>
         <sidebar-link to="/pill/index">
           <p class="mr-2">
