@@ -38,7 +38,7 @@ import VueCookies from "vue-cookies";
 Vue.use(VueCookies);
 Vue.$cookies.config("1d");
 //session
-import VueSession from 'vue-session';
+import VueSession from "vue-session";
 Vue.use(VueSession);
 
 // Make BootstrapVue available throughout your project
@@ -70,7 +70,7 @@ window.axios.defaults.baseURL = "http://localhost:3000/";
 // window.axios.defaults.baseURL = 'http://192.168.0.126:8081/';
 
 window.axios.interceptors.request.use(req => {
-  req.headers.authorization = "Bearer "+localStorage.getItem('token');
+  req.headers.authorization = "Bearer " + localStorage.getItem("token");
   req.headers.contentType = "application/json";
   return req;
 });

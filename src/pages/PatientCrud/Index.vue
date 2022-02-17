@@ -60,7 +60,12 @@
         <!-- table section start -->
         <div class="table-height mt-2">
           <div class="d-flex justify-content-center mb-3" v-if="checkTable">
-            <b-spinner variant="info" style="width: 3rem; height: 3rem;" type="grow" label="Spinning"></b-spinner>
+            <b-spinner
+              variant="info"
+              style="width: 3rem; height: 3rem;"
+              type="grow"
+              label="Spinning"
+            ></b-spinner>
           </div>
           <b-table
             sticky-header="500px"
@@ -111,7 +116,7 @@
                     font-scale="0.9"
                   ></b-icon>
                 </b-button>
-                
+
                 <b-button
                   size="sm"
                   @click="Delete(row.item.id)"
@@ -129,19 +134,37 @@
                   <tbody>
                     <tr>
                       <th>Вилоят:</th>
-                      <td>{{ row.item.region != null ? row.item.region.name : "" }}</td>
+                      <td>
+                        {{
+                          row.item.region != null ? row.item.region.name : ""
+                        }}
+                      </td>
                     </tr>
                     <tr>
                       <th>Туман:</th>
-                      <td>{{ row.item.district != null ? row.item.district.name : "" }}</td>
+                      <td>
+                        {{
+                          row.item.district != null
+                            ? row.item.district.name
+                            : ""
+                        }}
+                      </td>
                     </tr>
                     <tr>
                       <th>МФЙ:</th>
-                      <td>{{ row.item.neighboarhood != null ? row.item.neighboarhood.name : "" }}</td>
+                      <td>
+                        {{
+                          row.item.neighboarhood != null
+                            ? row.item.neighboarhood.name
+                            : ""
+                        }}
+                      </td>
                     </tr>
                     <tr>
                       <th>Манзил:</th>
-                      <td>{{ row.item.address != null ? row.item.address : "" }}</td>
+                      <td>
+                        {{ row.item.address != null ? row.item.address : "" }}
+                      </td>
                     </tr>
                     <tr>
                       <th>Жинси:</th>

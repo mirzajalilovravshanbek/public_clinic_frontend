@@ -103,7 +103,9 @@ export default {
       let id = self.$route.params.id;
 
       try {
-        const response = await self.axios.get("api/inspection_category/id/"+id);
+        const response = await self.axios.get(
+          "api/inspection_category/id/" + id
+        );
         self.datas = response.data;
       } catch (error) {
         self.$store.state.errors = error;
@@ -129,7 +131,7 @@ export default {
         });
         self.sending = false;
         self.$router.push("/inspectioncategory/index");
-      } catch(error){
+      } catch (error) {
         self.$store.state.errors = error;
       }
     },

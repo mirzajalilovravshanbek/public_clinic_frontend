@@ -103,7 +103,7 @@ export default {
       let id = self.$route.params.id;
 
       try {
-        const response = await self.axios.get("api/branch/id/"+id);
+        const response = await self.axios.get("api/branch/id/" + id);
         self.datas = response.data;
       } catch (error) {
         self.$store.state.errors = error;
@@ -129,7 +129,7 @@ export default {
         });
         self.sending = false;
         self.$router.push("/branch/index");
-      } catch(error){
+      } catch (error) {
         self.$store.state.errors = error;
       }
     },

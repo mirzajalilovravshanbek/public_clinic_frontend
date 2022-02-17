@@ -36,7 +36,7 @@
                 <b-icon icon="cash" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
                 <label>Нархи</label>
-                <md-input v-model="datas.price"  md-dense></md-input>
+                <md-input v-model="datas.price" md-dense></md-input>
               </md-field>
             </b-col>
           </b-row>
@@ -88,7 +88,7 @@ export default {
       let id = self.$route.params.id;
 
       try {
-        const response = await self.axios.get("api/doctor_category/id/"+id);
+        const response = await self.axios.get("api/doctor_category/id/" + id);
         self.datas = response.data;
       } catch (error) {
         self.$store.state.errors = error;
@@ -114,7 +114,7 @@ export default {
         });
         self.sending = false;
         self.$router.push("/doctorcategory/index");
-      } catch(error){
+      } catch (error) {
         self.$store.state.errors = error;
       }
     },

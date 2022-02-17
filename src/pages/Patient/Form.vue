@@ -1,21 +1,25 @@
 <template>
-  <div class="rmk-patient-form">
+  <b-container fluid class="rmk-patient-form">
     <!-- alert start -->
-    <div
-      class="col-lg-12 col-md-12 col-sm-12 col-xl-12 alert alert-danger text-center"
-      style="z-index: 5;"
-      v-if="$store.state.errors != ''"
-    >
-      <button
-        type="button"
-        aria-hidden="true"
-        class="close"
-        @click="$store.state.errors = ''"
-      >
-        ×
-      </button>
-      <p><i class="fas fa-exclamation-triangle"></i>&nbsp; Хатолик</p>
-      <span>{{ $store.state.errors }}</span>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div
+          class="col-lg-11 col-md-11 col-sm-11 col-xl-11 alert alert-danger text-center p-1"
+          style="z-index: 5;"
+          v-if="$store.state.errors != ''"
+        >
+          <button
+            type="button"
+            aria-hidden="true"
+            class="close"
+            @click="$store.state.errors = ''"
+          >
+            ×
+          </button>
+          <p><i class="fas fa-exclamation-triangle"></i>&nbsp; Хатолик</p>
+          <span>{{ $store.state.errors }}</span>
+        </div>
+      </div>
     </div>
     <!-- alert end -->
 
@@ -220,7 +224,7 @@
             id="operator"
             :clearable="true"
             :options="operators"
-            v-model="data.staff_id"
+            v-model="data.user_id"
             :reduce="username => username.id"
             label="username"
             @input="CheckOperator()"
@@ -239,9 +243,9 @@
             id="type_service"
             :clearable="true"
             :options="typeServices"
-            v-model="data.type_id"
-            :reduce="full_name => full_name.id"
-            label="full_name"
+            v-model="data.type_service"
+            :reduce="label => label.name"
+            label="label"
           >
           </v-select>
         </b-card>
@@ -443,8 +447,8 @@
                     class="pt-1"
                     v-if="
                       role === $store.state.REGISTRATION ||
-                    role === $store.state.DOCTOR ||
-                    role === $store.state.ITMED
+                        role === $store.state.DOCTOR ||
+                        role === $store.state.ITMED
                     "
                   >
                     <b-button
@@ -464,202 +468,10 @@
             </b-card-text>
           </b-tab>
           <!-- patient datas end -->
-          <!-- ispections start -->
-          <b-tab
-            title="Текширувлар"
-            :title-link-class="linkClass(1)"
-            class="pt-2"
-            v-if="role !== $store.state.KASSA"
-          >
-            <b-card-text>
-              <b-button
-                variant="primary"
-                id="show-btn"
-                @click="
-                  showModal();
-                  modalInspectionShow = !modalInspectionShow;
-                "
-                v-if="
-                  role === $store.state.REGISTRATION ||
-                    role === $store.state.DOCTOR ||
-                    role === $store.state.ITMED
-                "
-              >
-                <b-icon icon="journal-medical"></b-icon>
-                Текширувлар
-              </b-button>
-
-              <!-- <input ref="fileInput" style="display: none" type="file" @change="onFileSelected">
-              <button @click="$refs.fileInput.click()">Yuklash</button>
-              <img :src="selectedFile" style="width: 100px">
-              <button @click="onUpload">Upload</button>  -->
-
-              <!-- inspections modal start -->
-              <b-modal
-                v-model="modalInspectionShow"
-                size="lg"
-                hide-footer
-                title="Текширувлар Рўйҳати"
-              >
-                <div class="d-block">
-                  <!-- toggle link start -->
-                  <p v-for="(item, index) in inspections" :key="index">
-                    <a
-                      v-b-toggle:my-collapse
-                      :href="'#example-collapse-' + index"
-                      @click.prevent
-                    >
-                      <b-icon icon="folder-minus" class="when-open"></b-icon>
-                      <b-icon icon="folder-plus" class="when-closed"></b-icon>
-                      {{ item.full_name }}
-                    </a>
-
-                    <b-collapse
-                      :visible="index == 0 ? true : false"
-                      :id="'example-collapse-' + index"
-                    >
-                      <b-card>
-                        <table class="table table-bordered table-sm">
-                          <tr>
-                            <th>Номи</th>
-                          </tr>
-                          <tr
-                            @click="AddInspectionList(index, indexx)"
-                            v-for="(ins, indexx) in item.children"
-                            :key="indexx"
-                            style="cursor:pointer"
-                          >
-                            <td>{{ ins.full_name }}</td>
-                          </tr>
-                        </table>
-                      </b-card>
-                    </b-collapse>
-                  </p>
-                  <!-- toggle link end -->
-                </div>
-              </b-modal>
-              <!-- inspections modal end -->
-
-              <!-- inspections table start -->
-              <b-tabs
-                v-model="tableIndex"
-                card
-                v-if="data.inspection_list.length > 0"
-              >
-                <b-tab
-                  v-for="(item, index) in data.inspection_list"
-                  :key="index"
-                  :title="item.full_name"
-                  :title-link-class="link_Class(index)"
-                  active
-                  class="pt-2"
-                >
-                  <b-card-text>
-                    <h5 class="text-center m-0">
-                      {{ item.full_name }} &emsp;
-                      <b-icon
-                        variant="danger"
-                        icon="trash"
-                        @click="RemoveIns(index)"
-                        v-b-tooltip.hover.v-danger.top="'Текширувни Ўчириш'"
-                        style="cursor:pointer"
-                        v-if="
-                          role ===
-                            $store.state.REGISTRATION ||
-                            role ===
-                              $store.state.DOCTOR ||
-                            role === $store.state.ITMED
-                        "
-                      ></b-icon>
-                    </h5>
-                    <!-- table start -->
-                    <b-container fluid style="height: 312px; overflow-y: auto;">
-                      <table
-                        class="table table-bordered table-striped table-hover table-bordered table-sm mt-1"
-                      >
-                        <thead>
-                          <tr class="table-primary">
-                            <th>#</th>
-                            <th v-if="item.chekable == 1">Танлаш</th>
-                            <th>Анализ</th>
-                            <th>Натижа</th>
-                            <!-- <th style="width: 100px;">Расм</th> -->
-                            <th>Норма</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr
-                            v-for="(field, indeks) in item.child_table"
-                            :key="indeks"
-                          >
-                            <th>{{ indeks + 1 }}</th>
-                            <td v-if="item.chekable == 1">
-                              <input
-                                type="checkbox"
-                                false-value="0"
-                                true-value="1"
-                                v-model="field.checked"
-                                @change="Summa()"
-                              />
-                            </td>
-                            <td>
-                              {{ field.full_name ? field.full_name : "" }}
-                            </td>
-                            <td>
-                              <b-form-textarea
-                                rows="1"
-                                max-rows="5"
-                                v-model="field.result"
-                                class="form-control"
-                                :readonly="
-                                  role ===
-                                    $store.state.REGISTRATION
-                                "
-                              ></b-form-textarea>
-                            </td>
-                            <!-- <td style="width: 100px;">
-                              <input
-                                ref="files"
-                                type="file"
-                                @change="onImageSelected(indeks)"
-                              />
-                              <img :src="url" style="width: 100px" />
-                              <b-button
-                                variant="success"
-                                size="sm"
-                                v-b-tooltip.hover.v-success.right
-                                title="Кўриш"
-                                class="mt-1"
-                                v-b-modal="'image-modal-' + indeks"
-                              >
-                                <b-icon icon="eye-fill"></b-icon>
-                              </b-button>
-                              
-                              <b-modal
-                                :id="'image-modal-' + indeks"
-                                hide-footer
-                                title="Галарея"
-                                size="xl"
-                                >Image {{ indeks }} From My Modal!
-                              </b-modal>
-                            </td> -->
-                            <td>{{ field.normative }}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </b-container>
-                    <!-- table end -->
-                  </b-card-text>
-                </b-tab>
-              </b-tabs>
-              <!-- inspections table end -->
-            </b-card-text>
-          </b-tab>
-          <!-- ispections end -->
           <!-- doctors section start -->
           <b-tab
             title="Шифокор кўриги"
-            :title-link-class="linkClass(2)"
+            :title-link-class="linkClass(1)"
             class="pt-2"
             v-if="
               role === $store.state.REGISTRATION ||
@@ -668,17 +480,37 @@
             "
           >
             <b-card-text>
-              <b-button
-                @click="
-                  GetDoctors();
-                  modalDoctorShow = !modalDoctorShow;
-                "
-                variant="primary"
-                class="ml-3"
-              >
-                <b-icon icon="person-lines-fill"></b-icon>
-                Шифокорлар
-              </b-button>
+              <b-container fluid class="p-0">
+                <b-row>
+                  <!-- button start -->
+                  <b-col sm="2" md="2" lg="2" xl="2">
+                    <b-button
+                      @click="
+                        GetDoctors();
+                        modalDoctorShow = !modalDoctorShow;
+                      "
+                      variant="primary"
+                      class="mt-2"
+                    >
+                      <b-icon icon="person-lines-fill"></b-icon>
+                      Шифокорлар
+                    </b-button>
+                  </b-col>
+                  <!-- button end -->
+
+                  <!-- complaint input start -->
+                  <b-col sm="10" md="10" lg="10" xl="10">
+                    <label for="input-complaint" class="m-0">Шикояти</label>
+                    <b-form-input
+                      id="input-complaint"
+                      type="text"
+                      v-model="data.complaint"
+                      class="form-control rmk-input px-1"
+                    ></b-form-input>
+                  </b-col>
+                  <!-- complaint input end -->
+                </b-row>
+              </b-container>
               <!-- doctor list modal start -->
               <b-modal
                 v-model="modalDoctorShow"
@@ -790,6 +622,193 @@
             </b-card-text>
           </b-tab>
           <!-- doctors section end -->
+          <!-- ispections start -->
+          <b-tab
+            title="Текширувлар"
+            :title-link-class="linkClass(2)"
+            class="pt-2"
+            v-if="role !== $store.state.KASSA"
+          >
+            <b-card-text>
+              <b-button
+                variant="primary"
+                id="show-btn"
+                @click="
+                  showModal();
+                  modalInspectionShow = !modalInspectionShow;
+                "
+                v-if="
+                  role === $store.state.REGISTRATION ||
+                    role === $store.state.DOCTOR ||
+                    role === $store.state.ITMED
+                "
+              >
+                <b-icon icon="journal-medical"></b-icon>
+                Текширувлар
+              </b-button>
+
+              <!-- <input ref="fileInput" style="display: none" type="file" @change="onFileSelected">
+                <button @click="$refs.fileInput.click()">Yuklash</button>
+                <img :src="selectedFile" style="width: 100px">
+                <button @click="onUpload">Upload</button>  -->
+
+              <!-- inspections modal start -->
+              <b-modal
+                v-model="modalInspectionShow"
+                size="lg"
+                hide-footer
+                title="Текширувлар Рўйҳати"
+              >
+                <div class="d-block">
+                  <!-- toggle link start -->
+                  <p v-for="(item, index) in inspections" :key="index">
+                    <a
+                      v-b-toggle:my-collapse
+                      :href="'#example-collapse-' + index"
+                      @click.prevent
+                    >
+                      <b-icon icon="folder-minus" class="when-open"></b-icon>
+                      <b-icon icon="folder-plus" class="when-closed"></b-icon>
+                      {{ item.full_name }}
+                    </a>
+
+                    <b-collapse
+                      :visible="index == 0 ? true : false"
+                      :id="'example-collapse-' + index"
+                    >
+                      <b-card>
+                        <table class="table table-bordered table-sm">
+                          <tr>
+                            <th>Номи</th>
+                          </tr>
+                          <tr
+                            @click="AddInspectionList(index, indexx)"
+                            v-for="(ins, indexx) in item.children"
+                            :key="indexx"
+                            style="cursor:pointer"
+                          >
+                            <td>{{ ins.full_name }}</td>
+                          </tr>
+                        </table>
+                      </b-card>
+                    </b-collapse>
+                  </p>
+                  <!-- toggle link end -->
+                </div>
+              </b-modal>
+              <!-- inspections modal end -->
+
+              <!-- inspections table start -->
+              <b-tabs
+                v-model="tableIndex"
+                card
+                v-if="data.inspection_list.length > 0"
+              >
+                <b-tab
+                  v-for="(item, index) in data.inspection_list"
+                  :key="index"
+                  :title="item.full_name"
+                  :title-link-class="link_Class(index)"
+                  active
+                  class="pt-2"
+                >
+                  <b-card-text>
+                    <h5 class="text-center m-0">
+                      {{ item.full_name }} &emsp;
+                      <b-icon
+                        variant="danger"
+                        icon="trash"
+                        @click="RemoveIns(index)"
+                        v-b-tooltip.hover.v-danger.top="'Текширувни Ўчириш'"
+                        style="cursor:pointer"
+                        v-if="
+                          role === $store.state.REGISTRATION ||
+                            role === $store.state.DOCTOR ||
+                            role === $store.state.ITMED
+                        "
+                      ></b-icon>
+                    </h5>
+                    <!-- table start -->
+                    <b-container fluid style="height: 312px; overflow-y: auto;">
+                      <table
+                        class="table table-bordered table-striped table-hover table-bordered table-sm mt-1"
+                      >
+                        <thead>
+                          <tr class="table-primary">
+                            <th>#</th>
+                            <th v-if="item.chekable == 1">Танлаш</th>
+                            <th>Анализ</th>
+                            <th>Натижа</th>
+                            <!-- <th style="width: 100px;">Расм</th> -->
+                            <th>Норма</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="(field, indeks) in item.child_table"
+                            :key="indeks"
+                          >
+                            <th>{{ indeks + 1 }}</th>
+                            <td v-if="item.chekable == 1">
+                              <input
+                                type="checkbox"
+                                false-value="0"
+                                true-value="1"
+                                v-model="field.checked"
+                                @change="Summa()"
+                              />
+                            </td>
+                            <td>
+                              {{ field.full_name ? field.full_name : "" }}
+                            </td>
+                            <td>
+                              <b-form-textarea
+                                rows="1"
+                                max-rows="5"
+                                v-model="field.result"
+                                class="form-control"
+                                :readonly="role === $store.state.REGISTRATION"
+                              ></b-form-textarea>
+                            </td>
+                            <!-- <td style="width: 100px;">
+                                <input
+                                  ref="files"
+                                  type="file"
+                                  @change="onImageSelected(indeks)"
+                                />
+                                <img :src="url" style="width: 100px" />
+                                <b-button
+                                  variant="success"
+                                  size="sm"
+                                  v-b-tooltip.hover.v-success.right
+                                  title="Кўриш"
+                                  class="mt-1"
+                                  v-b-modal="'image-modal-' + indeks"
+                                >
+                                  <b-icon icon="eye-fill"></b-icon>
+                                </b-button>
+                                
+                                <b-modal
+                                  :id="'image-modal-' + indeks"
+                                  hide-footer
+                                  title="Галарея"
+                                  size="xl"
+                                  >Image {{ indeks }} From My Modal!
+                                </b-modal>
+                              </td> -->
+                            <td>{{ field.normative }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </b-container>
+                    <!-- table end -->
+                  </b-card-text>
+                </b-tab>
+              </b-tabs>
+              <!-- inspections table end -->
+            </b-card-text>
+          </b-tab>
+          <!-- ispections end -->
           <!-- room section start -->
           <b-tab
             title="Хона бириктириш"
@@ -990,10 +1009,7 @@
             title="Ташхис"
             :title-link-class="linkClass(4)"
             class="pt-2"
-            v-if="
-              role === $store.state.DOCTOR ||
-                role === $store.state.ITMED
-            "
+            v-if="role === $store.state.DOCTOR || role === $store.state.ITMED"
           >
             <b-tabs
               v-model="tabDoctorIndex"
@@ -1533,32 +1549,29 @@
             title="Рецеп"
             :title-link-class="linkClass(5)"
             class="pt-1"
-            v-if="
-              role === $store.state.DOCTOR ||
-                role === $store.state.ITMED
-            "
+            v-if="role === $store.state.DOCTOR || role === $store.state.ITMED"
           >
             <!-- <b-button variant="primary" class="m-1" @click="modalDrugShow = !modalDrugShow">
-              <b-icon icon="circle-half"></b-icon>
-              Дори қўшиш
-            </b-button> -->
+                <b-icon icon="circle-half"></b-icon>
+                Дори қўшиш
+              </b-button> -->
             <!-- add drug modal start -->
             <!-- <b-modal
-              hide-footer
-              size="lg"
-              title="Дори қўшиш"
-              v-model="modalDrugShow"
-              >
-              <label for="drug-input">Дори номи</label>
-              <b-form-input id="drug-input" v-model="drug_name" class="rmk-textarea px-1"></b-form-input>
-              <b-button
-                style="color: #fff;"
-                variant="success"
-              >
-                <b-icon icon="clipboard-check"></b-icon>
-                Сақлаш
-              </b-button>
-            </b-modal> -->
+                hide-footer
+                size="lg"
+                title="Дори қўшиш"
+                v-model="modalDrugShow"
+                >
+                <label for="drug-input">Дори номи</label>
+                <b-form-input id="drug-input" v-model="drug_name" class="rmk-textarea px-1"></b-form-input>
+                <b-button
+                  style="color: #fff;"
+                  variant="success"
+                >
+                  <b-icon icon="clipboard-check"></b-icon>
+                  Сақлаш
+                </b-button>
+              </b-modal> -->
             <!-- add drug modal end -->
             <b-button
               variant="primary"
@@ -1765,10 +1778,7 @@
           <b-tab
             title="Тўлов Ойнаси"
             :title-link-class="linkClass(6)"
-            v-if="
-              role === $store.state.KASSA ||
-                role === $store.state.ITMED
-            "
+            v-if="role === $store.state.KASSA || role === $store.state.ITMED"
           >
             <b-card-text>
               <!-- paytable start -->
@@ -1958,7 +1968,7 @@
       </b-card>
     </b-container>
     <!-- navbar end -->
-  </div>
+  </b-container>
 </template>
 <script>
 import DatePicker from "vue2-datepicker";
@@ -1991,8 +2001,13 @@ export default {
       patient_name: null,
       height: null,
       weight: null,
-      staff_id: parseInt(localStorage.getItem('oid')),
-      type_id: 1,
+      user_id: parseInt(localStorage.getItem("oid")),
+      branch_id: parseInt(localStorage.getItem("branch_id")),
+      type_service: 'ambulator',
+      created_at: null,
+      updated_at: null,
+      status: null,
+      complaint: null,
       inspection_list: [],
       staff_list: [],
       room: [],
@@ -2029,11 +2044,15 @@ export default {
     modalAddTemplate: false,
     modalDrugList: false,
     operators: [],
-    typeServices: [],
+    typeServices: [
+      {'name': "ambulator", 'label': "Амбулатор"},
+      {'name': "statsionar", 'label': "Стационар"}
+    ],
     regions: [],
     districts: [],
     neighboarhoods: [],
     inspections: [],
+    branches: [],
     doctors: [],
     rooms: [],
     images: [],
@@ -2148,15 +2167,8 @@ export default {
   }),
   async mounted() {
     let self = this;
-    self.role = localStorage.getItem('role')
+    self.role = localStorage.getItem("role");
     self.checkBody = true;
-    // //get list type of services => xizmat turlarini olish
-    // axios({
-    //   url: "universal/registration_type_table_list",
-    //   method: "get"
-    // }).then(function(response) {
-    //   self.typeServices = response.data.data;
-    // });
     // //get list types of pay => to'lov turlarini olish
     // axios({
     //   url: "universal/get_pay_type",
@@ -2166,6 +2178,7 @@ export default {
     // });
     await self.GetOperators();
     await self.GetRegions();
+    await self.GetBranches();
     // self.GetDrug();
 
     // //update patient => bemorni tahrirlash
@@ -2184,7 +2197,7 @@ export default {
     //     ) {
     //       self.checkSpinner = true;
     //       self.AddUpdatePatient(response.data.data.registration.patient_id);
-    //       self.data.staff_id = response.data.data.registration.staff_id;
+    //       self.data.user_id = response.data.data.registration.user_id;
     //       self.data.room = response.data.data.room;
     //       self.data.inspection_list = response.data.data.inspection_list;
     //       self.data.staff_list = response.data.data.staff_list;
@@ -2197,7 +2210,7 @@ export default {
     //     ) {
     //       self.checkSpinner = true;
     //       self.AddUpdatePatient(response.data.data.registration.patient_id);
-    //       self.data.staff_id = response.data.data.registration.staff_id;
+    //       self.data.user_id = response.data.data.registration.user_id;
     //       self.data.payment_data = response.data.data.payment_data;
     //       self.data.payment_list = response.data.data.payment_list;
     //       self.checkSpinner = false;
@@ -2208,7 +2221,7 @@ export default {
     //     ) {
     //       self.checkSpinner = true;
     //       self.AddUpdatePatient(response.data.data.registration.patient_id);
-    //       self.data.staff_id = response.data.data.registration.staff_id;
+    //       self.data.user_id = response.data.data.registration.user_id;
     //       self.data.inspection_list = response.data.data.inspection_list;
     //       self.data.payment_data = response.data.data.payment_data;
     //       self.checkSpinner = false;
@@ -2218,7 +2231,7 @@ export default {
     //     ) {
     //       self.checkSpinner = true;
     //       self.AddUpdatePatient(response.data.data.registration.patient_id);
-    //       self.data.staff_id = response.data.data.registration.staff_id;
+    //       self.data.user_id = response.data.data.registration.user_id;
     //       self.data.room = response.data.data.room;
     //       self.data.inspection_list = response.data.data.inspection_list;
     //       self.data.staff_list = response.data.data.staff_list;
@@ -2237,6 +2250,7 @@ export default {
     Save() {
       let self = this;
       self.saving = true;
+      self.data.status = self.$store.state.WAITING;
       // console.log(self.data)
       if (
         self.$cookies.get("user").position === self.$store.state.UZI ||
@@ -2450,7 +2464,7 @@ export default {
     },
     CheckOperator() {
       let self = this;
-      self.data.staff_id == null
+      self.data.user_id == null
         ? (self.checkOperator = true)
         : (self.checkOperator = false);
     },
@@ -2459,7 +2473,7 @@ export default {
       //get list of operators => operatorlarni olish
       let id = localStorage.getItem("branch_id");
       try {
-        const response = await self.axios.get("api/user/branch/"+ id);
+        const response = await self.axios.get("api/user/branch/" + id);
         self.operators = response.data;
       } catch (error) {
         self.$store.state.errors = error;
@@ -2694,7 +2708,7 @@ export default {
             data: self.patient_datas
           });
           self.patient_sending = false;
-          localStorage.setItem('user',JSON.stringify(response.data));
+          localStorage.setItem("user", JSON.stringify(response.data));
           self.data.patient_id = parseInt(response.data.id);
           self.data.patient_name = response.data.fullname;
           alert(msg);
@@ -2726,7 +2740,6 @@ export default {
       try {
         const response = await self.axios.get("staff/select");
         self.doctors = response.data.data;
-        self.Summa();
       } catch (error) {
         self.$store.state.errors = error;
       }
@@ -2850,7 +2863,9 @@ export default {
       //get list of districts => tumanlar ro'yhatinini olish
       if (self.patient_datas.region_id != null) {
         try {
-          const response = await self.axios.get("api/district/region/"+self.patient_datas.region_id);
+          const response = await self.axios.get(
+            "api/district/region/" + self.patient_datas.region_id
+          );
           self.districts = response.data;
         } catch (error) {
           self.$store.state.errors = error;
@@ -2862,11 +2877,23 @@ export default {
       //get list of neighboarhoods => mahallalar ro'yhatini olish
       if (self.patient_datas.district_id != null) {
         try {
-          const response = await self.axios.get("api/neighboarhood/district/"+self.patient_datas.district_id);
+          const response = await self.axios.get(
+            "api/neighboarhood/district/" + self.patient_datas.district_id
+          );
           self.neighboarhoods = response.data;
         } catch (error) {
           self.$store.state.errors = error;
         }
+      }
+    },
+    async GetBranches() {
+      let self = this;
+      //get list of branches => filiallar ro'yhatinini olish
+      try {
+        const response = await self.axios.get("api/branch");
+        self.branches = response.data;
+      } catch (error) {
+        self.$store.state.errors = error;
       }
     },
     onFileSelected(event) {
@@ -2929,10 +2956,11 @@ export default {
 </script>
 <style scoped>
 .rmk-patient-form {
-  width: 100vw;
+  width: 100%;
   background-color: #d1e5f1 !important;
-  padding: 8px 15px;
-  height: 100vh;
+  padding: 8px 10px;
+  margin: 0;
+  height: 100%;
 }
 .rmk-close-button {
   float: right;

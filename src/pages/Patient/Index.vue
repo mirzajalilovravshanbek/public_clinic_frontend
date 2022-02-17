@@ -108,8 +108,7 @@
             <b-button-group>
               <b-button
                 v-if="
-                  role === $store.state.DOCTOR ||
-                    role === $store.state.ITMED
+                  role === $store.state.DOCTOR || role === $store.state.ITMED
                 "
                 variant="outline-danger"
                 size="sm"
@@ -142,8 +141,7 @@
                 v-if="
                   role === $store.state.DOCTOR ||
                     role === $store.state.ITMED ||
-                    role ===
-                      $store.state.REGISTRATION ||
+                    role === $store.state.REGISTRATION ||
                     role === $store.state.KASSA
                 "
               >
@@ -207,7 +205,7 @@ export default {
     ]
   }),
   mounted() {
-    this.role = localStorage.getItem('role');
+    this.role = localStorage.getItem("role");
     // this.Data();
   },
   methods: {

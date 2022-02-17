@@ -75,21 +75,21 @@ export default {
     };
   },
   beforeCreate() {
-    if (!localStorage.getItem('token')) {
+    if (!localStorage.getItem("token")) {
       this.$router.push("/loginuser");
     }
   },
-  mounted(){
-    this.username = localStorage.getItem('username');
+  mounted() {
+    this.username = localStorage.getItem("username");
   },
   methods: {
     toggleSidebar() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
     },
     Logout() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('username');
-      localStorage.removeItem('role');
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      localStorage.removeItem("role");
       this.$router.push("/loginuser");
     }
   }

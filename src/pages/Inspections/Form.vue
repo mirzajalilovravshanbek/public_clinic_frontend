@@ -287,7 +287,6 @@ export default {
       } catch (error) {
         self.$store.state.errors = error;
       }
-      
     },
     async GetFolders() {
       let self = this;
@@ -302,9 +301,11 @@ export default {
     async GetUsers() {
       let self = this;
       //usernamelar ro'yhati
-      if(self.datas.branch_id != null){
+      if (self.datas.branch_id != null) {
         try {
-          const response = await self.axios.get("api/user/branch/"+ self.datas.branch_id);
+          const response = await self.axios.get(
+            "api/user/branch/" + self.datas.branch_id
+          );
           self.users = response.data;
         } catch (error) {
           self.$store.state.errors = error;
@@ -341,7 +342,7 @@ export default {
         });
         self.sending = false;
         self.$router.push("/inspections/index");
-      } catch(error){
+      } catch (error) {
         self.$store.state.errors = error;
       }
     },
@@ -354,7 +355,7 @@ export default {
       this.datas.user_id = null;
       this.datas.category_id = null;
       this.datas.percent_bonus = null;
-      this.datas.child = [] ;
+      this.datas.child = [];
     }
   }
 };

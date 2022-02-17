@@ -156,7 +156,9 @@ export default {
       localStorage.setItem("branch_id", self.datas.branch_id);
       //usernamelar ro'yhati
       try {
-        const response = await self.axios.get("api/user/branch/"+ self.datas.branch_id);
+        const response = await self.axios.get(
+          "api/user/branch/" + self.datas.branch_id
+        );
         self.users = response.data;
       } catch (error) {
         self.$store.state.errors = error;
@@ -196,10 +198,10 @@ export default {
         }
       }
     },
-    Clear(){
-      this.datas.branch_id = null,
-      this.datas.username = null,
-      this.datas.password = null
+    Clear() {
+      (this.datas.branch_id = null),
+        (this.datas.username = null),
+        (this.datas.password = null);
     }
   }
 };

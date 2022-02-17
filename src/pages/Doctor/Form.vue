@@ -127,7 +127,7 @@ export default {
       let id = self.$route.params.id;
 
       try {
-        const response = await self.axios.get("api/doctor/id/"+id);
+        const response = await self.axios.get("api/doctor/id/" + id);
         self.datas = response.data;
       } catch (error) {
         self.$store.state.errors = error;
@@ -153,7 +153,7 @@ export default {
         });
         self.sending = false;
         self.$router.push("/doctor/index");
-      } catch(error){
+      } catch (error) {
         self.$store.state.errors = error;
       }
     },

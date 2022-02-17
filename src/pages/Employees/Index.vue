@@ -60,7 +60,12 @@
         <!-- table section start -->
         <div class="table-height mt-2">
           <div class="d-flex justify-content-center mb-3" v-if="checkTable">
-            <b-spinner variant="info" style="width: 3rem; height: 3rem;" type="grow" label="Spinning"></b-spinner>
+            <b-spinner
+              variant="info"
+              style="width: 3rem; height: 3rem;"
+              type="grow"
+              label="Spinning"
+            ></b-spinner>
           </div>
           <b-table
             sticky-header="500px"
@@ -130,15 +135,27 @@
                   <tbody>
                     <tr>
                       <th>Шифокор:</th>
-                      <td>{{ row.item.doctor != null ? row.item.doctor.name : "" }}</td>
+                      <td>
+                        {{
+                          row.item.doctor != null ? row.item.doctor.name : ""
+                        }}
+                      </td>
                     </tr>
                     <tr>
                       <th>Текширув Бўлими:</th>
-                      <td>{{ row.item.inspection_category != null ? row.item.inspection_category.name : "" }}</td>
+                      <td>
+                        {{
+                          row.item.inspection_category != null
+                            ? row.item.inspection_category.name
+                            : ""
+                        }}
+                      </td>
                     </tr>
                     <tr>
                       <th>Тўлов Тури:</th>
-                      <td>{{ row.item.type == 'salary' ? "Ойлик" : "Фоиз" }}</td>
+                      <td>
+                        {{ row.item.type == "salary" ? "Ойлик" : "Фоиз" }}
+                      </td>
                     </tr>
                     <tr>
                       <th>Ойлик:</th>
@@ -247,9 +264,9 @@ export default {
           if (response === true) {
             axios({
               method: "delete",
-              url: "api/user/id/"+id
+              url: "api/user/id/" + id
             }).then(function(response) {
-             self.Data();
+              self.Data();
             });
           }
         })

@@ -60,7 +60,12 @@
         <!-- table section start -->
         <div class="table-height mt-2">
           <div class="d-flex justify-content-center mb-3" v-if="checkTable">
-            <b-spinner variant="info" style="width: 3rem; height: 3rem;" type="grow" label="Spinning"></b-spinner>
+            <b-spinner
+              variant="info"
+              style="width: 3rem; height: 3rem;"
+              type="grow"
+              label="Spinning"
+            ></b-spinner>
           </div>
           <b-table
             sticky-header="500px"
@@ -81,7 +86,7 @@
             </template>
             <template #cell(items)="row">
               {{ row.value.name }}
-              {{ row.value.branch ? row.value.branch.name : ""}}
+              {{ row.value.branch ? row.value.branch.name : "" }}
             </template>
             <template #cell(actions)="row">
               <b-button-group>

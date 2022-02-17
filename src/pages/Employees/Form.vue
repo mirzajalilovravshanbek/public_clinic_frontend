@@ -133,7 +133,6 @@
               </v-select>
             </b-col>
             <!-- room input end -->
-
           </b-row>
           <b-row class="mt-3">
             <!-- type input start -->
@@ -211,18 +210,18 @@ export default {
       branch_id: null
     },
     positions: [
-      {'name':'Register','label': 'Регистратор'},
-      {'name':'Doctor','label': 'Шифокор'},
-      {'name':'Inspector','label': 'Лаборант'}
+      { name: "Register", label: "Регистратор" },
+      { name: "Doctor", label: "Шифокор" },
+      { name: "Inspector", label: "Лаборант" }
     ],
     branches: [],
     doctors: [],
     inspection_category: [],
     rooms: [],
     types: [
-      {'name':'percent','label': 'Фоиз'},
-      {'name':'salary','label': 'Ойлик'}
-    ], 
+      { name: "percent", label: "Фоиз" },
+      { name: "salary", label: "Ойлик" }
+    ],
     sending: false
   }),
   async mounted() {
@@ -265,7 +264,7 @@ export default {
       let id = self.$route.params.id;
 
       try {
-        const response = await self.axios.get("api/user/id/"+id);
+        const response = await self.axios.get("api/user/id/" + id);
         self.datas = response.data;
       } catch (error) {
         self.$store.state.errors = error;
@@ -291,7 +290,7 @@ export default {
         });
         self.sending = false;
         self.$router.push("/employees/index");
-      } catch(error){
+      } catch (error) {
         self.$store.state.errors = error;
       }
     },
@@ -304,12 +303,12 @@ export default {
       this.datas.password = null;
       this.datas.type = null;
       this.datas.salary = null;
-      this.datas.branch_id = null;    
+      this.datas.branch_id = null;
     },
-    DisDoctor(){
+    DisDoctor() {
       this.datas.doctor_id = null;
     },
-    DisInspection(){
+    DisInspection() {
       this.datas.inspection_category_id = null;
     }
   }

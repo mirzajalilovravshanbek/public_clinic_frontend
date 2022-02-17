@@ -63,7 +63,11 @@
                 <b-icon icon="phone" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
                 <label>Телефон</label>
-                <md-input v-model="datas.phone" placeholder="+998" md-dense></md-input>
+                <md-input
+                  v-model="datas.phone"
+                  placeholder="+998"
+                  md-dense
+                ></md-input>
               </md-field>
             </b-col>
             <!-- patient phone input start -->
@@ -133,7 +137,7 @@
               </v-select>
             </b-col>
             <!-- patient district input end -->
-            
+
             <!-- patient neighboarhood input start -->
             <b-col md="4" sm="4" lg="4" xl="4">
               <b-icon icon="geo-alt" font-scale="1.6"></b-icon>
@@ -167,17 +171,11 @@
             <b-col md="4" sm="4" lg="4" xl="4">
               <b-icon icon="person" font-scale="1.6"></b-icon>
               <md-icon></md-icon>
-              <label>Жинси</label><br>
-              <md-radio
-                class="mx-1 my-0"
-                v-model="datas.gender"
-                value="male"
+              <label>Жинси</label><br />
+              <md-radio class="mx-1 my-0" v-model="datas.gender" value="male"
                 >Эркак</md-radio
               >
-              <md-radio
-                class="mx-1 my-0"
-                v-model="datas.gender"
-                value="female"
+              <md-radio class="mx-1 my-0" v-model="datas.gender" value="female"
                 >Аёл</md-radio
               >
             </b-col>
@@ -261,7 +259,7 @@ export default {
       district_id: null,
       neighboarhood_id: null,
       d_control: false,
-      disability: false,
+      disability: false
     },
     lang: {
       formatLocale: {
@@ -284,9 +282,9 @@ export default {
       let id = self.$route.params.id;
 
       try {
-        const response = await self.axios.get("api/patient/id/"+id);
+        const response = await self.axios.get("api/patient/id/" + id);
         self.datas = response.data;
-        self.datas.birthday = response.data.birthday.toString(); 
+        self.datas.birthday = response.data.birthday.toString();
         await self.GetDistrics();
         await self.GetNeighboarhoods();
       } catch (error) {
@@ -295,7 +293,7 @@ export default {
     }
   },
   methods: {
-    async GetRegions(){
+    async GetRegions() {
       let self = this;
 
       //viloyatlar ro'yhati
@@ -306,13 +304,15 @@ export default {
         self.$store.state.errors = error;
       }
     },
-    async GetDistrics(){
+    async GetDistrics() {
       let self = this;
 
       //tumanlar ro'yhati
       if (self.datas.region_id != null) {
         try {
-          const response = await self.axios.get("api/district/region/"+self.datas.region_id);
+          const response = await self.axios.get(
+            "api/district/region/" + self.datas.region_id
+          );
           self.districts = response.data;
         } catch (error) {
           self.$store.state.errors = error;
@@ -324,7 +324,9 @@ export default {
       //get list of neighboarhoods => mahallalar ro'yhatini olish
       if (self.datas.district_id != null) {
         try {
-          const response = await self.axios.get("api/neighboarhood/district/"+self.datas.district_id);
+          const response = await self.axios.get(
+            "api/neighboarhood/district/" + self.datas.district_id
+          );
           self.neighboarhoods = response.data;
         } catch (error) {
           self.$store.state.errors = error;
@@ -349,7 +351,7 @@ export default {
         });
         self.sending = false;
         self.$router.push("/patientcrud/index");
-      } catch(error){
+      } catch (error) {
         self.$store.state.errors = error;
       }
     },

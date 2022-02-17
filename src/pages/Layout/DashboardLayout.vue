@@ -19,12 +19,12 @@
         </p>
         <p>Регистрация</p>
       </sidebar-link>
-      <div
-        class="mt-2"
-      >
+      <div class="mt-2">
         <!-- v-if="role === $store.state.ITMED" -->
         <sidebar-link to="/patientcrud/index">
-          <p class="mr-2"><b-icon icon="person-plus-fill" font-scale="1.7"></b-icon></p>
+          <p class="mr-2">
+            <b-icon icon="person-plus-fill" font-scale="1.7"></b-icon>
+          </p>
           <p>Беморлар</p>
         </sidebar-link>
         <sidebar-link to="/reports/index">
@@ -164,7 +164,7 @@ export default {
     };
   },
   mounted() {
-    this.role = localStorage.getItem('role');
+    this.role = localStorage.getItem("role");
   }
 };
 </script>

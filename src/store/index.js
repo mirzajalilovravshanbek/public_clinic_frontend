@@ -9,6 +9,9 @@ export const store = new Vuex.Store({
     REGISTRATION: "Register",
     LABARATORY: "labaratory",
     UZI: "uzi",
+    WAITING: "waiting",
+    COMPLETED: "completed",
+    DELETED: "deleted",
     errors: ""
   }
 });
