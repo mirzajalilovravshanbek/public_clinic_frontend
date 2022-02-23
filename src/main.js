@@ -80,7 +80,7 @@ window.axios.interceptors.response.use(
     return response;
   },
   error => {
-    // console.log(error + "");
+    console.log(error + "");
 
     if (error.response.status == 401) {
       store.state.errors = error.message;

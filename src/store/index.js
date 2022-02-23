@@ -5,10 +5,9 @@ export const store = new Vuex.Store({
   state: {
     ITMED: "itmed",
     KASSA: "kassa",
-    DOCTOR: "doctor",
+    DOCTOR: "Doctor",
     REGISTRATION: "Register",
-    LABARATORY: "labaratory",
-    UZI: "uzi",
+    LABARATORY: "Inspector",
     WAITING: "waiting",
     COMPLETED: "completed",
     DELETED: "deleted",

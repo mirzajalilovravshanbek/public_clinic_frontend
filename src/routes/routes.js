@@ -2,13 +2,8 @@ const routes = [
   {
     path: "/",
     component: () => import("@/pages/Layout/DashboardLayout.vue"),
-    redirect: "/dashboard",
+    redirect: "/patient/index",
     children: [
-      {
-        path: "dashboard",
-        name: "Навбатлар Рўйҳати",
-        component: () => import("@/pages/Dashboard.vue")
-      },
       {
         path: "/patient/index",
         name: "Регистрация",
@@ -230,6 +225,11 @@ const routes = [
         component: () => import("@/pages/Notifications.vue")
       }
     ]
+  },
+  {
+    path: "/dashboard",
+    name: "Навбатлар Рўйҳати",
+    component: () => import("@/pages/Dashboard.vue")
   },
   {
     path: "/login",

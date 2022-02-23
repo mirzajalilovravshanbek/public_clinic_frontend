@@ -1,5 +1,6 @@
 <template>
-  <b-container fluid="xl" class="div-body">
+  <b-container fluid class="div-body">
+    <h3 class="text-center my-1">Навбатлар Рўйҳати</h3>
     <b-row>
       <b-col sm="12" md="6" lg="6" xl="6">
         <table class="table table-bordered table-sm text-center">
@@ -7,116 +8,18 @@
             <tr class="table-primary">
               <th>#</th>
               <th>Шифокор</th>
-              <th>Шифокор Ихтисослиги</th>
               <th>Хона Рақами</th>
+              <th>Бемор</th>
               <th>Навбат Рақами</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>1</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>2</th>
-              <td>Мирзажалилов Равшанбек</td>
-              <td>Стомотолог</td>
-              <td>15-хона</td>
-              <td>22</td>
-            </tr>
-            <tr>
-              <th>3</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>4</th>
-              <td>Мирзажалилов Равшанбек</td>
-              <td>Стомотолог</td>
-              <td>15-хона</td>
-              <td>22</td>
-            </tr>
-            <tr>
-              <th>5</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>6</th>
-              <td>Мирзажалилов Равшанбек</td>
-              <td>Стомотолог</td>
-              <td>15-хона</td>
-              <td>22</td>
-            </tr>
-            <tr>
-              <th>7</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>8</th>
-              <td>Турдиев Олимжон</td>
-              <td>Окулист</td>
-              <td>11-хона</td>
-              <td>19</td>
-            </tr>
-            <tr>
-              <th>9</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>10</th>
-              <td>Турдиев Олимжон</td>
-              <td>Окулист</td>
-              <td>11-хона</td>
-              <td>19</td>
-            </tr>
-            <tr>
-              <th>11</th>
-              <td>Турдиев Олимжон</td>
-              <td>Окулист</td>
-              <td>11-хона</td>
-              <td>19</td>
-            </tr>
-            <tr>
-              <th>12</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>13</th>
-              <td>Турдиев Олимжон</td>
-              <td>Окулист</td>
-              <td>11-хона</td>
-              <td>19</td>
-            </tr>
-            <tr>
-              <th>14</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>15</th>
-              <td>Турдиев Олимжон</td>
-              <td>Окулист</td>
-              <td>11-хона</td>
-              <td>19</td>
+            <tr v-for="(item, index) in firstTable" :key="index">
+              <th>{{ index + 1 }}</th>
+              <td>{{ item.room != null ? item.room.user.username : "" }}</td>
+              <td>{{ item.room != null ? item.room.name : "" }}</td>
+              <td>{{ item.patient != null ? item.patient.fullname : "" }}</td>
+              <th>{{ item.number }}</th>
             </tr>
           </tbody>
         </table>
@@ -127,116 +30,18 @@
             <tr class="table-primary">
               <th>#</th>
               <th>Шифокор</th>
-              <th>Шифокор Ихтисослиги</th>
               <th>Хона Рақами</th>
+              <th>Бемор</th>
               <th>Навбат Рақами</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>1</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>2</th>
-              <td>Мирзажалилов Равшанбек</td>
-              <td>Стомотолог</td>
-              <td>15-хона</td>
-              <td>22</td>
-            </tr>
-            <tr>
-              <th>3</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>4</th>
-              <td>Мирзажалилов Равшанбек</td>
-              <td>Стомотолог</td>
-              <td>15-хона</td>
-              <td>22</td>
-            </tr>
-            <tr>
-              <th>5</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>6</th>
-              <td>Мирзажалилов Равшанбек</td>
-              <td>Стомотолог</td>
-              <td>15-хона</td>
-              <td>22</td>
-            </tr>
-            <tr>
-              <th>7</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>8</th>
-              <td>Турдиев Олимжон</td>
-              <td>Окулист</td>
-              <td>11-хона</td>
-              <td>19</td>
-            </tr>
-            <tr>
-              <th>9</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>10</th>
-              <td>Турдиев Олимжон</td>
-              <td>Окулист</td>
-              <td>11-хона</td>
-              <td>19</td>
-            </tr>
-            <tr>
-              <th>11</th>
-              <td>Турдиев Олимжон</td>
-              <td>Окулист</td>
-              <td>11-хона</td>
-              <td>19</td>
-            </tr>
-            <tr>
-              <th>12</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>13</th>
-              <td>Турдиев Олимжон</td>
-              <td>Окулист</td>
-              <td>11-хона</td>
-              <td>19</td>
-            </tr>
-            <tr>
-              <th>14</th>
-              <td>Солиев Хуршид</td>
-              <td>Терапевт</td>
-              <td>12-хона</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <th>15</th>
-              <td>Турдиев Олимжон</td>
-              <td>Окулист</td>
-              <td>11-хона</td>
-              <td>19</td>
+            <tr v-for="(item, index) in secondTable" :key="index">
+              <th>{{ index + 1 }}</th>
+              <td>{{ item.room != null ? item.room.user.username : "" }}</td>
+              <td>{{ item.room != null ? item.room.name : "" }}</td>
+              <td>{{ item.patient != null ? item.patient.fullname : "" }}</td>
+              <th>{{ item.number }}</th>
             </tr>
           </tbody>
         </table>
@@ -249,26 +54,57 @@
 export default {
   data() {
     return {
-      queue: []
+      queue: [],
+      queuepolling: null,
+      avarage_value: null
     };
   },
-  mounted() {
-    // let self = this;
-    // //get list of followers => navbatlar ro'yhatini olish
-    // axios({
-    //   url: "universal/queue_table_list",
-    //   method: "get",
-    //   params: {
-    //     id: localStorage.getItem("branch_id")
-    //   }
-    // }).then(function(response) {
-    //   self.queue = response.data.data;
-    // });
-  }
+  async created() {
+    await this.pollQueue();
+  },
+  beforeDestroy() {
+    clearInterval(this.queuepolling);
+  },
+  async mounted() {
+    await this.Data();
+  },
+  methods: {
+    pollQueue() {
+      let self = this;
+      self.queuepolling = setInterval(async () => {
+        await self.Data();
+      }, 60000);
+    },
+    async Data(){
+      let self = this;
+      //get list of followers => navbatlar ro'yhatini olish
+      try {
+        const response = await self.axios({
+          url: "api/registration/queue/branch/" + localStorage.getItem("branch_id"),
+          method: "get"
+        });
+        self.queue = response.data;
+        self.avarage_value = Math.ceil(self.queue.length / 2);
+      } catch (error) {
+        self.$store.state.errors = error;
+      }
+    }
+  },
+  computed: {
+    firstTable() {
+      let self = this;
+      return self.queue.slice(0, parseInt(self.avarage_value));
+    },
+    secondTable() {
+      let self = this;
+      return self.queue.slice(parseInt(self.avarage_value), self.queue.length);
+    }
+  },
 };
 </script>
 <style scoped>
 .div-body {
-  height: 568px !important;
+  height: 100vh;
+  overflow-y: auto;
 }
 </style>

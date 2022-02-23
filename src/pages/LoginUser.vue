@@ -149,11 +149,17 @@ export default {
     } catch (error) {
       self.$store.state.errors = error;
     }
+    if (localStorage.getItem("branch_id") !== null) {
+      self.datas.branch_id = parseInt(localStorage.getItem("branch_id"));
+      await self.GetUsers();
+    }
   },
   methods: {
     async GetUsers() {
       let self = this;
-      localStorage.setItem("branch_id", self.datas.branch_id);
+      if (localStorage.getItem("branch_id") === null) {
+        localStorage.setItem("branch_id", self.datas.branch_id);
+      }
       //usernamelar ro'yhati
       try {
         const response = await self.axios.get(

@@ -18,7 +18,7 @@
 
         <div class="md-collapse">
           <md-list>
-            <md-list-item href="#/" id="dashboard-tooltip">
+            <md-list-item href="#/dashboard" target="_blank" id="dashboard-tooltip">
               <b-icon icon="columns-gap" font-scale="1.5"></b-icon>
               <p class="hidden-lg hidden-md">Dashboard</p>
               <b-tooltip target="dashboard-tooltip" variant="dark"
@@ -90,6 +90,7 @@ export default {
       localStorage.removeItem("token");
       localStorage.removeItem("username");
       localStorage.removeItem("role");
+      localStorage.removeItem("oid");
       this.$router.push("/loginuser");
     }
   }

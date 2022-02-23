@@ -31,7 +31,7 @@
           block
           class="m-2"
           target="_blank"
-          @click="Refresh()"
+          @click="Data()"
         >
           <b-icon icon="arrow-clockwise"></b-icon>
           Янгилаш</b-button
@@ -101,53 +101,21 @@
           </template>
           <template #cell(items)="row">
             {{ row.value.created_at }}
-            {{ row.value.patient.full_name }}
-            {{ row.value.staff.full_name }}
+            {{ row.value.patient != null ? row.value.patient.fullname : "" }}
+            {{ row.value.user != null ? row.value.user.username : "" }}
           </template>
           <template #cell(actions)="row">
-            <b-button-group>
-              <b-button
-                v-if="
-                  role === $store.state.DOCTOR || role === $store.state.ITMED
-                "
-                variant="outline-danger"
-                size="sm"
-                v-b-tooltip.hover.left.v-danger
-                title="Якунлаш"
-                @click="CompleteDocument(row.item.id)"
-              >
-                <b-icon icon="file-earmark-x-fill"></b-icon>
-              </b-button>
-
-              <b-button
-                variant="outline-primary"
-                target="_blank"
-                size="sm"
-                style="color: #1E90FF"
-                :to="{ path: '/patient/update/' + row.item.id }"
-                v-b-tooltip.hover.top.v-primary
-                title="Таҳрирлаш"
-              >
-                <b-icon icon="Pencil"></b-icon>
-              </b-button>
-
-              <b-button
-                style="display:none"
-                variant="outline-success"
-                v-b-tooltip.hover.right.v-success
-                size="sm"
-                title="Печат"
-                @click="Print(row.item.id)"
-                v-if="
-                  role === $store.state.DOCTOR ||
-                    role === $store.state.ITMED ||
-                    role === $store.state.REGISTRATION ||
-                    role === $store.state.KASSA
-                "
-              >
-                <b-icon icon="printer-fill"></b-icon>
-              </b-button>
-            </b-button-group>
+            <b-button
+              variant="outline-primary"
+              target="_blank"
+              size="sm"
+              style="color: #1E90FF"
+              :to="{ path: '/patient/update/' + row.item.id }"
+              v-b-tooltip.hover.top.v-primary
+              title="Таҳрирлаш"
+            >
+              <b-icon icon="Pencil" font-scale="0.9"></b-icon>
+            </b-button>
           </template>
         </b-table>
       </div>
@@ -189,12 +157,12 @@ export default {
         }
       },
       {
-        key: "patient.full_name",
+        key: "patient.fullname",
         label: "Бемор",
         sortable: true
       },
       {
-        key: "staff.full_name",
+        key: "user.username",
         label: "Рўйҳатга олган ходим",
         sortable: true
       },
@@ -204,40 +172,28 @@ export default {
       }
     ]
   }),
-  mounted() {
+  async mounted() {
     this.role = localStorage.getItem("role");
-    // this.Data();
+    await this.Data();
   },
   methods: {
-    Data() {
+    async Data() {
       let self = this;
       //get list of documents => hujjatlarni olish
-      axios({
-        url: "universal/registration_list",
-        method: "get",
-        params: {
-          id: localStorage.getItem("branch_id")
-        }
-      }).then(function(response) {
-        self.users = response.data.data;
+      if(this.role == this.$store.state.REGISTRATION){
+        var urlx = "api/registration/branch/"+localStorage.getItem("branch_id");
+      } else if (this.role == this.$store.state.DOCTOR) {
+        var urlx = "api/registration/doctor/"+localStorage.getItem("oid");        
+      } else {
+        var urlx = "api/registration/inspection/"+localStorage.getItem("oid");        
+      }
+      try {
+        const response = await self.axios.get(urlx);
+        self.users = response.data;
         self.totalRows = self.users.length;
-      });
-    },
-    CompleteDocument(id) {
-      let self = this;
-      axios({
-        url: "staff/register_complate",
-        method: "post",
-        data: {
-          doctor_id: self.$cookies.get("user").id,
-          register_id: id
-        }
-      }).then(function(response) {
-        alert("Ҳужжат Ёпилди!");
-      });
-    },
-    Refresh() {
-      this.Data();
+      } catch (error) {
+        self.$store.state.errors = error;
+      }
     },
     UpdatePatient(item) {
       let self = this;
@@ -252,27 +208,9 @@ export default {
       this.currentPage = 1;
       this.users.count = filteredItems.length;
     },
-    Print(id) {
-      let self = this;
-
-      axios({
-        url: "universal/print_turn",
-        method: "get",
-        params: {
-          id: id
-        }
-      }).then(function(response) {
-        // console.log(response.data)
-        self.$cookies.set("printData", response.data);
-        const route = self.$router.resolve({
-          path: "/patient/checkprint"
-        });
-        window.open(route.href, "_blank");
-      });
-    },
     rowClass(item, type) {
       if (!item || type !== "row") return;
-      if (item.status === 0) return "table-success";
+      if (item.status === this.$store.state.WAITING) return "table-success";
     }
   },
   computed: {
@@ -297,7 +235,7 @@ export default {
   margin: 0;
 }
 .div-body {
-  height: 480px;
+  height: 500px;
   overflow-y: auto;
 }
 </style>
