@@ -180,12 +180,13 @@ export default {
     async Data() {
       let self = this;
       //get list of documents => hujjatlarni olish
-      if(this.role == this.$store.state.REGISTRATION){
-        var urlx = "api/registration/branch/"+localStorage.getItem("branch_id");
+      if (this.role == this.$store.state.REGISTRATION) {
+        var urlx =
+          "api/registration/branch/" + localStorage.getItem("branch_id");
       } else if (this.role == this.$store.state.DOCTOR) {
-        var urlx = "api/registration/doctor/"+localStorage.getItem("oid");        
+        var urlx = "api/registration/doctor/" + localStorage.getItem("oid");
       } else {
-        var urlx = "api/registration/inspection/"+localStorage.getItem("oid");        
+        var urlx = "api/registration/inspection/" + localStorage.getItem("oid");
       }
       try {
         const response = await self.axios.get(urlx);

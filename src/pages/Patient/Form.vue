@@ -60,7 +60,7 @@
               role === $store.state.ITMED
           "
           style="color: #fff;"
-          variant="success"
+          variant="primary"
           @click="PatientHistory()"
           :disabled="history"
         >
@@ -95,8 +95,21 @@
         </b-button>
       </b-col>
       <b-col sm="3" md="3" lg="3" xl="3">
-        <label for="tashxis-file" class="m-0">Ташхисларни юклаш</label>
-        <input type="file" id="tashxis-file" class="my-0" name="tashxis-file" />
+        <input
+          type="file"
+          style="display: none"
+          id="files"
+          ref="files"
+          @change="onUploadTashxis()"
+          class="my-0"
+        />
+        <button class="btn btn-primary" @click="$refs.files.click()">
+          <b-icon icon="cloud-arrow-up-fill"></b-icon>&ensp;Ташхисларни юклаш
+        </button>
+        <span v-if="tashxisfile != ''"
+          >&emsp;
+          <b-icon icon="patch-check-fill" variant="success"></b-icon>
+        </span>
       </b-col>
       <b-col sm="1" md="1" lg="1" xl="1">
         <b-button
@@ -737,11 +750,6 @@
                 Текширувлар
               </b-button>
 
-              <!-- <input ref="fileInput" style="display: none" type="file" @change="onFileSelected">
-                <button @click="$refs.fileInput.click()">Yuklash</button>
-                <img :src="selectedFile" style="width: 100px">
-                <button @click="onUpload">Upload</button>  -->
-
               <!-- inspections modal start -->
               <b-modal
                 v-model="modalInspectionShow"
@@ -824,10 +832,18 @@
                         <thead>
                           <tr class="table-primary">
                             <th>#</th>
-                            <th v-if="item.type != null ? item.type : item.inspection.type == true">Танлаш</th>
+                            <th
+                              v-if="
+                                item.type != null
+                                  ? item.type
+                                  : item.inspection.type == true
+                              "
+                            >
+                              Танлаш
+                            </th>
                             <th>Анализ</th>
                             <th>Натижа</th>
-                            <!-- <th style="width: 100px;">Расм</th> -->
+                            <th style="width: 100px;">Расм</th>
                             <th>Норма</th>
                           </tr>
                         </thead>
@@ -837,22 +853,14 @@
                             :key="indeks"
                           >
                             <th>{{ indeks + 1 }}</th>
-                            <td v-if="item.type != null ? item.type : item.inspection.type == true">
+                            <td
+                              v-if="
+                                item.type != null
+                                  ? item.type
+                                  : item.inspection.type == true
+                              "
+                            >
                               <input type="checkbox" v-model="field.checked" />
-                            </td>
-                            <td style="display:none;">
-                              <input
-                                type="text"
-                                :v-model="
-                                  (field.registration_id = registration_id)
-                                "
-                              />
-                            </td>
-                            <td style="display:none;">
-                              <input
-                                type="text"
-                                :v-model="(field.status = $store.state.WAITING)"
-                              />
                             </td>
                             <td>
                               {{ field.name ? field.name : "" }}
@@ -863,40 +871,53 @@
                                 max-rows="5"
                                 v-model="field.text"
                                 class="form-control"
-                                :readonly="role === $store.state.REGISTRATION || role === $store.state.DOCTOR"
-                                @change="CheckStatusInspection(item.user_id, index)"
+                                :readonly="
+                                  role === $store.state.REGISTRATION ||
+                                    role === $store.state.DOCTOR
+                                "
+                                @change="
+                                  CheckStatusInspection(item.user_id, index)
+                                "
                               ></b-form-textarea>
                             </td>
-                            <!-- <td style="width: 100px;">
-                                <input
-                                  ref="files"
-                                  type="file"
-                                  @change="onImageSelected(indeks)"
+                            <td style="width: 100px; text-align:center">
+                              <input
+                                :id="'ins_' + index + '_files_' + indeks"
+                                type="file"
+                                @change="onInsUpload(indeks, index)"
+                              />
+                              <span v-if="field.file != ''">
+                                <img
+                                  :src="
+                                    'http://localhost:3000/upload/' + field.file
+                                  "
+                                  style="width: 100px; cursor:pointer"
+                                  @click="
+                                    modalImageShow = !modalImageShow;
+                                    ShowImage(field.file);
+                                  "
                                 />
-                                <img :src="url" style="width: 100px" />
-                                <b-button
-                                  variant="success"
-                                  size="sm"
-                                  v-b-tooltip.hover.v-success.right
-                                  title="Кўриш"
-                                  class="mt-1"
-                                  v-b-modal="'image-modal-' + indeks"
-                                >
-                                  <b-icon icon="eye-fill"></b-icon>
-                                </b-button>
-                                
-                                <b-modal
-                                  :id="'image-modal-' + indeks"
-                                  hide-footer
-                                  title="Галарея"
-                                  size="xl"
-                                  >Image {{ indeks }} From My Modal!
-                                </b-modal>
-                              </td> -->
+                              </span>
+                            </td>
                             <td>{{ field.norm }}</td>
                           </tr>
                         </tbody>
                       </table>
+                      <!-- image modal start -->
+                      <b-modal
+                        size="lg"
+                        hide-footer
+                        title="Расм"
+                        v-model="modalImageShow"
+                      >
+                        <div class="text-center">
+                          <img
+                            :src="'http://localhost:3000/upload/' + modalImage"
+                            style="width: 300px"
+                          />
+                        </div>
+                      </b-modal>
+                      <!-- image modal end -->
                     </b-container>
                     <!-- table end -->
                   </b-card-text>
@@ -1443,7 +1464,7 @@
                           size="sm"
                           class="p-0"
                           style="color: #3c8dbc"
-                          @click="GetMKB(index);"
+                          @click="GetMKB(index)"
                           :disabled="item.doctor.id !== data.user_id"
                           >МКБ-10</b-button
                         >
@@ -1517,56 +1538,69 @@
                       title="МКБ-10"
                       v-model="modalMKBShow"
                     >
-                      <p v-for="(item1, index1) in mkb" :key="index1">
-                        <b-button
-                          v-b-toggle="'mkb-collapse-' + index1"
-                          variant="primary"
-                          size="sm"
-                          @click="GetMKB1(item1)"
-                        >
-                          <b-icon
-                            icon="folder-minus"
-                            class="when-open"
-                          ></b-icon>
-                          <b-icon
-                            icon="folder-plus"
-                            class="when-closed"
-                          ></b-icon>
-                        </b-button>
-                        &emsp;<span class="badge badge-success">{{item1.code}}</span>&emsp;
-                        <span style="cursor: pointer;" @click="SetMKB(item1)">{{ item1.name }}</span>
-                        <b-collapse
-                          :id="'mkb-collapse-' + index1"
-                        >
-                          <b-card>
-                            <p v-for="(item2, index2) in mkb1" :key="index2">
-                              <b-button
-                                v-b-toggle="'mkb1-collapse-' + index2"
-                                variant="primary"
-                                size="sm"
+                      <div style="height: 400px; overflow-y: auto;">
+                        <p v-for="(item1, index1) in mkb" :key="index1">
+                          <b-button
+                            v-b-toggle="'mkb-collapse-' + index1"
+                            variant="primary"
+                            size="sm"
+                          >
+                            <b-icon
+                              icon="folder-minus"
+                              class="when-open"
+                            ></b-icon>
+                            <b-icon
+                              icon="folder-plus"
+                              class="when-closed"
+                              @click="GetMKB1(item1, index1)"
+                            ></b-icon>
+                          </b-button>
+                          &emsp;<span class="badge badge-success">{{
+                            item1.code
+                          }}</span
+                          >&emsp;
+                          <span
+                            style="cursor: pointer;"
+                            @click="SetMKB(item1)"
+                            >{{ item1.name }}</span
+                          >
+                          <b-collapse :id="'mkb-collapse-' + index1">
+                            <b-card>
+                              <p
+                                v-for="(itm2, indx2) in item1.child"
+                                :key="indx2"
                               >
-                                <b-icon
-                                  icon="folder-minus"
-                                  class="when-open"
-                                ></b-icon>
-                                <b-icon
-                                  icon="folder-plus"
-                                  class="when-closed"
-                                ></b-icon>
-                              </b-button>
-                              &emsp;<span class="badge badge-success">{{item2.code}}</span>&emsp;
-                              <span style="cursor: pointer;" @click="SetMKB(item2)">{{ item2.name }}</span>
-                              <b-collapse
-                                :id="'mkb1-collapse-' + index2"
-                              >
-                                <b-card>
-                                  salom
-                                </b-card>
-                              </b-collapse>
-                            </p>
-                          </b-card>
-                        </b-collapse>
-                      </p>
+                                <b-button
+                                  v-b-toggle="'mkb-child-collapse-' + indx2"
+                                  variant="primary"
+                                  size="sm"
+                                >
+                                  <b-icon
+                                    icon="folder-minus"
+                                    class="when-open"
+                                  ></b-icon>
+                                  <b-icon
+                                    icon="folder-plus"
+                                    class="when-closed"
+                                  ></b-icon>
+                                </b-button>
+                                &emsp;<span class="badge badge-success">{{
+                                  itm2.code
+                                }}</span
+                                >&emsp;
+                                <span style="cursor: pointer;">{{
+                                  itm2.name
+                                }}</span>
+                                <b-collapse :id="'mkb-child-collapse-' + indx2">
+                                  <b-card>
+                                    salom
+                                  </b-card>
+                                </b-collapse>
+                              </p>
+                            </b-card>
+                          </b-collapse>
+                        </p>
+                      </div>
                     </b-modal>
                     <!-- МКБ modal end -->
                   </b-row>
@@ -1795,7 +1829,9 @@
                                 class="form-control form-control-sm"
                                 type="number"
                                 v-model="item2.time"
-                                @change="CheckStatusDoctor(item.doctor_id, index)"
+                                @change="
+                                  CheckStatusDoctor(item.doctor_id, index)
+                                "
                               />
                             </td>
                             <td>
@@ -1829,6 +1865,50 @@
             </b-tabs>
           </b-tab>
           <!-- recipe section end -->
+          <!-- tashxis section start -->
+          <b-tab
+            title="Ташхис Файллар"
+            :title-link-class="linkClass(6)"
+            class="pt-1"
+            v-if="
+              role === $store.state.DOCTOR ||
+                role === $store.state.ITMED ||
+                role === $store.state.REGISTRATION
+            "
+          >
+            <b-container fluid style="height: 450px; overflow-y: auto;">
+              <b-row>
+                <b-col sm="12" md="12" lg="12" xl="12">
+                  <table
+                    class="table table-hover table-striped table-bordered table-sm"
+                  >
+                    <thead>
+                      <tr class="table-primary">
+                        <th>#</th>
+                        <th>Файллар</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(item, index) in data.files" :key="index">
+                        <th>{{ index + 1 }}</th>
+                        <td>{{ item.href }}</td>
+                        <td>
+                          <a
+                            :href="'http://localhost:3000/upload/' + item.href"
+                            target="_blank"
+                            class="btn btn-info btn-sm text-white"
+                            ><i class="fas fa-eye"></i>&ensp;Кўриш</a
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </b-col>
+              </b-row>
+            </b-container>
+          </b-tab>
+          <!-- tashxis section end -->
         </b-tabs>
       </b-card>
     </b-container>
@@ -2011,9 +2091,12 @@ export default {
     printing: false,
     history: false,
     selectedFile: null,
-    url: [],
+    tashxisfile: "",
+    modalImageShow: false,
+    modalImage: null,
+    inspection_files: null,
     mkb: [],
-    mkb1: [],
+    ins_child: [],
     saving: false,
     save_template: false,
     checkTemplateName: false
@@ -2031,7 +2114,9 @@ export default {
     if (self.$route.path != "/patient/create") {
       try {
         // self.checkSpinner = true;
-        const response = await self.axios.get("api/registration/id/" + self.$route.params.id);
+        const response = await self.axios.get(
+          "api/registration/id/" + self.$route.params.id
+        );
         self.data = response.data;
         await self.GetPatientById(response.data.patient_id);
         // self.checkSpinner = false;
@@ -2090,9 +2175,11 @@ export default {
             data: self.data
           });
           self.printing = false;
-          if(response){
+          if (response) {
             try {
-              const response1 = await self.axios.get("api/registration/queue/patient/" + self.data.patient_id);
+              const response1 = await self.axios.get(
+                "api/registration/queue/patient/" + self.data.patient_id
+              );
               localStorage.setItem("printData", JSON.stringify(response1.data));
               const route = self.$router.resolve({
                 path: "/patient/checkprint"
@@ -2104,7 +2191,6 @@ export default {
             } catch (error) {
               self.$store.state.errors = error;
             }
-            
           }
         } catch (error) {
           self.$store.state.errors = error;
@@ -2219,7 +2305,7 @@ export default {
       });
     },
     //update doc
-    async GetPatientById(id){
+    async GetPatientById(id) {
       let self = this;
       try {
         const response = await self.axios.get("api/patient/id/" + id);
@@ -2309,6 +2395,33 @@ export default {
           "api/inspection/id/" + ins_data.id
         );
         ins_data = response.data;
+        var children = {
+          id: null,
+          name: null,
+          norm: null,
+          text: "",
+          parent_id: null,
+          price: null,
+          file: "",
+          status: null,
+          registration_id: null
+        };
+        response.data.child.forEach(element => {
+          children.id = element.id;
+          children.name = element.name;
+          children.norm = element.norm;
+          children.parent_id = element.parent_id;
+          children.price = element.price;
+          children.text = "";
+          children.file = "";
+          children.status = self.$store.state.WAITING;
+          children.registration_id = self.registration_id;
+
+          // console.log(children);
+          self.ins_child.push({ ...children });
+        });
+        ins_data.child = self.ins_child;
+        self.ins_child = [];
         ins_data.inspection_id = ins_data.id;
         ins_data.registration_id = 0;
         ins_data.status = self.$store.state.WAITING;
@@ -2327,15 +2440,15 @@ export default {
       }
       self.modalInspectionShow = false;
     },
-    CheckStatusInspection(user_id, index){
+    CheckStatusInspection(user_id, index) {
       let self = this;
-      if(user_id == this.data.user_id){
+      if (user_id == this.data.user_id) {
         self.data.inspection[index].status = self.$store.state.COMPLETED;
       }
     },
-    CheckStatusDoctor(doctor_id, index){
+    CheckStatusDoctor(doctor_id, index) {
       let self = this;
-      if(doctor_id == this.data.user_id){
+      if (doctor_id == this.data.user_id) {
         self.data.doctor[index].status = self.$store.state.COMPLETED;
       }
     },
@@ -2502,6 +2615,13 @@ export default {
       let self = this;
       self.data.room.splice(index, 1);
     },
+    PatientHistory() {
+      let self = this;
+      const route = self.$router.resolve({
+        path: "/patient/history/" + self.data.patient_id
+      });
+      window.open(route.href, "_blank");
+    },
     async CreateDrug() {
       let self = this;
       //dori qo'shish
@@ -2534,19 +2654,22 @@ export default {
         self.$store.state.errors = error;
       }
     },
-    SetMKB(item1){
+    SetMKB(item1) {
       let self = this;
       let index = parseInt(localStorage.getItem("index"));
       self.data.doctor[index].diagnos = item1.id;
       self.modalMKBShow = false;
     },
-    async GetMKB1(item){
+    async GetMKB1(item, index) {
       let self = this;
       //mkblar ro'yhatini olish
-      console.log(item);
+      // console.log(item);
+      // console.log(index);
       try {
-        const response = await self.axios.get("api/registration/mkb/"+item.id);
-        self.mkb1 = response.data;
+        const response = await self.axios.get(
+          "api/registration/mkb/" + item.id
+        );
+        self.mkb[index].child = response.data;
       } catch (error) {
         self.$store.state.errors = error;
       }
@@ -2671,45 +2794,46 @@ export default {
         self.$store.state.errors = error;
       }
     },
-    onFileSelected(event) {
-      var reader,
-        files = event.target.files;
-      reader = new FileReader();
-      reader.onload = event => {
-        this.selectedFile = event.target.result;
-      };
-      reader.readAsDataURL(files[0]);
-      // console.log(event);
-      // this.selectedFile = event.target.files[0].name
-      // console.log(this.$refs.file_0[0].files[0].name);
-
-      // console.log(this.$refs.file_0[0].files.FileList)
-      // this.data.inspection[index].child[indeks].file = this.$refs.file_0[0].files.FileList
-      // for(const [key, value] of Object.entries(foo)){
-      //   if(key != 'my-modal'){
-      //     // console.log(`${key} : ${value}`);
-      //   console.log(value);
-      //   // console.log(this.$refs.key.files);
-
-      //     // for(let i=0; i < value.files.length; i ++){
-      //     //   let my_foo = value.files[i];
-      //     //   // console.log(my_foo)
-      //     //   formData.append('files['+i+']', my_foo);
-      //     // }
-      //   }
-      // }
+    //tashxis-file
+    onUploadTashxis() {
+      let self = this;
+      const formData = new FormData();
+      formData.append("href", self.$refs.files.files[0]);
+      axios
+        .post("api/upload/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(res => {
+          self.tashxisfile = res.data;
+          if (self.$route.path != "/patient/create") {
+            self.registration_id = self.$route.params.id;
+          }
+          self.data.files.push({
+            href: res.data,
+            registration_id: self.registration_id
+          });
+        });
     },
-    onUpload() {
-      const fd = new FormData();
-      fd.append("image", this.selectedFile, this.selectedFile.name);
-      axios.post("", fd).then(res => {
-        console.log(res);
-      });
+    //inspection images
+    onInsUpload(indeks, index) {
+      let self = this;
+      let img = document.getElementById("ins_" + index + "_files_" + indeks);
+      const formData = new FormData();
+      formData.append("href", img.files[0]);
+      axios
+        .post("api/upload/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(res => {
+          self.data.inspection[index].child[indeks].file = res.data;
+        });
     },
-    onImageSelected(indeks) {
-      this.images.push(this.$refs);
-      console.log(this.images);
-      this.url = URL.createObjectURL(this.$refs.images[indeks].files[0]);
+    ShowImage(image) {
+      this.modalImage = image;
     }
   },
   computed: {

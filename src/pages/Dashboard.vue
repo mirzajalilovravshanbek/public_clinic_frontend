@@ -75,12 +75,14 @@ export default {
         await self.Data();
       }, 60000);
     },
-    async Data(){
+    async Data() {
       let self = this;
       //get list of followers => navbatlar ro'yhatini olish
       try {
         const response = await self.axios({
-          url: "api/registration/queue/branch/" + localStorage.getItem("branch_id"),
+          url:
+            "api/registration/queue/branch/" +
+            localStorage.getItem("branch_id"),
           method: "get"
         });
         self.queue = response.data;
@@ -99,7 +101,7 @@ export default {
       let self = this;
       return self.queue.slice(parseInt(self.avarage_value), self.queue.length);
     }
-  },
+  }
 };
 </script>
 <style scoped>

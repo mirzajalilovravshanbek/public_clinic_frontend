@@ -7,7 +7,7 @@
       :sidebar-background-image="sidebarBackgroundImage"
     >
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link to="/dashboard" target= '_blank'>
+      <sidebar-link to="/dashboard" target="_blank">
         <p class="rmk-margin">
           <b-icon icon="columns-gap" font-scale="1.5"></b-icon>
         </p>

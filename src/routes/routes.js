@@ -247,6 +247,11 @@ const routes = [
     component: () => import("@/pages/Patient/Create.vue")
   },
   {
+    path: "/patient/history/:id",
+    name: "Беморнинг Касаллик Тарихи",
+    component: () => import("@/pages/Patient/History.vue")
+  },
+  {
     path: "/patient/update/:id",
     name: "Регистрация хужжатини Таҳрирлаш",
     component: () => import("@/pages/Patient/Update.vue")
@@ -255,6 +260,11 @@ const routes = [
     path: "/patient/checkprint",
     name: "Чек",
     component: () => import("@/pages/Patient/CheckPrint.vue")
+  },
+  {
+    path: "/404",
+    name: "Not Found",
+    component: () => import("@/pages/404.vue")
   }
 ];
 
