@@ -80,15 +80,14 @@ window.axios.interceptors.response.use(
     return response;
   },
   error => {
-    // console.log(error.response);
-
+    
     if (error.response.status == 401) {
-      store.state.errors = error.message;
+      store.state.errors = error.response.data.message;
       router.push("/loginuser");
     } else if (error.response.status == 400) {
       store.state.errors = error.response.data.message;
     } else if (error.response.status == 404) {
-      // router.push("/404");
+      router.push("/404");
       store.state.errors = error.response.data.message;
     } else {
       store.state.errors = error.response.data.message;

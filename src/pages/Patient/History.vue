@@ -21,7 +21,6 @@
           <b-tab
             title="Бемор маълумотлари"
             :title-link-class="linkClass(0)"
-            active
             class="pt-1"
           >
             <b-card-text>
@@ -349,7 +348,6 @@
                   :key="index"
                   :title="item.name ? item.name : item.inspection.name"
                   :title-link-class="link_Class(index)"
-                  active
                   class="pt-2"
                 >
                   <b-card-text>
@@ -453,14 +451,13 @@
           </b-tab>
           <!-- ispections end -->
           <!-- diagnosis section start -->
-          <b-tab title="Ташхис" :title-link-class="linkClass(4)" class="pt-2">
+          <b-tab title="Ташхис" :title-link-class="linkClass(3)" class="pt-2">
             <b-tabs v-model="tabDoctorIndex" card v-if="doc.doctor.length > 0">
               <b-tab
                 v-for="(item, index) in doc.doctor"
                 :key="index"
                 :title="item.doctor.name != null ? item.doctor.name : ''"
                 :title-link-class="linkDoctorClass(index)"
-                active
                 class="pt-2"
               >
                 <b-container fluid style="height: 385px; overflow-y: auto;">
@@ -528,7 +525,7 @@
                       <b-form-input
                         id="textarea-main-diagnosis"
                         type="text"
-                        v-model="item.diagnos"
+                        v-model="item.diagnos_name.name"
                         disabled
                         class="form-control rmk-input px-1"
                       ></b-form-input>
@@ -567,7 +564,7 @@
           </b-tab>
           <!-- diagnosis section end -->
           <!-- recipe section start -->
-          <b-tab title="Рецеп" :title-link-class="linkClass(5)" class="pt-1">
+          <b-tab title="Рецеп" :title-link-class="linkClass(4)" class="pt-1">
             <b-tabs v-model="tabRecipeIndex" card v-if="doc.doctor.length > 0">
               <b-tab
                 v-for="(item, index) in doc.doctor"
@@ -598,16 +595,12 @@
                           >
                             <th>{{ index2 + 1 }}</th>
                             <td>
-                              <v-select
-                                :clearable="true"
-                                :options="drugs"
-                                v-model="item2.pill_id"
-                                :reduce="name => name.id"
-                                placeholder="Танланг..."
-                                label="name"
+                              <input
+                                type="text"
+                                v-model="item2.pill.name"
                                 disabled
-                              >
-                              </v-select>
+                                class="form-control form-control-sm px-1"
+                              />
                             </td>
                             <td>
                               <input
@@ -646,7 +639,7 @@
           <!-- tashxis section start -->
           <b-tab
             title="Ташхис Файллар"
-            :title-link-class="linkClass(6)"
+            :title-link-class="linkClass(5)"
             class="pt-1"
           >
             <b-container fluid style="height: 450px; overflow-y: auto;">
@@ -733,7 +726,7 @@ export default {
       }
     },
     link_Class(idx) {
-      if (this.tableIndex === idx) {
+      if (this.tableIndex == idx) {
         return ["bg-primary", "text-light"];
       } else {
         return ["bg-light", "text-info"];

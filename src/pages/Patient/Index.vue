@@ -42,11 +42,7 @@
         md="2"
         lg="2"
         xl="2"
-        v-if="
-          role === $store.state.KASSA ||
-            role === $store.state.LABARATORY ||
-            role === $store.state.UZI
-        "
+        v-if="role === $store.state.LABARATORY"
       >
       </b-col>
       <b-col sm="8" md="8" lg="8" xl="8">
@@ -184,9 +180,11 @@ export default {
         var urlx =
           "api/registration/branch/" + localStorage.getItem("branch_id");
       } else if (this.role == this.$store.state.DOCTOR) {
-        var urlx = "api/registration/doctor/" + localStorage.getItem("oid");
-      } else {
+        var urlx = "api/registration/doctor/" + localStorage.getItem("did");
+      } else if (this.role == this.$store.state.LABARATORY) {
         var urlx = "api/registration/inspection/" + localStorage.getItem("oid");
+      } else {
+        var urlx = "api/registration";
       }
       try {
         const response = await self.axios.get(urlx);

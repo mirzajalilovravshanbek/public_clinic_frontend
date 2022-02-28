@@ -19,8 +19,7 @@
         </p>
         <p>Регистрация</p>
       </sidebar-link>
-      <div class="mt-2">
-        <!-- v-if="role === $store.state.ITMED" -->
+      <div class="mt-2" v-if="role === $store.state.ITMED">
         <sidebar-link to="/patientcrud/index">
           <p class="mr-2">
             <b-icon icon="person-plus-fill" font-scale="1.7"></b-icon>
@@ -114,7 +113,7 @@
       <top-navbar></top-navbar>
 
       <!-- alert start -->
-      <div class="container-fluid">
+      <div class="container-fluid" style="position: absolute;">
         <div class="row justify-content-md-center">
           <div
             class="col-lg-11 col-md-11 col-sm-11 col-xl-11 alert alert-danger text-center p-1"

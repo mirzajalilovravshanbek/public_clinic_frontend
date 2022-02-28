@@ -191,7 +191,9 @@ export default {
         try {
           const response = await axios.post("api/user/login", self.datas);
           if (response) {
+            console.log(response.data);
             localStorage.setItem("oid", response.data.id);
+            localStorage.setItem("did", response.data.doctor_id);
             localStorage.setItem("username", response.data.username);
             localStorage.setItem("role", response.data.role);
             localStorage.setItem("token", response.data.token);
@@ -199,7 +201,6 @@ export default {
             self.sending = false;
           }
         } catch (e) {
-          self.$store.state.errors = e + "";
           self.datas.password = null;
         }
       }
@@ -208,6 +209,7 @@ export default {
       (this.datas.branch_id = null),
         (this.datas.username = null),
         (this.datas.password = null);
+        (this.sending = false);
     }
   }
 };

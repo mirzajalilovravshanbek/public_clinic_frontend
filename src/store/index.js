@@ -3,8 +3,8 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
-    ITMED: "itmed",
     KASSA: "kassa",
+    ITMED: "Administrator",
     DOCTOR: "Doctor",
     REGISTRATION: "Register",
     LABARATORY: "Inspector",

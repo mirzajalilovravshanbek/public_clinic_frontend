@@ -212,7 +212,8 @@ export default {
     positions: [
       { name: "Register", label: "Регистратор" },
       { name: "Doctor", label: "Шифокор" },
-      { name: "Inspector", label: "Лаборант" }
+      { name: "Inspector", label: "Лаборант" },
+      { name: "Administrator", label: "Администратор" }
     ],
     branches: [],
     doctors: [],

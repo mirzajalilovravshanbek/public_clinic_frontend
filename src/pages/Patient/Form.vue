@@ -17,7 +17,7 @@
             ×
           </button>
           <p><i class="fas fa-exclamation-triangle"></i>&nbsp; Хатолик</p>
-          <span>{{ $store.state.errors }}</span>
+          <p class="text-center">{{ $store.state.errors }}</p>
         </div>
         <div
           class="col-lg-10 col-md-10 col-sm-10 col-xl-10 alert alert-success text-center p-1"
@@ -32,7 +32,8 @@
           >
             ×
           </button>
-          <span>{{ PatientStatusText }}</span>
+          <p><i class="fas fa-check-circle"></i>&nbsp; Муваффақиятли</p>
+          <p class="text-center">{{ PatientStatusText }}</p>
         </div>
       </div>
     </div>
@@ -52,7 +53,7 @@
           Сақлаш ва беркитиш
         </b-button>
       </b-col>
-      <b-col sm="3" md="3" lg="3" xl="3">
+      <b-col sm="2" md="2" lg="2" xl="2">
         <b-button
           v-if="
             role === $store.state.REGISTRATION ||
@@ -77,7 +78,19 @@
           Касаллик Тирихи
         </b-button>
       </b-col>
-      <b-col sm="2" md="2" lg="2" xl="2">
+      <b-col sm="1" md="1" lg="1" xl="1" class="text-center">
+        <b-form-checkbox
+          id="doc_status"
+          v-model="data.status"
+          name="doc_status"
+          class="mt-2"
+          value="completed"
+          unchecked-value="waiting"
+        >
+          Тугатиш
+        </b-form-checkbox>
+      </b-col>
+      <b-col sm="2" md="2" lg="2" xl="2" class="text-center">
         <b-button
           v-if="
             role === $store.state.REGISTRATION ||
@@ -94,22 +107,30 @@
           Печат
         </b-button>
       </b-col>
-      <b-col sm="3" md="3" lg="3" xl="3">
-        <input
-          type="file"
-          style="display: none"
-          id="files"
-          ref="files"
-          @change="onUploadTashxis()"
-          class="my-0"
-        />
-        <button class="btn btn-primary" @click="$refs.files.click()">
-          <b-icon icon="cloud-arrow-up-fill"></b-icon>&ensp;Ташхисларни юклаш
-        </button>
-        <span v-if="tashxisfile != ''"
-          >&emsp;
-          <b-icon icon="patch-check-fill" variant="success"></b-icon>
-        </span>
+      <b-col sm="3" md="3" lg="3" xl="3" class="text-center">
+        <div 
+          v-if="
+            role === $store.state.REGISTRATION ||
+              role === $store.state.DOCTOR ||
+              role === $store.state.ITMED
+          "
+        >
+          <input
+            type="file"
+            style="display: none"
+            id="files"
+            ref="files"
+            @change="onUploadTashxis()"
+            class="my-0"
+          />
+          <button class="btn btn-primary" @click="$refs.files.click()">
+            <b-icon icon="cloud-arrow-up-fill"></b-icon>&ensp;Ташхисларни юклаш
+          </button>
+          <span v-if="tashxisfile != ''"
+            >&emsp;
+            <b-icon icon="patch-check-fill" variant="success"></b-icon>
+          </span>
+        </div>
       </b-col>
       <b-col sm="1" md="1" lg="1" xl="1">
         <b-button
@@ -303,7 +324,6 @@
           <b-tab
             title="Бемор маълумотлари"
             :title-link-class="linkClass(0)"
-            active
             class="pt-1"
           >
             <b-card-text>
@@ -716,6 +736,11 @@
                           font-scale="1.2"
                           v-b-tooltip.hover.v-danger.right="'Шифокорни Ўчириш'"
                           @click="RemoveDoctor(index)"
+                          v-if="
+                            role === $store.state.REGISTRATION ||
+                              role === $store.state.DOCTOR ||
+                              role === $store.state.ITMED
+                          "
                         ></b-icon>
                       </td>
                     </tr>
@@ -876,7 +901,7 @@
                                     role === $store.state.DOCTOR
                                 "
                                 @change="
-                                  CheckStatusInspection(item.user_id, index)
+                                  CheckStatusInspection(item.user_id, index, indeks)
                                 "
                               ></b-form-textarea>
                             </td>
@@ -884,7 +909,7 @@
                               <input
                                 :id="'ins_' + index + '_files_' + indeks"
                                 type="file"
-                                @change="onInsUpload(indeks, index)"
+                                @change="onInsUpload(indeks, index); CheckStatusInspection(item.user_id, index, indeks)"
                               />
                               <span v-if="field.file != ''">
                                 <img
@@ -927,205 +952,10 @@
             </b-card-text>
           </b-tab>
           <!-- ispections end -->
-          <!-- room section start -->
-          <b-tab
-            title="Хона бириктириш"
-            :title-link-class="linkClass(3)"
-            v-if="role === $store.state.ITMED"
-          >
-            <b-card-text>
-              <b-row>
-                <b-col
-                  sm="3"
-                  offset-sm="1"
-                  md="3"
-                  offset-md="1"
-                  lg="3"
-                  offset-lg="1"
-                  xl="3"
-                  offset-xl="1"
-                >
-                  <label for="datepicker-first-date">Вақтдан</label><br />
-                  <date-picker
-                    id="datepicker-first-date"
-                    v-model="attach_room.begin_date"
-                    format="DD.MM.YYYY"
-                    value-type="X"
-                    type="date"
-                    style="width: 100%"
-                    :lang="lang"
-                    placeholder="dd.mm.yyyy"
-                  ></date-picker>
-                </b-col>
-                <b-col sm="3" md="3" lg="3" xl="3">
-                  <label for="input-date-range">Кун</label>
-                  <b-form-input
-                    style="border: 1px solid #CACACA; border-radius: 4px"
-                    id="input-date-range"
-                    type="number"
-                    v-model.number="attach_room.add_date"
-                    class="px-1"
-                    @change="AddDate()"
-                  ></b-form-input>
-                </b-col>
-                <b-col sm="3" md="3" lg="3" xl="3">
-                  <label for="datepicker-second-date">Вақтгача</label><br />
-                  <date-picker
-                    id="datepicker-second-date"
-                    v-model="attach_room.end_date"
-                    format="DD.MM.YYYY"
-                    value-type="X"
-                    style="width: 100%"
-                    type="date"
-                    :lang="lang"
-                    placeholder="dd.mm.yyyy"
-                  ></date-picker>
-                </b-col>
-                <b-col sm="2" md="2" lg="2" xl="2">
-                  <b-button variant="success" class="mt-4" @click="GetRoom()">
-                    <b-icon icon="eye-fill"></b-icon>
-                    Кўриш
-                  </b-button>
-                </b-col>
-                <b-col
-                  sm="6"
-                  offset-sm="3"
-                  md="6"
-                  offset-md="3"
-                  lg="6"
-                  offset-lg="3"
-                  xl="6"
-                  offset-xl="3"
-                  v-if="checkRoom"
-                >
-                  <!-- room alert start -->
-                  <b-alert
-                    show
-                    dismissible
-                    class="mt-2 text-center"
-                    variant="warning"
-                  >
-                    Саналарни танланг!
-                  </b-alert>
-                  <!-- room alert end -->
-                </b-col>
-              </b-row>
-              <!-- attach room modal start -->
-              <b-modal
-                hide-footer
-                size="lg"
-                title="Хоналар Рўйҳати"
-                v-model="modalRoomShow"
-              >
-                <b-row>
-                  <b-col sm="6" md="6" lg="6" xl="6">
-                    <b-form-group
-                      label-for="filter-input-room"
-                      label-align-sm="right"
-                      label-size="sm"
-                      class="mb-0"
-                    >
-                      <b-input-group size="sm">
-                        <b-form-input
-                          id="filter-input-room"
-                          v-model="filterRoom"
-                          type="search"
-                          placeholder="Қидириш..."
-                        ></b-form-input>
-
-                        <b-input-group-append>
-                          <b-button
-                            variant="danger"
-                            size="sm"
-                            :disabled="!filterRoom"
-                            @click="filterRoom = ''"
-                            >Тозалаш</b-button
-                          >
-                        </b-input-group-append>
-                      </b-input-group>
-                    </b-form-group>
-                  </b-col>
-                  <b-col sm="6" md="6" lg="6" xl="6">
-                    <b-pagination
-                      v-model="currentPageRoom"
-                      :total-rows="totalRowsRoom"
-                      :per-page="perPageRoom"
-                      align="fill"
-                      size="sm"
-                      class="mt-2"
-                    ></b-pagination>
-                  </b-col>
-                  <b-table
-                    :items="rooms"
-                    bordered
-                    :fields="fieldsRoom"
-                    :filter="filterRoom"
-                    stacked="md"
-                    :current-page="currentPageRoom"
-                    :per-page="perPageRoom"
-                    hover
-                    show-empty
-                    small
-                    style="cursor:pointer"
-                    striped
-                    @row-clicked="AddRoom"
-                    @filtered="onFilteredRoom"
-                  >
-                    <template #cell(name)="row">
-                      {{ row.value.full_name }}
-                    </template>
-                  </b-table>
-                </b-row>
-              </b-modal>
-              <!-- attach room modal end -->
-              <!-- table start -->
-              <b-container
-                v-if="data.room.length > 0"
-                fluid
-                style="height: 370px; overflow-y: auto;"
-              >
-                <table
-                  class="table table-bordered table-striped table-hover table-bordered table-sm mt-2"
-                >
-                  <thead>
-                    <tr class="table-primary">
-                      <th>Хона</th>
-                      <th>Келган вақти</th>
-                      <th>Кетиш вақти</th>
-                      <th>Нарҳи</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(item, index) in data.room" :key="index">
-                      <td>
-                        {{ item.room ? item.room.full_name : item.full_name }}
-                      </td>
-                      <td>{{ item.begin_date | moment }}</td>
-                      <td>{{ item.end_date | moment }}</td>
-                      <td>{{ item.price }}</td>
-                      <td class="text-center">
-                        <b-icon
-                          icon="trash"
-                          style="cursor: pointer;"
-                          variant="danger"
-                          font-scale="1.2"
-                          v-b-tooltip.hover.v-danger.right="'Ўчириш'"
-                          @click="RemoveRoom(index)"
-                        ></b-icon>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </b-container>
-              <!-- table end -->
-            </b-card-text>
-          </b-tab>
-          <!-- room section end -->
           <!-- diagnosis section start -->
           <b-tab
             title="Ташхис"
-            :title-link-class="linkClass(4)"
+            :title-link-class="linkClass(3)"
             class="pt-2"
             v-if="role === $store.state.DOCTOR || role === $store.state.ITMED"
           >
@@ -1135,7 +965,6 @@
                 :key="index"
                 :title="item.doctor.name != null ? item.doctor.name : ''"
                 :title-link-class="linkDoctorClass(index)"
-                active
                 class="pt-2"
               >
                 <b-container fluid style="height: 385px; overflow-y: auto;">
@@ -1144,7 +973,7 @@
                       <b-button
                         variant="primary"
                         block
-                        v-if="item.doctor.id == data.user_id"
+                        style="display: none"
                         v-b-tooltip.hover.v-primary.bottom
                         title="Шаблонлар"
                         v-b-modal="'my-template-' + index"
@@ -1391,7 +1220,7 @@
                         v-model="item.medical_history"
                         max-rows="8"
                         class="px-1 rmk-textarea"
-                        :disabled="item.doctor.id !== data.user_id"
+                        :disabled="item.doctor.id !== doctor_id"
                         @change="CheckStatusDoctor(item.doctor_id, index)"
                       ></b-form-textarea>
                     </b-col>
@@ -1416,7 +1245,7 @@
                         v-model="item.objective_vision"
                         max-rows="8"
                         class="px-1 rmk-textarea"
-                        :disabled="item.doctor.id !== data.user_id"
+                        :disabled="item.doctor.id !== doctor_id"
                         @change="CheckStatusDoctor(item.doctor_id, index)"
                       ></b-form-textarea>
                     </b-col>
@@ -1441,7 +1270,7 @@
                         v-model="item.instrumental"
                         max-rows="8"
                         class="px-1 rmk-textarea"
-                        :disabled="item.doctor.id !== data.user_id"
+                        :disabled="item.doctor.id !== doctor_id"
                         @change="CheckStatusDoctor(item.doctor_id, index)"
                       ></b-form-textarea>
                     </b-col>
@@ -1464,24 +1293,20 @@
                           size="sm"
                           class="p-0"
                           style="color: #3c8dbc"
-                          @click="GetMKB(index)"
-                          :disabled="item.doctor.id !== data.user_id"
+                          @click="GetMKB(index); modalMKBShow = true;"
+                          :disabled="item.doctor.id !== doctor_id"
                           >МКБ-10</b-button
                         >
                       </label>
-                      <v-select
+                      <b-form-textarea
                         id="textarea-main-diagnosis"
-                        :clearable="true"
-                        :options="mkb"
-                        v-model="item.diagnos"
-                        :reduce="name => name.id"
-                        label="name"
-                        placeholder="МКБни танланг..."
-                        class="mb-2"
-                        :disabled="item.doctor.id !== data.user_id"
-                        @input="CheckStatusDoctor(item.doctor_id, index)"
-                      >
-                      </v-select>
+                        rows="1"
+                        v-model="item.diagnos_name.name"
+                        max-rows="3"
+                        class="px-1 rmk-textarea"
+                        :disabled="item.doctor.id !== doctor_id"
+                        @change="CheckStatusDoctor(item.doctor_id, index)"
+                      ></b-form-textarea>
                     </b-col>
                     <b-col
                       offset-sm="1"
@@ -1502,7 +1327,7 @@
                         v-model="item.procedure"
                         max-rows="8"
                         class="px-1 rmk-textarea"
-                        :disabled="item.doctor.id !== data.user_id"
+                        :disabled="item.doctor.id !== doctor_id"
                         @change="CheckStatusDoctor(item.doctor_id, index)"
                       ></b-form-textarea>
                     </b-col>
@@ -1525,7 +1350,7 @@
                         v-model="item.recommended"
                         max-rows="8"
                         class="px-1 rmk-textarea"
-                        :disabled="item.doctor.id !== data.user_id"
+                        :disabled="item.doctor.id !== doctor_id"
                         @change="CheckStatusDoctor(item.doctor_id, index)"
                       ></b-form-textarea>
                     </b-col>
@@ -1539,9 +1364,9 @@
                       v-model="modalMKBShow"
                     >
                       <div style="height: 400px; overflow-y: auto;">
-                        <p v-for="(item1, index1) in mkb" :key="index1">
+                        <p v-for="(item_parent, index_parent) in mkb" :key="index_parent">
                           <b-button
-                            v-b-toggle="'mkb-collapse-' + index1"
+                            v-b-toggle="'mkb-collapse-' + index_parent"
                             variant="primary"
                             size="sm"
                           >
@@ -1552,26 +1377,27 @@
                             <b-icon
                               icon="folder-plus"
                               class="when-closed"
-                              @click="GetMKB1(item1, index1)"
+                              @click="GetMKBChild(item_parent, index_parent)"
                             ></b-icon>
                           </b-button>
                           &emsp;<span class="badge badge-success">{{
-                            item1.code
+                            item_parent.code
                           }}</span
                           >&emsp;
                           <span
                             style="cursor: pointer;"
-                            @click="SetMKB(item1)"
-                            >{{ item1.name }}</span
+                            @click="SetMKB(item_parent)"
+                            >{{ item_parent.name }}</span
                           >
-                          <b-collapse :id="'mkb-collapse-' + index1">
+                          <b-collapse :id="'mkb-collapse-' + index_parent">
+                            <!-- mkb child start -->
                             <b-card>
                               <p
-                                v-for="(itm2, indx2) in item1.child"
-                                :key="indx2"
+                                v-for="(item_child, index_child) in item_parent.child"
+                                :key="index_child"
                               >
                                 <b-button
-                                  v-b-toggle="'mkb-child-collapse-' + indx2"
+                                  v-b-toggle="'mkb-child-collapse-' + index_child"
                                   variant="primary"
                                   size="sm"
                                 >
@@ -1582,22 +1408,89 @@
                                   <b-icon
                                     icon="folder-plus"
                                     class="when-closed"
+                                    @click="GetMKBGrandChild(item_child, index_parent, index_child)"
                                   ></b-icon>
                                 </b-button>
                                 &emsp;<span class="badge badge-success">{{
-                                  itm2.code
+                                  item_child.code
                                 }}</span
                                 >&emsp;
-                                <span style="cursor: pointer;">{{
-                                  itm2.name
+                                <span style="cursor: pointer;" @click="SetMKB(item_child)">{{
+                                  item_child.name
                                 }}</span>
-                                <b-collapse :id="'mkb-child-collapse-' + indx2">
+                                <b-collapse :id="'mkb-child-collapse-' + index_child">
+                                  <!-- mkb grandchild start -->
                                   <b-card>
-                                    salom
+                                    <p
+                                      v-for="(item_grandchild, index_grandchild) in item_child.grandchild"
+                                      :key="index_grandchild"
+                                    >
+                                      <b-button
+                                        v-b-toggle="'mkb-grandchild-collapse-' + index_grandchild"
+                                        variant="primary"
+                                        size="sm"
+                                      >
+                                        <b-icon
+                                          icon="folder-minus"
+                                          class="when-open"
+                                        ></b-icon>
+                                        <b-icon
+                                          icon="folder-plus"
+                                          class="when-closed"
+                                          @click="GetMKBGrandGrandChild(item_grandchild, index_parent, index_child, index_grandchild)"
+                                        ></b-icon>
+                                      </b-button>
+                                      &emsp;<span class="badge badge-success">{{
+                                        item_grandchild.code
+                                      }}</span
+                                      >&emsp;
+                                      <span style="cursor: pointer;" @click="SetMKB(item_grandchild)">{{
+                                        item_grandchild.name
+                                      }}</span>
+                                      <b-collapse :id="'mkb-grandchild-collapse-' + index_grandchild">
+                                        <!-- mkb grandgrandchild start -->
+                                        <b-card>
+                                          <p
+                                            v-for="(item_grandgrandchild, index_grandgrandchild) in item_grandchild.grandgrandchild"
+                                            :key="index_grandgrandchild"
+                                          >
+                                            <b-button
+                                              v-b-toggle="'mkb-grandgrandchild-collapse-' + index_grandgrandchild"
+                                              variant="primary"
+                                              size="sm"
+                                            >
+                                              <b-icon
+                                                icon="folder-minus"
+                                                class="when-open"
+                                              ></b-icon>
+                                              <b-icon
+                                                icon="folder-plus"
+                                                class="when-closed"
+                                              ></b-icon>
+                                            </b-button>
+                                            &emsp;<span class="badge badge-success">{{
+                                              item_grandgrandchild.code
+                                            }}</span
+                                            >&emsp;
+                                            <span style="cursor: pointer;" @click="SetMKB(item_grandgrandchild)">{{
+                                              item_grandgrandchild.name
+                                            }}</span>
+                                            <b-collapse :id="'mkb-grandgrandchild-collapse-' + index_grandgrandchild">
+                                              <b-card>
+                                                ***
+                                              </b-card>
+                                            </b-collapse>
+                                          </p>
+                                        </b-card>
+                                        <!-- mkb grandgrandchild end -->
+                                      </b-collapse>
+                                    </p>
                                   </b-card>
+                                  <!-- mkb grandchild end -->
                                 </b-collapse>
                               </p>
                             </b-card>
+                            <!-- mkb child end -->
                           </b-collapse>
                         </p>
                       </div>
@@ -1612,7 +1505,7 @@
           <!-- recipe section start -->
           <b-tab
             title="Рецеп"
-            :title-link-class="linkClass(5)"
+            :title-link-class="linkClass(4)"
             class="pt-1"
             v-if="role === $store.state.DOCTOR || role === $store.state.ITMED"
           >
@@ -1652,7 +1545,7 @@
             <b-button
               variant="primary"
               class="m-1"
-              @click="modalDrugList = !modalDrugList"
+              @click="GetDrug(); modalDrugList = !modalDrugList"
             >
               <b-icon icon="receipt"></b-icon>
               Дорилар рўйҳати
@@ -1722,44 +1615,48 @@
                   </b-col>
                 </b-row>
                 <!-- Drug search table element start -->
-                <b-table
-                  :items="drugs"
-                  bordered
-                  :fields="fieldsDrug"
-                  :current-page="currentPageDrug"
-                  :per-page="perPageDrug"
-                  :filter="filterDrug"
-                  :filter-included-fields="filterOnDrug"
-                  :sort-desc.sync="sortDescDrug"
-                  stacked="md"
-                  hover
-                  show-empty
-                  small
-                  @filtered="onFilteredDrug"
-                >
-                  <template #cell(items)="row">
-                    {{ row.value.name }}
-                  </template>
-                </b-table>
+                <div style="height: 270px; overflow-y: auto;">
+                  <b-table
+                    :items="drugs"
+                    bordered
+                    :fields="fieldsDrug"
+                    :current-page="currentPageDrug"
+                    :per-page="perPageDrug"
+                    :filter="filterDrug"
+                    :filter-included-fields="filterOnDrug"
+                    :sort-desc.sync="sortDescDrug"
+                    stacked="md"
+                    hover
+                    show-empty
+                    small
+                    @filtered="onFilteredDrug"
+                  >
+                    <template #cell(items)="row">
+                      {{ row.value.name }}
+                    </template>
+                  </b-table>
+                </div>
                 <!-- Drug search table element end -->
               </b-container>
             </b-modal>
             <!-- drug list modal end -->
 
             <!-- alert start -->
-            <div class="row justify-content-md-center" v-if="drug_alert">
-              <div
-                class="col-xl-6 col-lg-6 col-md-6 col-xs-6 alert alert-success"
-              >
-                <button
-                  type="button"
-                  aria-hidden="true"
-                  class="close"
-                  @click="drug_alert = false"
+            <div class="container-fluid" style="position:absolute;" v-if="drug_alert">
+              <div class="row justify-content-md-center">
+                <div
+                  class="col-xl-6 col-lg-6 col-md-6 col-xs-6 alert alert-success"
                 >
-                  ×
-                </button>
-                <span><b>Дори Қўшилди!</b></span>
+                  <button
+                    type="button"
+                    aria-hidden="true"
+                    class="close"
+                    @click="drug_alert = false"
+                  >
+                    ×
+                  </button>
+                  <span><b>Дори Қўшилди!</b></span>
+                </div>
               </div>
             </div>
             <!-- alert end -->
@@ -1789,7 +1686,7 @@
                                 size="sm"
                                 v-b-tooltip.hover.v-info.topright
                                 title="Қатор қўшиш"
-                                :disabled="item.doctor.id !== data.user_id"
+                                :disabled="item.doctor.id !== doctor_id"
                                 >+</b-button
                               >
                             </th>
@@ -1814,6 +1711,10 @@
                                 :reduce="name => name.id"
                                 placeholder="Танланг..."
                                 label="name"
+                                :disabled="item.doctor.id !== doctor_id"
+                                @input="
+                                  CheckStatusDoctor(item.doctor_id, index)
+                                "
                               >
                               </v-select>
                             </td>
@@ -1822,6 +1723,10 @@
                                 class="form-control form-control-sm"
                                 type="number"
                                 v-model="item2.day"
+                                :disabled="item.doctor.id !== doctor_id"
+                                @change="
+                                  CheckStatusDoctor(item.doctor_id, index)
+                                "
                               />
                             </td>
                             <td>
@@ -1832,6 +1737,7 @@
                                 @change="
                                   CheckStatusDoctor(item.doctor_id, index)
                                 "
+                                :disabled="item.doctor.id !== doctor_id"
                               />
                             </td>
                             <td>
@@ -1839,7 +1745,8 @@
                                 class="form-control form-control-sm"
                                 type="text"
                                 v-model="item2.comment"
-                                @change="Addrow(index)"
+                                :disabled="item.doctor.id !== doctor_id"
+                                @change="Addrow(index); CheckStatusDoctor(item.doctor_id, index);"
                               />
                             </td>
                             <td class="text-center">
@@ -1851,7 +1758,7 @@
                                 v-b-tooltip.hover.v-danger.right="
                                   'Дорини Ўчириш'
                                 "
-                                :disabled="item.doctor.id !== data.user_id"
+                                v-if="item.doctor.id === doctor_id"
                                 @click="RemoveDrug(index, index2)"
                               ></b-icon>
                             </td>
@@ -1868,7 +1775,7 @@
           <!-- tashxis section start -->
           <b-tab
             title="Ташхис Файллар"
-            :title-link-class="linkClass(6)"
+            :title-link-class="linkClass(5)"
             class="pt-1"
             v-if="
               role === $store.state.DOCTOR ||
@@ -1909,6 +1816,201 @@
             </b-container>
           </b-tab>
           <!-- tashxis section end -->
+          <!-- room section start -->
+          <b-tab
+            title="Хона бириктириш"
+            :title-link-class="linkClass(6)"
+            v-if="role === $store.state.ITMED"
+          >
+            <b-card-text>
+              <b-row>
+                <b-col
+                  sm="3"
+                  offset-sm="1"
+                  md="3"
+                  offset-md="1"
+                  lg="3"
+                  offset-lg="1"
+                  xl="3"
+                  offset-xl="1"
+                >
+                  <label for="datepicker-first-date">Вақтдан</label><br />
+                  <date-picker
+                    id="datepicker-first-date"
+                    v-model="attach_room.begin_date"
+                    format="DD.MM.YYYY"
+                    value-type="X"
+                    type="date"
+                    style="width: 100%"
+                    :lang="lang"
+                    placeholder="dd.mm.yyyy"
+                  ></date-picker>
+                </b-col>
+                <b-col sm="3" md="3" lg="3" xl="3">
+                  <label for="input-date-range">Кун</label>
+                  <b-form-input
+                    style="border: 1px solid #CACACA; border-radius: 4px"
+                    id="input-date-range"
+                    type="number"
+                    v-model.number="attach_room.add_date"
+                    class="px-1"
+                    @change="AddDate()"
+                  ></b-form-input>
+                </b-col>
+                <b-col sm="3" md="3" lg="3" xl="3">
+                  <label for="datepicker-second-date">Вақтгача</label><br />
+                  <date-picker
+                    id="datepicker-second-date"
+                    v-model="attach_room.end_date"
+                    format="DD.MM.YYYY"
+                    value-type="X"
+                    style="width: 100%"
+                    type="date"
+                    :lang="lang"
+                    placeholder="dd.mm.yyyy"
+                  ></date-picker>
+                </b-col>
+                <b-col sm="2" md="2" lg="2" xl="2">
+                  <b-button variant="success" class="mt-4" @click="GetRoom()">
+                    <b-icon icon="eye-fill"></b-icon>
+                    Кўриш
+                  </b-button>
+                </b-col>
+                <b-col
+                  sm="6"
+                  offset-sm="3"
+                  md="6"
+                  offset-md="3"
+                  lg="6"
+                  offset-lg="3"
+                  xl="6"
+                  offset-xl="3"
+                  v-if="checkRoom"
+                >
+                  <!-- room alert start -->
+                  <b-alert
+                    show
+                    dismissible
+                    class="mt-2 text-center"
+                    variant="warning"
+                  >
+                    Саналарни танланг!
+                  </b-alert>
+                  <!-- room alert end -->
+                </b-col>
+              </b-row>
+              <!-- attach room modal start -->
+              <b-modal
+                hide-footer
+                size="lg"
+                title="Хоналар Рўйҳати"
+                v-model="modalRoomShow"
+              >
+                <b-row>
+                  <b-col sm="6" md="6" lg="6" xl="6">
+                    <b-form-group
+                      label-for="filter-input-room"
+                      label-align-sm="right"
+                      label-size="sm"
+                      class="mb-0"
+                    >
+                      <b-input-group size="sm">
+                        <b-form-input
+                          id="filter-input-room"
+                          v-model="filterRoom"
+                          type="search"
+                          placeholder="Қидириш..."
+                        ></b-form-input>
+
+                        <b-input-group-append>
+                          <b-button
+                            variant="danger"
+                            size="sm"
+                            :disabled="!filterRoom"
+                            @click="filterRoom = ''"
+                            >Тозалаш</b-button
+                          >
+                        </b-input-group-append>
+                      </b-input-group>
+                    </b-form-group>
+                  </b-col>
+                  <b-col sm="6" md="6" lg="6" xl="6">
+                    <b-pagination
+                      v-model="currentPageRoom"
+                      :total-rows="totalRowsRoom"
+                      :per-page="perPageRoom"
+                      align="fill"
+                      size="sm"
+                      class="mt-2"
+                    ></b-pagination>
+                  </b-col>
+                  <b-table
+                    :items="rooms"
+                    bordered
+                    :fields="fieldsRoom"
+                    :filter="filterRoom"
+                    stacked="md"
+                    :current-page="currentPageRoom"
+                    :per-page="perPageRoom"
+                    hover
+                    show-empty
+                    small
+                    style="cursor:pointer"
+                    striped
+                    @row-clicked="AddRoom"
+                    @filtered="onFilteredRoom"
+                  >
+                    <template #cell(name)="row">
+                      {{ row.value.full_name }}
+                    </template>
+                  </b-table>
+                </b-row>
+              </b-modal>
+              <!-- attach room modal end -->
+              <!-- table start -->
+              <b-container
+                v-if="data.room.length > 0"
+                fluid
+                style="height: 370px; overflow-y: auto;"
+              >
+                <table
+                  class="table table-bordered table-striped table-hover table-bordered table-sm mt-2"
+                >
+                  <thead>
+                    <tr class="table-primary">
+                      <th>Хона</th>
+                      <th>Келган вақти</th>
+                      <th>Кетиш вақти</th>
+                      <th>Нарҳи</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, index) in data.room" :key="index">
+                      <td>
+                        {{ item.room ? item.room.full_name : item.full_name }}
+                      </td>
+                      <td>{{ item.begin_date | moment }}</td>
+                      <td>{{ item.end_date | moment }}</td>
+                      <td>{{ item.price }}</td>
+                      <td class="text-center">
+                        <b-icon
+                          icon="trash"
+                          style="cursor: pointer;"
+                          variant="danger"
+                          font-scale="1.2"
+                          v-b-tooltip.hover.v-danger.right="'Ўчириш'"
+                          @click="RemoveRoom(index)"
+                        ></b-icon>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </b-container>
+              <!-- table end -->
+            </b-card-text>
+          </b-tab>
+          <!-- room section end -->
         </b-tabs>
       </b-card>
     </b-container>
@@ -1952,7 +2054,7 @@ export default {
       type_service: "ambulator",
       created_at: null,
       updated_at: null,
-      status: null,
+      status: "waiting",
       complaint: null,
       inspection: [],
       doctor: [],
@@ -1970,6 +2072,7 @@ export default {
       },
       monthBeforeYear: false
     },
+    doctor_id: parseInt(localStorage.getItem("did")),
     drug: { name: null },
     drug_save: false,
     drug_alert: false,
@@ -2119,6 +2222,7 @@ export default {
         );
         self.data = response.data;
         await self.GetPatientById(response.data.patient_id);
+        await self.GetMKB(0);
         // self.checkSpinner = false;
         self.checkBody = true;
       } catch (error) {
@@ -2134,7 +2238,6 @@ export default {
     async Save() {
       let self = this;
       self.saving = true;
-      self.data.status = self.$store.state.WAITING;
       if (self.$route.path == "/patient/create") {
         var methods = "post";
         var action = "api/registration";
@@ -2151,7 +2254,7 @@ export default {
         self.saving = false;
         window.close();
       } catch (error) {
-        self.$store.state.errors = error;
+        // self.$store.state.errors = error;
       }
     },
     async print() {
@@ -2189,11 +2292,11 @@ export default {
                 window.close();
               }, 3000);
             } catch (error) {
-              self.$store.state.errors = error;
+              // self.$store.state.errors = error;
             }
           }
         } catch (error) {
-          self.$store.state.errors = error;
+          // self.$store.state.errors = error;
         }
       }
     },
@@ -2440,10 +2543,11 @@ export default {
       }
       self.modalInspectionShow = false;
     },
-    CheckStatusInspection(user_id, index) {
+    CheckStatusInspection(user_id, index, indeks) {
       let self = this;
       if (user_id == this.data.user_id) {
         self.data.inspection[index].status = self.$store.state.COMPLETED;
+        self.data.inspection[index].child[indeks].status = self.$store.state.COMPLETED;
       }
     },
     CheckStatusDoctor(doctor_id, index) {
@@ -2470,6 +2574,7 @@ export default {
         instrumental: "",
         //mkb-10 id si
         diagnos: null,
+        diagnos_name: {name:''},
         procedure: "",
         recommended: "",
         reciept: []
@@ -2557,7 +2662,7 @@ export default {
           self.data.patient_name = response.data.fullname;
           self.checkPatientStatus = true;
         } catch (error) {
-          self.$store.state.errors = error;
+          // self.$store.state.errors = error;
         }
       }
     },
@@ -2642,34 +2747,69 @@ export default {
         self.$store.state.errors = error;
       }
     },
+    SetMKB(item) {
+      let self = this;
+      // console.log(item);
+      let index = parseInt(localStorage.getItem("index"));
+      self.data.doctor[index].diagnos = item.id;
+      self.data.doctor[index].diagnos_name = item;
+      self.modalMKBShow = false;
+      localStorage.removeItem("index");
+    },
     async GetMKB(index) {
       let self = this;
-      localStorage.setItem("index", index);
+      if(index != 0){
+        localStorage.setItem("index", index);
+      }
       //mkblar ro'yhatini olish
-      self.modalMKBShow = true;
       try {
         const response = await self.axios.get("api/registration/mkb/0");
+        response.data.forEach(element => {
+          element.child = [];
+        });
         self.mkb = response.data;
       } catch (error) {
         self.$store.state.errors = error;
       }
     },
-    SetMKB(item1) {
-      let self = this;
-      let index = parseInt(localStorage.getItem("index"));
-      self.data.doctor[index].diagnos = item1.id;
-      self.modalMKBShow = false;
-    },
-    async GetMKB1(item, index) {
+    async GetMKBChild(item, index) {
       let self = this;
       //mkblar ro'yhatini olish
-      // console.log(item);
-      // console.log(index);
       try {
         const response = await self.axios.get(
           "api/registration/mkb/" + item.id
         );
+        response.data.forEach(element => {
+          element.grandchild = [];
+        });
         self.mkb[index].child = response.data;
+      } catch (error) {
+        self.$store.state.errors = error;
+      }
+    },
+    async GetMKBGrandChild(item_child, index_parent, index_child) {
+      let self = this;
+      //mkblar ro'yhatini olish
+      try {
+        const response = await self.axios.get(
+          "api/registration/mkb/" + item_child.id
+        );
+        response.data.forEach(element => {
+          element.grandgrandchild = [];
+        });
+        self.mkb[index_parent].child[index_child].grandchild = response.data;
+      } catch (error) {
+        self.$store.state.errors = error;
+      }
+    },
+    async GetMKBGrandGrandChild(item_grandchild, index_parent, index_child, index_grandchild) {
+      let self = this;
+      //mkblar ro'yhatini olish
+      try {
+        const response = await self.axios.get(
+          "api/registration/mkb/" + item_grandchild.id
+        );
+        self.mkb[index_parent].child[index_child].grandchild[index_grandchild].grandgrandchild = response.data;
       } catch (error) {
         self.$store.state.errors = error;
       }
@@ -2857,7 +2997,7 @@ export default {
 .rmk-patient-form {
   width: 100%;
   background-color: #d1e5f1 !important;
-  padding: 8px 10px;
+  padding-top: 5px;
   margin: 0;
   height: 100%;
 }
