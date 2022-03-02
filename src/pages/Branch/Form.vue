@@ -27,14 +27,14 @@
               <md-field>
                 <b-icon icon="building" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>Филиал Номи</label>
+                <label>Филиал Номи<sup class="text-danger">*</sup></label>
                 <md-input v-model="datas.name" md-dense></md-input>
               </md-field>
             </b-col>
             <b-col md="6" sm="6" lg="6" xl="6">
               <b-icon icon="card-list" font-scale="1.6"></b-icon>
               <md-icon></md-icon>
-              <label>Туман</label>
+              <label>Туман<sup class="text-danger">*</sup></label>
               <v-select
                 :clearable="true"
                 :options="districts"

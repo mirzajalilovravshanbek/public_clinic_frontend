@@ -5,7 +5,7 @@
 <script>
 export default {
   mounted() {
-    if (!localStorage.getItem("token")) {
+    if (!localStorage.getItem("t")) {
       this.$router.push({ name: "LoginUser" }).catch(error => {
         if (error.name != "NavigationDuplicated") {
           throw error;

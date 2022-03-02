@@ -27,7 +27,7 @@
               <md-field>
                 <b-icon icon="circle-half" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>Дори номи</label>
+                <label>Дори номи<sup class="text-danger">*</sup></label>
                 <md-input v-model="datas.name" md-dense></md-input>
               </md-field>
             </b-col>

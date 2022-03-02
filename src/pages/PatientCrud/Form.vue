@@ -28,7 +28,7 @@
               <md-field>
                 <b-icon icon="person" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>Фамилия</label>
+                <label>Фамилия<sup class="text-danger">*</sup></label>
                 <md-input v-model="datas.lastname" md-dense></md-input>
               </md-field>
             </b-col>
@@ -39,7 +39,7 @@
               <md-field>
                 <b-icon icon="person" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>Исми</label>
+                <label>Исми<sup class="text-danger">*</sup></label>
                 <md-input v-model="datas.name" md-dense></md-input>
               </md-field>
             </b-col>
@@ -50,7 +50,7 @@
               <md-field>
                 <b-icon icon="person" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>Отаси Исми</label>
+                <label>Отаси Исми<sup class="text-danger">*</sup></label>
                 <md-input v-model="datas.patronymic" md-dense></md-input>
               </md-field>
             </b-col>

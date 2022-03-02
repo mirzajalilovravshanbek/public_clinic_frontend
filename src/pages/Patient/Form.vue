@@ -80,6 +80,11 @@
       </b-col>
       <b-col sm="1" md="1" lg="1" xl="1" class="text-center">
         <b-form-checkbox
+          v-if="
+            role === $store.state.REGISTRATION ||
+              role === $store.state.DOCTOR ||
+              role === $store.state.ITMED
+          "
           id="doc_status"
           v-model="data.status"
           name="doc_status"
@@ -108,7 +113,7 @@
         </b-button>
       </b-col>
       <b-col sm="3" md="3" lg="3" xl="3" class="text-center">
-        <div 
+        <div
           v-if="
             role === $store.state.REGISTRATION ||
               role === $store.state.DOCTOR ||
@@ -898,7 +903,11 @@
                                 class="form-control"
                                 :readonly="item.user_id != ins_user_id"
                                 @change="
-                                  CheckStatusInspection(item.user_id, index, indeks)
+                                  CheckStatusInspection(
+                                    item.user_id,
+                                    index,
+                                    indeks
+                                  )
                                 "
                               ></b-form-textarea>
                             </td>
@@ -906,11 +915,21 @@
                               <input
                                 :id="'ins_' + index + '_files_' + indeks"
                                 type="file"
-                                @change="onInsUpload(indeks, index); CheckStatusInspection(item.user_id, index, indeks)"
+                                @change="
+                                  onInsUpload(indeks, index);
+                                  CheckStatusInspection(
+                                    item.user_id,
+                                    index,
+                                    indeks
+                                  );
+                                "
                               />
                               <span v-if="field.file != ''">
                                 <img
-                                  :src="`${axios.defaults.baseURL}upload/`+ field.file"
+                                  :src="
+                                    `${axios.defaults.baseURL}upload/` +
+                                      field.file
+                                  "
                                   style="width: 100px; cursor:pointer"
                                   @click="
                                     modalImageShow = !modalImageShow;
@@ -932,7 +951,9 @@
                       >
                         <div class="text-center">
                           <img
-                            :src="`${axios.defaults.baseURL}upload/`+ modalImage"
+                            :src="
+                              `${axios.defaults.baseURL}upload/` + modalImage
+                            "
                             style="width: 300px"
                           />
                         </div>
@@ -1288,7 +1309,10 @@
                           size="sm"
                           class="p-0"
                           style="color: #3c8dbc"
-                          @click="GetMKB(index); modalMKBShow = true;"
+                          @click="
+                            GetMKB(index);
+                            modalMKBShow = true;
+                          "
                           :disabled="item.doctor.id !== doctor_id"
                           >МКБ-10</b-button
                         >
@@ -1296,7 +1320,11 @@
                       <b-form-textarea
                         id="textarea-main-diagnosis"
                         rows="1"
-                        :value="item.diagnos_name != null ? item.diagnos_name.name : ''"
+                        :value="
+                          item.diagnos_name != null
+                            ? item.diagnos_name.name
+                            : ''
+                        "
                         max-rows="3"
                         class="px-1 rmk-textarea"
                         :disabled="item.doctor.id !== doctor_id"
@@ -1359,7 +1387,10 @@
                       v-model="modalMKBShow"
                     >
                       <div style="height: 400px; overflow-y: auto;">
-                        <p v-for="(item_parent, index_parent) in mkb" :key="index_parent">
+                        <p
+                          v-for="(item_parent, index_parent) in mkb"
+                          :key="index_parent"
+                        >
                           <b-button
                             v-b-toggle="'mkb-collapse-' + index_parent"
                             variant="primary"
@@ -1388,11 +1419,14 @@
                             <!-- mkb child start -->
                             <b-card>
                               <p
-                                v-for="(item_child, index_child) in item_parent.child"
+                                v-for="(item_child,
+                                index_child) in item_parent.child"
                                 :key="index_child"
                               >
                                 <b-button
-                                  v-b-toggle="'mkb-child-collapse-' + index_child"
+                                  v-b-toggle="
+                                    'mkb-child-collapse-' + index_child
+                                  "
                                   variant="primary"
                                   size="sm"
                                 >
@@ -1403,25 +1437,39 @@
                                   <b-icon
                                     icon="folder-plus"
                                     class="when-closed"
-                                    @click="GetMKBGrandChild(item_child, index_parent, index_child)"
+                                    @click="
+                                      GetMKBGrandChild(
+                                        item_child,
+                                        index_parent,
+                                        index_child
+                                      )
+                                    "
                                   ></b-icon>
                                 </b-button>
                                 &emsp;<span class="badge badge-success">{{
                                   item_child.code
                                 }}</span
                                 >&emsp;
-                                <span style="cursor: pointer;" @click="SetMKB(item_child)">{{
-                                  item_child.name
-                                }}</span>
-                                <b-collapse :id="'mkb-child-collapse-' + index_child">
+                                <span
+                                  style="cursor: pointer;"
+                                  @click="SetMKB(item_child)"
+                                  >{{ item_child.name }}</span
+                                >
+                                <b-collapse
+                                  :id="'mkb-child-collapse-' + index_child"
+                                >
                                   <!-- mkb grandchild start -->
                                   <b-card>
                                     <p
-                                      v-for="(item_grandchild, index_grandchild) in item_child.grandchild"
+                                      v-for="(item_grandchild,
+                                      index_grandchild) in item_child.grandchild"
                                       :key="index_grandchild"
                                     >
                                       <b-button
-                                        v-b-toggle="'mkb-grandchild-collapse-' + index_grandchild"
+                                        v-b-toggle="
+                                          'mkb-grandchild-collapse-' +
+                                            index_grandchild
+                                        "
                                         variant="primary"
                                         size="sm"
                                       >
@@ -1432,25 +1480,43 @@
                                         <b-icon
                                           icon="folder-plus"
                                           class="when-closed"
-                                          @click="GetMKBGrandGrandChild(item_grandchild, index_parent, index_child, index_grandchild)"
+                                          @click="
+                                            GetMKBGrandGrandChild(
+                                              item_grandchild,
+                                              index_parent,
+                                              index_child,
+                                              index_grandchild
+                                            )
+                                          "
                                         ></b-icon>
                                       </b-button>
                                       &emsp;<span class="badge badge-success">{{
                                         item_grandchild.code
                                       }}</span
                                       >&emsp;
-                                      <span style="cursor: pointer;" @click="SetMKB(item_grandchild)">{{
-                                        item_grandchild.name
-                                      }}</span>
-                                      <b-collapse :id="'mkb-grandchild-collapse-' + index_grandchild">
+                                      <span
+                                        style="cursor: pointer;"
+                                        @click="SetMKB(item_grandchild)"
+                                        >{{ item_grandchild.name }}</span
+                                      >
+                                      <b-collapse
+                                        :id="
+                                          'mkb-grandchild-collapse-' +
+                                            index_grandchild
+                                        "
+                                      >
                                         <!-- mkb grandgrandchild start -->
                                         <b-card>
                                           <p
-                                            v-for="(item_grandgrandchild, index_grandgrandchild) in item_grandchild.grandgrandchild"
+                                            v-for="(item_grandgrandchild,
+                                            index_grandgrandchild) in item_grandchild.grandgrandchild"
                                             :key="index_grandgrandchild"
                                           >
                                             <b-button
-                                              v-b-toggle="'mkb-grandgrandchild-collapse-' + index_grandgrandchild"
+                                              v-b-toggle="
+                                                'mkb-grandgrandchild-collapse-' +
+                                                  index_grandgrandchild
+                                              "
                                               variant="primary"
                                               size="sm"
                                             >
@@ -1463,14 +1529,27 @@
                                                 class="when-closed"
                                               ></b-icon>
                                             </b-button>
-                                            &emsp;<span class="badge badge-success">{{
-                                              item_grandgrandchild.code
-                                            }}</span
+                                            &emsp;<span
+                                              class="badge badge-success"
+                                              >{{
+                                                item_grandgrandchild.code
+                                              }}</span
                                             >&emsp;
-                                            <span style="cursor: pointer;" @click="SetMKB(item_grandgrandchild)">{{
-                                              item_grandgrandchild.name
-                                            }}</span>
-                                            <b-collapse :id="'mkb-grandgrandchild-collapse-' + index_grandgrandchild">
+                                            <span
+                                              style="cursor: pointer;"
+                                              @click="
+                                                SetMKB(item_grandgrandchild)
+                                              "
+                                              >{{
+                                                item_grandgrandchild.name
+                                              }}</span
+                                            >
+                                            <b-collapse
+                                              :id="
+                                                'mkb-grandgrandchild-collapse-' +
+                                                  index_grandgrandchild
+                                              "
+                                            >
                                               <b-card>
                                                 ***
                                               </b-card>
@@ -1540,7 +1619,10 @@
             <b-button
               variant="primary"
               class="m-1"
-              @click="GetDrug(); modalDrugList = !modalDrugList"
+              @click="
+                GetDrug();
+                modalDrugList = !modalDrugList;
+              "
             >
               <b-icon icon="receipt"></b-icon>
               Дорилар рўйҳати
@@ -1637,7 +1719,11 @@
             <!-- drug list modal end -->
 
             <!-- alert start -->
-            <div class="container-fluid" style="position:absolute;" v-if="drug_alert">
+            <div
+              class="container-fluid"
+              style="position:absolute;"
+              v-if="drug_alert"
+            >
               <div class="row justify-content-md-center">
                 <div
                   class="col-xl-6 col-lg-6 col-md-6 col-xs-6 alert alert-success"
@@ -1741,7 +1827,10 @@
                                 type="text"
                                 v-model="item2.comment"
                                 :disabled="item.doctor.id !== doctor_id"
-                                @change="Addrow(index); CheckStatusDoctor(item.doctor_id, index);"
+                                @change="
+                                  Addrow(index);
+                                  CheckStatusDoctor(item.doctor_id, index);
+                                "
                               />
                             </td>
                             <td class="text-center">
@@ -2569,7 +2658,7 @@ export default {
         instrumental: "",
         //mkb-10 id si
         diagnos: null,
-        diagnos_name: {name:''},
+        diagnos_name: { name: "" },
         procedure: "",
         recommended: "",
         reciept: []
@@ -2752,9 +2841,9 @@ export default {
     },
     async GetMKB(index) {
       let self = this;
-      
+
       localStorage.setItem("index", index);
-      
+
       //mkblar ro'yhatini olish
       try {
         const response = await self.axios.get("api/registration/mkb/0");
@@ -2796,14 +2885,21 @@ export default {
         self.$store.state.errors = error;
       }
     },
-    async GetMKBGrandGrandChild(item_grandchild, index_parent, index_child, index_grandchild) {
+    async GetMKBGrandGrandChild(
+      item_grandchild,
+      index_parent,
+      index_child,
+      index_grandchild
+    ) {
       let self = this;
       //mkblar ro'yhatini olish
       try {
         const response = await self.axios.get(
           "api/registration/mkb/" + item_grandchild.id
         );
-        self.mkb[index_parent].child[index_child].grandchild[index_grandchild].grandgrandchild = response.data;
+        self.mkb[index_parent].child[index_child].grandchild[
+          index_grandchild
+        ].grandgrandchild = response.data;
       } catch (error) {
         self.$store.state.errors = error;
       }

@@ -147,7 +147,6 @@ export default {
       const response = await self.axios.get("api/branch");
       self.branches = response.data;
     } catch (error) {
-      self.$store.state.errors = error;
     }
     if (localStorage.getItem("branch_id") !== null) {
       self.datas.branch_id = parseInt(localStorage.getItem("branch_id"));
@@ -167,7 +166,6 @@ export default {
         );
         self.users = response.data;
       } catch (error) {
-        self.$store.state.errors = error;
       }
     },
     CheckUser() {
@@ -195,7 +193,7 @@ export default {
             localStorage.setItem("did", response.data.doctor_id);
             localStorage.setItem("username", response.data.username);
             localStorage.setItem("role", response.data.role);
-            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("t", response.data.token);
             self.$router.push({ path: "/patient/index" });
             self.sending = false;
           }
@@ -208,7 +206,7 @@ export default {
       (this.datas.branch_id = null),
         (this.datas.username = null),
         (this.datas.password = null);
-        (this.sending = false);
+      this.sending = false;
     }
   }
 };

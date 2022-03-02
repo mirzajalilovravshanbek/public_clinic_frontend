@@ -27,7 +27,7 @@
               <md-field>
                 <b-icon icon="door-open-fill" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>Бўлим номи</label>
+                <label>Бўлим номи<sup class="text-danger">*</sup></label>
                 <md-input v-model="datas.name" md-dense></md-input>
               </md-field>
             </b-col>
@@ -35,7 +35,7 @@
               <md-field>
                 <b-icon icon="cash" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>Нархи</label>
+                <label>Нархи<sup class="text-danger">*</sup></label>
                 <md-input v-model="datas.price" md-dense></md-input>
               </md-field>
             </b-col>

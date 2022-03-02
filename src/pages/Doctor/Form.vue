@@ -27,14 +27,14 @@
               <md-field>
                 <b-icon icon="person" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>Шифокор</label>
+                <label>Шифокор<sup class="text-danger">*</sup></label>
                 <md-input v-model="datas.name" md-dense></md-input>
               </md-field>
             </b-col>
             <b-col md="4" sm="4" lg="4" xl="4">
               <b-icon icon="card-list" font-scale="1.6"></b-icon>
               <md-icon></md-icon>
-              <label>Шифокор Бўлими</label>
+              <label>Шифокор Бўлими<sup class="text-danger">*</sup></label>
               <v-select
                 :clearable="true"
                 :options="categories"
@@ -48,7 +48,7 @@
             <b-col md="4" sm="4" lg="4" xl="4">
               <b-icon icon="card-list" font-scale="1.6"></b-icon>
               <md-icon></md-icon>
-              <label>Филиал</label>
+              <label>Филиал<sup class="text-danger">*</sup></label>
               <v-select
                 :clearable="true"
                 :options="branches"

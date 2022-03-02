@@ -411,7 +411,10 @@
                             <td style="width: 100px; text-align:center">
                               <span v-if="field.file != ''">
                                 <img
-                                  :src="`${axios.defaults.baseURL}upload/`+ field.file"
+                                  :src="
+                                    `${axios.defaults.baseURL}upload/` +
+                                      field.file
+                                  "
                                   style="width: 100px; cursor:pointer"
                                   @click="
                                     modalImageShow = !modalImageShow;
@@ -433,7 +436,9 @@
                       >
                         <div class="text-center">
                           <img
-                            :src="`${axios.defaults.baseURL}upload/`+ modalImage"
+                            :src="
+                              `${axios.defaults.baseURL}upload/` + modalImage
+                            "
                             style="width: 300px"
                           />
                         </div>
@@ -523,7 +528,11 @@
                       <b-form-input
                         id="textarea-main-diagnosis"
                         type="text"
-                        :value="item.diagnos_name != null ? item.diagnos_name.name : ''"
+                        :value="
+                          item.diagnos_name != null
+                            ? item.diagnos_name.name
+                            : ''
+                        "
                         disabled
                         class="form-control rmk-input px-1"
                       ></b-form-input>
@@ -659,7 +668,9 @@
                         <td>{{ item.href }}</td>
                         <td>
                           <a
-                            :src="`${axios.defaults.baseURL}upload/`+ item.href"
+                            :src="
+                              `${axios.defaults.baseURL}upload/` + item.href
+                            "
                             target="_blank"
                             class="btn btn-info btn-sm text-white"
                             ><i class="fas fa-eye"></i>&ensp;Кўриш</a
@@ -675,7 +686,7 @@
           <!-- tashxis section end -->
         </b-tabs>
       </b-card>
-    <hr>
+      <hr />
     </div>
   </b-container>
   <!-- navbar end -->
@@ -710,7 +721,7 @@ export default {
     }
   },
   methods: {
-    Birthday(date){
+    Birthday(date) {
       return moment.unix(date).format("DD.MM.YYYY");
     },
     Close() {

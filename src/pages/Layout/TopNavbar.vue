@@ -79,7 +79,7 @@ export default {
     };
   },
   beforeCreate() {
-    if (!localStorage.getItem("token")) {
+    if (!localStorage.getItem("t")) {
       this.$router.push("/loginuser");
     }
   },
@@ -91,10 +91,11 @@ export default {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
     },
     Logout() {
-      localStorage.removeItem("token");
+      localStorage.removeItem("t");
       localStorage.removeItem("username");
       localStorage.removeItem("role");
       localStorage.removeItem("oid");
+      localStorage.removeItem("did");
       this.$router.push("/loginuser");
     }
   }

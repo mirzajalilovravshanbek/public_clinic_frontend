@@ -77,8 +77,15 @@
     <!-- main panel start -->
     <md-card class="p-2 card-margin">
       <div class="div-body">
+        <div class="d-flex justify-content-center mb-3" v-if="checkTable">
+          <b-spinner
+            variant="info"
+            style="width: 3rem; height: 3rem;"
+            type="grow"
+            label="Spinning"
+          ></b-spinner>
+        </div>
         <b-table
-          striped
           hover
           :items="filteredData"
           :fields="fields"
@@ -138,6 +145,7 @@ export default {
     filter: null,
     totalRows: 1,
     currentPage: 1,
+    checkTable: false,
     perPage: 20,
     fields: [
       {
@@ -175,6 +183,7 @@ export default {
   methods: {
     async Data() {
       let self = this;
+      self.checkTable = true;
       //get list of documents => hujjatlarni olish
       if (this.role == this.$store.state.REGISTRATION) {
         var urlx =
@@ -190,6 +199,7 @@ export default {
         const response = await self.axios.get(urlx);
         self.users = response.data;
         self.totalRows = self.users.length;
+        self.checkTable = false;
       } catch (error) {
         self.$store.state.errors = error;
       }

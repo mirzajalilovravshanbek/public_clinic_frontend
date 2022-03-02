@@ -27,14 +27,14 @@
               <md-field>
                 <b-icon icon="journal-bookmark" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>Номи</label>
+                <label>Номи<sup class="text-danger">*</sup></label>
                 <md-input v-model="datas.name" md-dense></md-input>
               </md-field>
             </b-col>
             <b-col md="6" sm="6" lg="6" xl="6">
               <b-icon icon="card-list" font-scale="1.6"></b-icon>
               <md-icon></md-icon>
-              <label>Филиал</label>
+              <label>Филиал<sup class="text-danger">*</sup></label>
               <v-select
                 :clearable="true"
                 :options="branches"

@@ -32,7 +32,7 @@
               <md-field>
                 <b-icon icon="person" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>ФИШ</label>
+                <label>ФИШ<sup class="text-danger">*</sup></label>
                 <md-input v-model="datas.username" md-dense></md-input>
               </md-field>
             </b-col>
@@ -43,7 +43,7 @@
               <md-field>
                 <b-icon icon="shield-lock" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>Парол</label>
+                <label>Парол<sup class="text-danger">*</sup></label>
                 <md-input v-model="datas.password" md-dense></md-input>
               </md-field>
             </b-col>
@@ -87,7 +87,7 @@
             <!-- role input start -->
             <b-col md="6" sm="6" lg="6" xl="6">
               <b-icon icon="bookmark-star" font-scale="1.6"></b-icon>
-              <label>Ҳуқуқи</label>
+              <label>Ҳуқуқи<sup class="text-danger">*</sup></label>
               <v-select
                 :clearable="true"
                 :options="positions"

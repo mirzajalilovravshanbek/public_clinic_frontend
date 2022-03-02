@@ -4,7 +4,9 @@
       <b-row class="pt-2 px-2">
         <!-- inspection name input start -->
         <b-col sm="4" md="4" lg="4" xl="4">
-          <label for="input-ins-name" class="m-0">Текширув Номи</label>
+          <label for="input-ins-name" class="m-0"
+            >Текширув Номи<sup class="text-danger">*</sup></label
+          >
           <b-form-input
             id="input-ins-name"
             type="text"
@@ -67,7 +69,9 @@
       <b-row class="pt-1 px-2">
         <!-- inspection branch input start -->
         <b-col sm="4" md="4" lg="4" xl="4">
-          <label for="input-normative" class="m-0">Филиал</label>
+          <label for="input-normative" class="m-0"
+            >Филиал<sup class="text-danger">*</sup></label
+          >
           <v-select
             id="input-normative"
             :clearable="true"

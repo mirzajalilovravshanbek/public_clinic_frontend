@@ -47,7 +47,7 @@ window.axios.defaults.baseURL = "http://localhost:3000/";
 // window.axios.defaults.baseURL = 'http://192.168.0.126:8081/';
 
 window.axios.interceptors.request.use(req => {
-  req.headers.authorization = "Bearer " + localStorage.getItem("token");
+  req.headers.authorization = "Bearer " + localStorage.getItem("t");
   req.headers.contentType = "application/json";
   return req;
 });
@@ -57,7 +57,6 @@ window.axios.interceptors.response.use(
     return response;
   },
   error => {
-    
     if (error.response.status == 401) {
       store.state.errors = error.response.data.message;
       router.push("/loginuser");
