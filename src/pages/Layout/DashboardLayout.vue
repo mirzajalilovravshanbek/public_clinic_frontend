@@ -26,10 +26,10 @@
           </p>
           <p>Беморлар</p>
         </sidebar-link>
-        <sidebar-link to="/reports/index">
+        <!-- <sidebar-link to="/reports/index">
           <p class="mr-2"><b-icon icon="journals" font-scale="1.7"></b-icon></p>
           <p>Ҳисоботлар</p>
-        </sidebar-link>
+        </sidebar-link> -->
         <sidebar-link to="/branch/index">
           <p class="mr-2"><b-icon icon="building" font-scale="1.7"></b-icon></p>
           <p>Филиаллар</p>
@@ -60,7 +60,7 @@
           </p>
           <p>Ҳодимлар</p>
         </sidebar-link>
-        <sidebar-link to="/room/index">
+        <sidebar-link to="/room/doctorroom/index">
           <p class="mr-2">
             <b-icon icon="door-open-fill" font-scale="1.7"></b-icon>
           </p>
@@ -99,14 +99,6 @@
           <p>Дорилар</p>
         </sidebar-link>
       </div>
-      <!-- <sidebar-link to="/typography">
-        <md-icon>library_books</md-icon>
-        <p>Typography</p>
-      </sidebar-link>
-      <sidebar-link to="/notifications">
-        <md-icon>notifications</md-icon>
-        <p>Notifications</p>
-      </sidebar-link> -->
     </side-bar>
 
     <div class="main-panel">

@@ -180,7 +180,7 @@ export default {
         var urlx =
           "api/registration/branch/" + localStorage.getItem("branch_id");
       } else if (this.role == this.$store.state.DOCTOR) {
-        var urlx = "api/registration/doctor/" + localStorage.getItem("did");
+        var urlx = "api/registration/doctor/" + localStorage.getItem("oid");
       } else if (this.role == this.$store.state.LABARATORY) {
         var urlx = "api/registration/inspection/" + localStorage.getItem("oid");
       } else {
@@ -214,16 +214,6 @@ export default {
   },
   computed: {
     filteredData() {
-      // let self = this;
-      // if (
-      //   self.$cookies.get("user").position === self.$store.state.DOCTOR ||
-      //   self.$cookies.get("user").position === self.$store.state.UZI ||
-      //   self.$cookies.get("user").position === self.$store.state.LABARATORY
-      // ) {
-      //   return this.users.filter(users => users.status === 1);
-      // } else {
-      //   return this.users;
-      // }
       return this.users;
     }
   }

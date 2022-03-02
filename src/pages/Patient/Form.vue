@@ -896,10 +896,7 @@
                                 max-rows="5"
                                 v-model="field.text"
                                 class="form-control"
-                                :readonly="
-                                  role === $store.state.REGISTRATION ||
-                                    role === $store.state.DOCTOR
-                                "
+                                :readonly="item.user_id != ins_user_id"
                                 @change="
                                   CheckStatusInspection(item.user_id, index, indeks)
                                 "
@@ -913,9 +910,7 @@
                               />
                               <span v-if="field.file != ''">
                                 <img
-                                  :src="
-                                    'http://localhost:3000/upload/' + field.file
-                                  "
+                                  :src="`${axios.defaults.baseURL}upload/`+ field.file"
                                   style="width: 100px; cursor:pointer"
                                   @click="
                                     modalImageShow = !modalImageShow;
@@ -937,7 +932,7 @@
                       >
                         <div class="text-center">
                           <img
-                            :src="'http://localhost:3000/upload/' + modalImage"
+                            :src="`${axios.defaults.baseURL}upload/`+ modalImage"
                             style="width: 300px"
                           />
                         </div>
@@ -1221,7 +1216,7 @@
                         max-rows="8"
                         class="px-1 rmk-textarea"
                         :disabled="item.doctor.id !== doctor_id"
-                        @change="CheckStatusDoctor(item.doctor_id, index)"
+                        @blur="CheckStatusDoctor(item.doctor_id, index)"
                       ></b-form-textarea>
                     </b-col>
                     <b-col
@@ -1301,7 +1296,7 @@
                       <b-form-textarea
                         id="textarea-main-diagnosis"
                         rows="1"
-                        v-model="item.diagnos_name.name"
+                        :value="item.diagnos_name != null ? item.diagnos_name.name : ''"
                         max-rows="3"
                         class="px-1 rmk-textarea"
                         :disabled="item.doctor.id !== doctor_id"
@@ -2021,6 +2016,7 @@
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import moment from "moment";
+// const axios = require("axios");
 export default {
   components: { DatePicker },
   data: () => ({
@@ -2073,6 +2069,7 @@ export default {
       monthBeforeYear: false
     },
     doctor_id: parseInt(localStorage.getItem("did")),
+    ins_user_id: parseInt(localStorage.getItem("oid")),
     drug: { name: null },
     drug_save: false,
     drug_alert: false,
@@ -2262,7 +2259,6 @@ export default {
       self.CheckOperator();
       if (self.checkOperator == false) {
         self.printing = true;
-        self.data.status = self.$store.state.WAITING;
 
         if (self.$route.path == "/patient/create") {
           var methods = "post";
@@ -2311,7 +2307,6 @@ export default {
       self.CheckTemplateName();
       if (self.checkTemplateName == false) {
         self.save_template = true;
-        self.doctor_template.doctor_id = self.$cookies.get("user").id;
         if (self.doctor_template.id) {
           var urlx = "staff/update_template";
           var id = self.doctor_template.id;
@@ -2349,10 +2344,7 @@ export default {
       //get list of templates => shablonlarni olish
       axios({
         url: "staff/get_templates",
-        method: "get",
-        params: {
-          id: self.$cookies.get("user").id
-        }
+        method: "get"
       }).then(function(response) {
         self.templates = response.data.data;
       });
@@ -2545,15 +2537,18 @@ export default {
     },
     CheckStatusInspection(user_id, index, indeks) {
       let self = this;
-      if (user_id == this.data.user_id) {
-        self.data.inspection[index].status = self.$store.state.COMPLETED;
-        self.data.inspection[index].child[indeks].status = self.$store.state.COMPLETED;
+      if (user_id == self.ins_user_id) {
+        self.data.inspection[index].status = null;
+        self.data.inspection[index].child[indeks].status = null;
+        self.data.inspection[index].status = "completed";
+        self.data.inspection[index].child[indeks].status = "completed";
       }
     },
     CheckStatusDoctor(doctor_id, index) {
       let self = this;
-      if (doctor_id == this.data.user_id) {
-        self.data.doctor[index].status = self.$store.state.COMPLETED;
+      if (doctor_id == self.doctor_id) {
+        self.data.doctor[index].status = null;
+        self.data.doctor[index].status = "completed";
       }
     },
     AddDoctor(index, indexx) {
@@ -2749,7 +2744,6 @@ export default {
     },
     SetMKB(item) {
       let self = this;
-      // console.log(item);
       let index = parseInt(localStorage.getItem("index"));
       self.data.doctor[index].diagnos = item.id;
       self.data.doctor[index].diagnos_name = item;
@@ -2758,9 +2752,9 @@ export default {
     },
     async GetMKB(index) {
       let self = this;
-      if(index != 0){
-        localStorage.setItem("index", index);
-      }
+      
+      localStorage.setItem("index", index);
+      
       //mkblar ro'yhatini olish
       try {
         const response = await self.axios.get("api/registration/mkb/0");

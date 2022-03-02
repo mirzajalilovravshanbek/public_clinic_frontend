@@ -208,21 +208,6 @@ const routes = [
         path: "/inspections/update/:id",
         name: "Текширувни Таҳрирлаш ",
         component: () => import("@/pages/Inspections/Update.vue")
-      },
-      {
-        path: "user",
-        name: "User Profile",
-        component: () => import("@/pages/UserProfile.vue")
-      },
-      {
-        path: "typography",
-        name: "Typography",
-        component: () => import("@/pages/Typography.vue")
-      },
-      {
-        path: "notifications",
-        name: "Notifications",
-        component: () => import("@/pages/Notifications.vue")
       }
     ]
   },
@@ -231,11 +216,11 @@ const routes = [
     name: "Навбатлар Рўйҳати",
     component: () => import("@/pages/Dashboard.vue")
   },
-  {
-    path: "/login",
-    name: "Login",
-    component: () => import("@/pages/Login.vue")
-  },
+  // {
+  //   path: "/login",
+  //   name: "Login",
+  //   component: () => import("@/pages/Login.vue")
+  // },
   {
     path: "/loginuser",
     name: "LoginUser",
@@ -264,6 +249,11 @@ const routes = [
   {
     path: "/404",
     name: "Not Found",
+    component: () => import("@/pages/404.vue")
+  },
+  {
+    path :'*',
+    name: '404',
     component: () => import("@/pages/404.vue")
   }
 ];

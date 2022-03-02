@@ -411,9 +411,7 @@
                             <td style="width: 100px; text-align:center">
                               <span v-if="field.file != ''">
                                 <img
-                                  :src="
-                                    'http://localhost:3000/upload/' + field.file
-                                  "
+                                  :src="`${axios.defaults.baseURL}upload/`+ field.file"
                                   style="width: 100px; cursor:pointer"
                                   @click="
                                     modalImageShow = !modalImageShow;
@@ -435,7 +433,7 @@
                       >
                         <div class="text-center">
                           <img
-                            :src="'http://localhost:3000/upload/' + modalImage"
+                            :src="`${axios.defaults.baseURL}upload/`+ modalImage"
                             style="width: 300px"
                           />
                         </div>
@@ -525,7 +523,7 @@
                       <b-form-input
                         id="textarea-main-diagnosis"
                         type="text"
-                        v-model="item.diagnos_name.name"
+                        :value="item.diagnos_name != null ? item.diagnos_name.name : ''"
                         disabled
                         class="form-control rmk-input px-1"
                       ></b-form-input>
@@ -661,7 +659,7 @@
                         <td>{{ item.href }}</td>
                         <td>
                           <a
-                            :href="'http://localhost:3000/upload/' + item.href"
+                            :src="`${axios.defaults.baseURL}upload/`+ item.href"
                             target="_blank"
                             class="btn btn-info btn-sm text-white"
                             ><i class="fas fa-eye"></i>&ensp;Кўриш</a

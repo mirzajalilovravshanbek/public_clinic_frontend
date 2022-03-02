@@ -1,19 +1,3 @@
-// =========================================================
-// * Vue Material Dashboard - v1.4.0
-// =========================================================
-//
-// * Product Page: https://www.creative-tim.com/product/vue-material-dashboard
-// * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-// * Licensed under MIT (https://github.com/creativetimofficial/vue-material-dashboard/blob/master/LICENSE.md)
-//
-// * Coded by Creative Tim
-//
-// =========================================================
-//
-// * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
 import VueRouter from "vue-router";
 import App from "./App";
@@ -33,13 +17,6 @@ import Notifications from "./components/NotificationPlugin";
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
-//cookies
-import VueCookies from "vue-cookies";
-Vue.use(VueCookies);
-Vue.$cookies.config("1d");
-//session
-import VueSession from "vue-session";
-Vue.use(VueSession);
 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue);
@@ -102,7 +79,4 @@ new Vue({
   render: h => h(App),
   router,
   store
-  // data: {
-  //   Chartist: Chartist
-  // }
 });

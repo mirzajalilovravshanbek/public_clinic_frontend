@@ -191,7 +191,6 @@ export default {
         try {
           const response = await axios.post("api/user/login", self.datas);
           if (response) {
-            console.log(response.data);
             localStorage.setItem("oid", response.data.id);
             localStorage.setItem("did", response.data.doctor_id);
             localStorage.setItem("username", response.data.username);
