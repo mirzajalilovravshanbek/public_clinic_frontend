@@ -51,7 +51,7 @@
           <b-col md="12" sm="12" lg="12" xl="12">
             <div class="rmk-district">
               <md-card style="z-index: 10;" class="my-1">
-                <!-- <v-select
+                <v-select
                   :clearable="true"
                   :options="users"
                   v-model="datas.username"
@@ -60,18 +60,18 @@
                   placeholder="Ходимни танланг..."
                   @input="CheckUser()"
                 >
-                </v-select> -->
-                <md-field class="m-0 px-1">
+                </v-select>
+                <!-- <md-field class="m-0 px-1">
                   <label style="color:#000!important;">Ходим</label>
                   <md-input
                     v-model="datas.username"
                     type="text"
                     @blur="CheckUser()"
                   ></md-input>
-                </md-field>
+                </md-field> -->
               </md-card>
-              <span class="alert alert-danger d-block p-1 m-0" v-if="checkUser"
-                >Ходимни тўлдириш шарт</span
+              <small class="alert alert-danger d-block p-0 m-0" v-if="checkUser"
+                >Ходимни тўлдириш шарт</small
               >
             </div>
           </b-col>
@@ -87,10 +87,10 @@
                   ></md-input>
                 </md-field>
               </md-card>
-              <span
-                class="alert alert-danger d-block p-1 m-0"
+              <small
+                class="alert alert-danger d-block p-0 m-0"
                 v-if="checkPassword"
-                >Паролни тўлдириш шарт</span
+                >Паролни тўлдириш шарт</small
               >
             </div>
           </b-col>

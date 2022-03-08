@@ -62,6 +62,7 @@
                 :reduce="name => name.id"
                 label="name"
                 placeholder="Филиални танланг..."
+                @input="GetRooms()"
               >
               </v-select>
             </b-col>
@@ -252,13 +253,6 @@ export default {
       self.$store.state.errors = error;
     }
 
-    //get list of doctor_rooms => xonalar ro'yhatini olish
-    try {
-      const response = await self.axios.get("api/room");
-      self.rooms = response.data;
-    } catch (error) {
-      self.$store.state.errors = error;
-    }
 
     //update employees => xodimni tahrirlash
     if (self.$route.path != "/employees/create") {
@@ -267,6 +261,7 @@ export default {
       try {
         const response = await self.axios.get("api/user/id/" + id);
         self.datas = response.data;
+        await self.GetRooms();
       } catch (error) {
         self.$store.state.errors = error;
       }
@@ -305,6 +300,18 @@ export default {
       this.datas.type = null;
       this.datas.salary = null;
       this.datas.branch_id = null;
+    },
+    async GetRooms(){
+      let self = this;
+      //get list of doctor_rooms => xonalar ro'yhatini olish
+      if(self.datas.branch_id != null){
+        try {
+          const response = await self.axios.get("api/room/branch/"+self.datas.branch_id);
+          self.rooms = response.data;
+        } catch (error) {
+          self.$store.state.errors = error;
+        }
+      }
     },
     DisDoctor() {
       this.datas.doctor_id = null;

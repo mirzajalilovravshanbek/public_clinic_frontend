@@ -80,7 +80,11 @@
                     <b-form-input
                       id="region"
                       type="text"
-                      v-model="doc.patient.region.name"
+                      :value="
+                        doc.patient.region != null
+                          ? doc.patient.region.name
+                          : ''
+                      "
                       class="form-control"
                       disabled
                     ></b-form-input>
@@ -106,7 +110,11 @@
                     <b-form-input
                       id="district"
                       type="text"
-                      v-model="doc.patient.district.name"
+                      :value="
+                        doc.patient.district != null
+                          ? doc.patient.district.name
+                          : ''
+                      "
                       class="form-control"
                       disabled
                     ></b-form-input>
@@ -139,7 +147,11 @@
                     <b-form-input
                       id="neighboarhood"
                       type="text"
-                      v-model="doc.patient.neighboarhood.name"
+                      :value="
+                        doc.patient.neighboarhood != null
+                          ? doc.patient.neighboarhood.name
+                          : ''
+                      "
                       class="form-control"
                       disabled
                     ></b-form-input>
@@ -459,7 +471,7 @@
               <b-tab
                 v-for="(item, index) in doc.doctor"
                 :key="index"
-                :title="item.doctor.name != null ? item.doctor.name : ''"
+                :title="item.doctor != null ? item.doctor.name : ''"
                 :title-link-class="linkDoctorClass(index)"
                 class="pt-2"
               >
@@ -604,7 +616,11 @@
                             <td>
                               <input
                                 type="text"
-                                v-model="item2.pill.name"
+                                :value="
+                                  item2.pill != null
+                                    ? item2.pill.name
+                                    : ''
+                                "
                                 disabled
                                 class="form-control form-control-sm px-1"
                               />
@@ -722,7 +738,11 @@ export default {
   },
   methods: {
     Birthday(date) {
-      return moment.unix(date).format("DD.MM.YYYY");
+      if(date != null ){
+        return moment.unix(date).format("DD.MM.YYYY");
+      } else {
+        return '';
+      }
     },
     Close() {
       window.close();

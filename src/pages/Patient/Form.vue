@@ -667,7 +667,7 @@
                     {{ item.name }}
                   </a>
                   <b-collapse
-                    :visible="index == 0 ? true : false"
+                    :visible="item.id == branch_id ? true : false"
                     :id="'doctor-collapse-' + index"
                   >
                     <table class="table table-bordered table-sm">
@@ -801,7 +801,7 @@
                     </a>
 
                     <b-collapse
-                      :visible="index == 0 ? true : false"
+                      :visible="item.id == branch_id ? true : false"
                       :id="'example-collapse-' + index"
                     >
                       <table class="table table-bordered table-sm">
@@ -2161,6 +2161,7 @@ export default {
       monthBeforeYear: false
     },
     doctor_id: parseInt(localStorage.getItem("did")),
+    branch_id: parseInt(localStorage.getItem("branch_id")),
     ins_user_id: parseInt(localStorage.getItem("oid")),
     drug: { name: null },
     drug_save: false,

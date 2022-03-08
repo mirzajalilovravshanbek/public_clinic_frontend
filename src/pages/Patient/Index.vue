@@ -234,7 +234,7 @@ export default {
   margin: 0;
 }
 .div-body {
-  height: 600px;
+  height: 95vh;
   overflow-y: auto;
 }
 </style>
