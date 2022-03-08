@@ -89,7 +89,7 @@
           v-model="data.status"
           name="doc_status"
           class="mt-2"
-          value="completed"
+          value="complete"
           unchecked-value="waiting"
         >
           Тугатиш
@@ -882,7 +882,7 @@
                             v-for="(field, indeks) in item.child"
                             :key="indeks"
                           >
-                            <th>{{ indeks + 1 }}</th>
+                            <th style="width: 30px;">{{ indeks + 1 }}</th>
                             <td
                               v-if="
                                 item.type != null
@@ -912,7 +912,11 @@
                               ></b-form-textarea>
                             </td>
                             <td style="width: 100px; text-align:center">
+                              <label :for="'ins_' + index + '_files_' + indeks" class="btn btn-primary btn-sm">
+                                <b-icon icon="cloud-arrow-up-fill"></b-icon>Юклаш
+                              </label>
                               <input
+                                style="display: none;"
                                 :id="'ins_' + index + '_files_' + indeks"
                                 type="file"
                                 @change="
@@ -1228,7 +1232,7 @@
                       <label
                         for="textarea-illness-history"
                         class="rmk-label-doctor"
-                        >История болезни(Анамнез)</label
+                        >Касаллик тарихи(Анамнез)</label
                       >
                       <b-form-textarea
                         id="textarea-illness-history"
@@ -1253,7 +1257,7 @@
                       <label
                         for="textarea-objective-survey"
                         class="rmk-label-doctor"
-                        >Объективный осмотр</label
+                        >Объектив кўрув</label
                       >
                       <b-form-textarea
                         id="textarea-objective-survey"
@@ -1278,7 +1282,7 @@
                       <label
                         for="textarea-labaratory-entry"
                         class="rmk-label-doctor"
-                        >Инструментальные обследование</label
+                        >Инструментал текшириш</label
                       >
                       <b-form-textarea
                         id="textarea-labaratory-entry"
@@ -1303,7 +1307,7 @@
                       <label
                         for="textarea-main-diagnosis"
                         class="rmk-label-doctor"
-                        >Главный диагноз
+                        >Aсосий ташхис
                         <b-button
                           variant="light"
                           size="sm"
@@ -1342,7 +1346,7 @@
                       xl="11"
                     >
                       <label for="textarea-procedure" class="rmk-label-doctor"
-                        >Лечение</label
+                        >Даволаш</label
                       >
                       <b-form-textarea
                         id="textarea-procedure"
@@ -1365,7 +1369,7 @@
                       xl="11"
                     >
                       <label for="textarea-recommended" class="rmk-label-doctor"
-                        >Рекомендация</label
+                        >Тавсия</label
                       >
                       <b-form-textarea
                         id="textarea-recommended"
@@ -1904,7 +1908,7 @@
           <b-tab
             title="Хона бириктириш"
             :title-link-class="linkClass(6)"
-            v-if="role === $store.state.ITMED"
+            v-if="role === 'dasturchi'"
           >
             <b-card-text>
               <b-row>
@@ -2105,7 +2109,6 @@
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import moment from "moment";
-// const axios = require("axios");
 export default {
   components: { DatePicker },
   data: () => ({
@@ -2513,9 +2516,9 @@ export default {
     async GetOperators() {
       let self = this;
       //get list of operators => operatorlarni olish
-      let id = localStorage.getItem("branch_id");
+      // let id = localStorage.getItem("branch_id");
       try {
-        const response = await self.axios.get("api/user/branch/" + id);
+        const response = await self.axios.get("api/user");
         self.operators = response.data;
       } catch (error) {
         self.$store.state.errors = error;
@@ -2629,15 +2632,15 @@ export default {
       if (user_id == self.ins_user_id) {
         self.data.inspection[index].status = null;
         self.data.inspection[index].child[indeks].status = null;
-        self.data.inspection[index].status = "completed";
-        self.data.inspection[index].child[indeks].status = "completed";
+        self.data.inspection[index].status = "complete";
+        self.data.inspection[index].child[indeks].status = "complete";
       }
     },
     CheckStatusDoctor(doctor_id, index) {
       let self = this;
       if (doctor_id == self.doctor_id) {
         self.data.doctor[index].status = null;
-        self.data.doctor[index].status = "completed";
+        self.data.doctor[index].status = "complete";
       }
     },
     AddDoctor(index, indexx) {

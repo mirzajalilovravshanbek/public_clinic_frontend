@@ -27,14 +27,14 @@
               <md-field>
                 <b-icon icon="door-open" font-scale="1.6"></b-icon>
                 <md-icon></md-icon>
-                <label>Хона Рақами</label>
+                <label>Хона Рақами<sup class="text-danger">*</sup></label>
                 <md-input v-model="datas.name" md-dense></md-input>
               </md-field>
             </b-col>
             <b-col md="6" sm="6" lg="6" xl="6">
               <b-icon icon="person" font-scale="1.6"></b-icon>
               <md-icon></md-icon>
-              <label>Филиал</label>
+              <label>Филиал<sup class="text-danger">*</sup></label>
               <v-select
                 :clearable="true"
                 :options="branches"

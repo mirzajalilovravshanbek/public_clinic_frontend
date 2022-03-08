@@ -146,7 +146,7 @@ export default {
     totalRows: 1,
     currentPage: 1,
     checkTable: false,
-    perPage: 20,
+    perPage: 50,
     fields: [
       {
         key: "index",
@@ -234,7 +234,7 @@ export default {
   margin: 0;
 }
 .div-body {
-  height: 500px;
+  height: 600px;
   overflow-y: auto;
 }
 </style>

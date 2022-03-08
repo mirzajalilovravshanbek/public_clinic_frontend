@@ -9,7 +9,7 @@ export const store = new Vuex.Store({
     REGISTRATION: "Register",
     LABARATORY: "Inspector",
     WAITING: "waiting",
-    COMPLETED: "completed",
+    COMPLETE: "complete",
     DELETED: "deleted",
     errors: ""
   }

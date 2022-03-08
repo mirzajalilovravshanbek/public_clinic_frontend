@@ -51,7 +51,7 @@
           <b-col md="12" sm="12" lg="12" xl="12">
             <div class="rmk-district">
               <md-card style="z-index: 10;" class="my-1">
-                <v-select
+                <!-- <v-select
                   :clearable="true"
                   :options="users"
                   v-model="datas.username"
@@ -60,10 +60,18 @@
                   placeholder="Ходимни танланг..."
                   @input="CheckUser()"
                 >
-                </v-select>
+                </v-select> -->
+                <md-field class="m-0 px-1">
+                  <label style="color:#000!important;">Ходим</label>
+                  <md-input
+                    v-model="datas.username"
+                    type="text"
+                    @blur="CheckUser()"
+                  ></md-input>
+                </md-field>
               </md-card>
               <span class="alert alert-danger d-block p-1 m-0" v-if="checkUser"
-                >Ходимни танлаш шарт</span
+                >Ходимни тўлдириш шарт</span
               >
             </div>
           </b-col>
@@ -98,7 +106,7 @@
           >
             <b-button
               size="lg"
-              class="rmk-center mt-4"
+              class="rmk-center mt-2"
               variant="outline-primary"
               block
               :disabled="sending"
@@ -111,7 +119,7 @@
           <b-col md="5" sm="5" lg="5" xl="5">
             <b-button
               size="lg"
-              class="rmk-center-back mt-4"
+              class="rmk-center-back mt-2"
               variant="outline-danger"
               block
               style="color:#000"
@@ -146,8 +154,7 @@ export default {
     try {
       const response = await self.axios.get("api/branch");
       self.branches = response.data;
-    } catch (error) {
-    }
+    } catch (error) {}
     if (localStorage.getItem("branch_id") !== null) {
       self.datas.branch_id = parseInt(localStorage.getItem("branch_id"));
       await self.GetUsers();
@@ -165,8 +172,7 @@ export default {
           "api/user/branch/" + self.datas.branch_id
         );
         self.users = response.data;
-      } catch (error) {
-      }
+      } catch (error) {}
     },
     CheckUser() {
       let self = this;
@@ -190,6 +196,7 @@ export default {
           const response = await axios.post("api/user/login", self.datas);
           if (response) {
             localStorage.setItem("oid", response.data.id);
+            localStorage.setItem("branch_id", response.data.branch_id);
             localStorage.setItem("did", response.data.doctor_id);
             localStorage.setItem("username", response.data.username);
             localStorage.setItem("role", response.data.role);
