@@ -253,7 +253,6 @@ export default {
       self.$store.state.errors = error;
     }
 
-
     //update employees => xodimni tahrirlash
     if (self.$route.path != "/employees/create") {
       let id = self.$route.params.id;
@@ -301,12 +300,14 @@ export default {
       this.datas.salary = null;
       this.datas.branch_id = null;
     },
-    async GetRooms(){
+    async GetRooms() {
       let self = this;
       //get list of doctor_rooms => xonalar ro'yhatini olish
-      if(self.datas.branch_id != null){
+      if (self.datas.branch_id != null) {
         try {
-          const response = await self.axios.get("api/room/branch/"+self.datas.branch_id);
+          const response = await self.axios.get(
+            "api/room/branch/" + self.datas.branch_id
+          );
           self.rooms = response.data;
         } catch (error) {
           self.$store.state.errors = error;

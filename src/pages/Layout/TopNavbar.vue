@@ -18,16 +18,26 @@
 
         <div class="md-collapse">
           <md-list>
+            <li class="md-list-item lang-item" @click="switchLocale('uz')">
+              <div class="md-list-item-content">
+                ЎЗБ
+              </div>
+            </li>
+            <li class="md-list-item lang-item" @click="switchLocale('ru')">
+              <div class="md-list-item-content">
+                РУС
+              </div>
+            </li>
             <md-list-item
               href="#/dashboard"
               target="_blank"
               id="dashboard-tooltip"
             >
               <b-icon icon="columns-gap" font-scale="1.5"></b-icon>
-              <p class="hidden-lg hidden-md">Dashboard</p>
-              <b-tooltip target="dashboard-tooltip" variant="dark"
-                >Навбат</b-tooltip
-              >
+              <p class="hidden-lg hidden-md">{{ $t("Навбат") }}</p>
+              <b-tooltip target="dashboard-tooltip" variant="dark">{{
+                $t("Навбат")
+              }}</b-tooltip>
             </md-list-item>
 
             <li class="md-list-item">
@@ -41,10 +51,10 @@
                   <p class="mt-3">
                     <b-icon icon="box-arrow-in-right" font-scale="1.8"></b-icon>
                   </p>
-                  <p class="hidden-lg hidden-md">Чиқиш</p>
-                  <b-tooltip target="logout-tooltip" variant="dark"
-                    >Чиқиш</b-tooltip
-                  >
+                  <p class="hidden-lg hidden-md">{{ $t("Чиқиш") }}</p>
+                  <b-tooltip target="logout-tooltip" variant="dark">{{
+                    $t("Чиқиш")
+                  }}</b-tooltip>
                 </md-button>
               </div>
             </li>
@@ -64,29 +74,25 @@
 export default {
   data() {
     return {
-      username: null,
-      selectedEmployee: null,
-      employees: [
-        "Jim Halpert",
-        "Dwight Schrute",
-        "Michael Scott",
-        "Pam Beesly",
-        "Angela Martin",
-        "Kelly Kapoor",
-        "Ryan Howard",
-        "Kevin Malone"
-      ]
+      username: null
     };
   },
   beforeCreate() {
     if (!localStorage.getItem("t")) {
       this.$router.push("/loginuser");
     }
+    this.$i18n.locale = this.$store.state.lang;
   },
   mounted() {
     this.username = localStorage.getItem("username");
   },
   methods: {
+    switchLocale(locale) {
+      if (this.$i18n.locale !== locale) {
+        this.$i18n.locale = locale;
+        this.$store.state.lang = locale;
+      }
+    },
     toggleSidebar() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
     },
@@ -102,4 +108,13 @@ export default {
 };
 </script>
 
-<style lang="css"></style>
+<style lang="css">
+.lang-item {
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 18px;
+  display: inline;
+  width: 30px;
+  margin: 0 8px;
+}
+</style>

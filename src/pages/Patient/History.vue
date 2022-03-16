@@ -9,7 +9,7 @@
     >
       <b-icon icon="x"></b-icon>
     </b-button>
-    <h2 class="text-center">Беморнинг Касаллик Тарихи</h2>
+    <h2 class="text-center">{{ $t("Беморнинг Касаллик Тарихи") }}</h2>
     <div class="container-fluid" v-for="(doc, number) in doc" :key="number">
       <p>
         <span class="font-weight-bold">Ҳужжат Сақланган Сана:</span>
@@ -617,9 +617,7 @@
                               <input
                                 type="text"
                                 :value="
-                                  item2.pill != null
-                                    ? item2.pill.name
-                                    : ''
+                                  item2.pill != null ? item2.pill.name : ''
                                 "
                                 disabled
                                 class="form-control form-control-sm px-1"
@@ -738,10 +736,10 @@ export default {
   },
   methods: {
     Birthday(date) {
-      if(date != null ){
+      if (date != null) {
         return moment.unix(date).format("DD.MM.YYYY");
       } else {
-        return '';
+        return "";
       }
     },
     Close() {

@@ -16,7 +16,10 @@
           >
             ×
           </button>
-          <p><i class="fas fa-exclamation-triangle"></i>&nbsp; Хатолик</p>
+          <p>
+            <i class="fas fa-exclamation-triangle"></i>&nbsp;
+            {{ $t("Хатолик") }}
+          </p>
           <p class="text-center">{{ $store.state.errors }}</p>
         </div>
         <div
@@ -32,7 +35,9 @@
           >
             ×
           </button>
-          <p><i class="fas fa-check-circle"></i>&nbsp; Муваффақиятли</p>
+          <p>
+            <i class="fas fa-check-circle"></i>&nbsp; {{ $t("Муваффақиятли") }}
+          </p>
           <p class="text-center">{{ PatientStatusText }}</p>
         </div>
       </div>
@@ -50,7 +55,7 @@
         >
           <b-spinner small v-if="saving"></b-spinner>
           <b-icon icon="clipboard-plus"></b-icon>
-          Сақлаш ва беркитиш
+          {{ $t("Сақлаш ва Беркитиш") }}
         </b-button>
       </b-col>
       <b-col sm="2" md="2" lg="2" xl="2">
@@ -75,7 +80,7 @@
             ></b-icon>
             <b-icon stacked icon="clipboard"></b-icon>
           </b-iconstack>
-          Касаллик Тирихи
+          {{ $t("Касаллик Тирихи") }}
         </b-button>
       </b-col>
       <b-col sm="1" md="1" lg="1" xl="1" class="text-center">
@@ -92,7 +97,7 @@
           value="complete"
           unchecked-value="waiting"
         >
-          Тугатиш
+          {{ $t("Тугатиш") }}
         </b-form-checkbox>
       </b-col>
       <b-col sm="2" md="2" lg="2" xl="2" class="text-center">
@@ -109,11 +114,11 @@
         >
           <b-spinner small v-if="printing"></b-spinner>
           <b-icon icon="printer-fill"></b-icon>
-          Печат
+          {{ $t("Печат") }}
         </b-button>
       </b-col>
-      <b-col sm="3" md="3" lg="3" xl="3" class="text-center">
-        <div
+      <b-col sm="4" md="4" lg="4" xl="4" class="text-center">
+        <span
           v-if="
             role === $store.state.REGISTRATION ||
               role === $store.state.DOCTOR ||
@@ -129,15 +134,18 @@
             class="my-0"
           />
           <button class="btn btn-primary" @click="$refs.files.click()">
-            <b-icon icon="cloud-arrow-up-fill"></b-icon>&ensp;Ташхисларни юклаш
+            <b-icon icon="cloud-arrow-up-fill"></b-icon>&ensp;{{
+              $t("Ташхисларни Юклаш")
+            }}
           </button>
           <span v-if="tashxisfile != ''"
             >&emsp;
             <b-icon icon="patch-check-fill" variant="success"></b-icon>
           </span>
-        </div>
-      </b-col>
-      <b-col sm="1" md="1" lg="1" xl="1">
+        </span>
+        <span class="change-lang" @click="switchLocale('uz')">ЎЗБ</span>
+        <span class="change-lang" @click="switchLocale('ru')">РУС</span>
+
         <b-button
           style="color: #fff; float:right;"
           variant="danger"
@@ -153,7 +161,7 @@
     <!-- document datas start -->
     <b-row class="rmk-card">
       <b-col sm="4" md="4" lg="4" xl="4">
-        <label for="patient" class="rmk-label">Бемор</label>
+        <label for="patient" class="rmk-label">{{ $t("Бемор") }}</label>
         <b-card no-body>
           <b-input-group
             @click="
@@ -165,7 +173,7 @@
               id="patient"
               type="text"
               v-model="data.patient_name"
-              placeholder="Беморни танланг..."
+              :placeholder="$t('Беморни танланг...')"
               class="form-control px-1"
             ></b-form-input>
             <b-input-group-append>
@@ -174,7 +182,7 @@
                 size="sm"
                 style="color: #fff;"
                 v-b-tooltip.hover.bottom.v-primary
-                title="Бемор Танлаш"
+                :title="$t('Бемор Танлаш')"
                 >...</b-button
               >
             </b-input-group-append>
@@ -182,7 +190,7 @@
         </b-card>
         <!-- modal patient search start -->
         <b-modal
-          title="Беморни Қидириш"
+          :title="$t('Беморни Қидириш')"
           size="xl"
           hide-footer
           v-model="modalPatientShow"
@@ -192,7 +200,7 @@
           <b-row class="mt-0">
             <b-col sm="6" md="6" lg="6" xl="6" class="my-1">
               <b-form-group
-                label="Қидирув"
+                :label="$t('Қидирув')"
                 label-for="filter-input"
                 label-align-sm="left"
                 label-size="sm"
@@ -203,7 +211,6 @@
                     id="filter-input"
                     v-model="filter"
                     type="search"
-                    placeholder="Қидириш..."
                   ></b-form-input>
 
                   <b-input-group-append>
@@ -212,7 +219,7 @@
                       size="sm"
                       :disabled="!filter"
                       @click="filter = ''"
-                      >Тозалаш</b-button
+                      >{{ $t("Тозалаш") }}</b-button
                     >
                   </b-input-group-append>
                 </b-input-group>
@@ -221,7 +228,7 @@
 
             <b-col sm="6" md="6" lg="6" xl="6" class="my-1">
               <b-form-group
-                label="Ҳар бир сахифада"
+                :label="$t('Ҳар бир сахифада')"
                 label-for="per-page-select"
                 label-align-sm="left"
                 label-size="sm"
@@ -276,7 +283,7 @@
         <!-- modal patient search end -->
       </b-col>
       <b-col sm="4" md="4" lg="4" xl="4">
-        <label for="operator" class="rmk-label">Оператор</label>
+        <label for="operator" class="rmk-label">{{ $t("Оператор") }}</label>
         <b-card no-body>
           <v-select
             id="operator"
@@ -286,16 +293,18 @@
             :reduce="username => username.id"
             label="username"
             @input="CheckOperator()"
-            placeholder="Операторни танланг..."
+            disabled
           >
           </v-select>
         </b-card>
-        <small style="color: red;" v-if="checkOperator"
-          >"Оператор"ни танлаш шарт</small
-        >
+        <small style="color: red;" v-if="checkOperator">{{
+          $t("Операторни танлаш шарт")
+        }}</small>
       </b-col>
       <b-col sm="4" md="4" lg="4" xl="4">
-        <label for="type_service" class="rmk-label">Хизмат Тури</label>
+        <label for="type_service" class="rmk-label">{{
+          $t("Хизмат Тури")
+        }}</label>
         <b-card no-body>
           <v-select
             id="type_service"
@@ -327,7 +336,7 @@
         <b-tabs v-model="tabIndex" card>
           <!-- patient datas start -->
           <b-tab
-            title="Бемор маълумотлари"
+            :title="$t('Бемор маълумотлари')"
             :title-link-class="linkClass(0)"
             class="pt-1"
           >
@@ -337,63 +346,65 @@
                   <!-- patient lastname start -->
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-0">
                     <label class="mb-0" for="input-lastname"
-                      >Фамилия<sup class="text-danger">*</sup></label
+                      >{{ $t("Фамилия")
+                      }}<sup class="text-danger">*</sup></label
                     >
                     <b-form-input
                       id="input-lastname"
                       type="text"
                       v-model="patient_datas.lastname"
-                      placeholder="Фамилияни тўлдиринг"
+                      :placeholder="$t('Фамилияни тўлдиринг')"
                       class="form-control"
                       @blur="CheckLastName()"
                     ></b-form-input>
-                    <small class="text-danger m-0" v-if="checkLastName"
-                      >"Фамилия"ни тўлдириш шарт</small
-                    >
+                    <small class="text-danger m-0" v-if="checkLastName">{{
+                      $t("Фамилияни тўлдириш шарт")
+                    }}</small>
                   </b-col>
                   <!-- patient lastname end -->
 
                   <!-- patient name start -->
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-0">
                     <label class="mb-0" for="input-name"
-                      >Исм<sup class="text-danger">*</sup></label
+                      >{{ $t("Исм") }}<sup class="text-danger">*</sup></label
                     >
                     <b-form-input
                       id="input-name"
                       type="text"
                       v-model="patient_datas.name"
-                      placeholder="Исмни тўлдиринг"
+                      :placeholder="$t('Исмни тўлдиринг')"
                       class="form-control"
                       @blur="CheckName()"
                     ></b-form-input>
-                    <small class="text-danger m-0" v-if="checkName"
-                      >"Исм"ни тўлдириш шарт</small
-                    >
+                    <small class="text-danger m-0" v-if="checkName">{{
+                      $t("Исмни тўлдириш шарт")
+                    }}</small>
                   </b-col>
                   <!-- patient name end -->
 
                   <!-- patient patronymic start -->
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <label class="mb-0" for="input-patronymic"
-                      >Отасини Исми<sup class="text-danger">*</sup></label
+                      >{{ $t("Отасини Исми")
+                      }}<sup class="text-danger">*</sup></label
                     >
                     <b-form-input
                       id="input-patronymic"
                       type="text"
                       v-model="patient_datas.patronymic"
-                      placeholder="Отасини Исмини тўлдиринг"
+                      :placeholder="$t('Отасини Исмини тўлдиринг')"
                       class="form-control"
                       @blur="CheckPatronymic()"
                     ></b-form-input>
-                    <small class="text-danger m-0" v-if="checkPatronymic"
-                      >"Отасини Исми"ни тўлдириш шарт</small
-                    >
+                    <small class="text-danger m-0" v-if="checkPatronymic">{{
+                      $t("Отасини Исмини тўлдириш шарт")
+                    }}</small>
                   </b-col>
                   <!-- patient patronymic end -->
 
                   <!-- patient region start -->
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
-                    <label class="mb-0" for="region">Вилоят</label>
+                    <label class="mb-0" for="region">{{ $t("Вилоят") }}</label>
                     <v-select
                       id="region"
                       :clearable="true"
@@ -401,7 +412,7 @@
                       v-model="patient_datas.region_id"
                       :reduce="name => name.id"
                       label="name"
-                      placeholder="Вилоятни танланг..."
+                      :placeholder="$t('Вилоятни танланг...')"
                       @input="GetDistricts()"
                     >
                     </v-select>
@@ -410,7 +421,9 @@
 
                   <!-- patient birthday start -->
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
-                    <label class="mb-0" for="input-date">Туғилган сана</label
+                    <label class="mb-0" for="input-date">{{
+                      $t("Туғилган сана")
+                    }}</label
                     ><br />
                     <date-picker
                       id="input-date"
@@ -420,14 +433,14 @@
                       style="width: 100%"
                       type="date"
                       :lang="lang"
-                      placeholder="Туғилган санани танланг..."
+                      :placeholder="$t('Туғилган санани танланг...')"
                     ></date-picker>
                   </b-col>
                   <!-- patient birthday end -->
 
                   <!-- patient district start -->
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
-                    <label class="mb-0" for="district">Туман</label>
+                    <label class="mb-0" for="district">{{ $t("Туман") }}</label>
                     <v-select
                       id="district"
                       :clearable="true"
@@ -435,7 +448,7 @@
                       v-model="patient_datas.district_id"
                       :reduce="name => name.id"
                       label="name"
-                      placeholder="Туманни танланг..."
+                      :placeholder="$t('Туманни танланг...')"
                       @input="GetNeighboarhood()"
                     >
                     </v-select>
@@ -444,25 +457,27 @@
 
                   <!-- patient gender start -->
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
-                    <p class="m-0 p-0">Жинси</p>
+                    <p class="m-0 p-0">{{ $t("Жинси") }}</p>
                     <md-radio
                       class="my-1"
                       v-model="patient_datas.gender"
                       value="male"
-                      >Эркак</md-radio
+                      >{{ $t("Эркак") }}</md-radio
                     >
                     <md-radio
                       class="my-1"
                       v-model="patient_datas.gender"
                       value="female"
-                      >Аёл</md-radio
+                      >{{ $t("Аёл") }}</md-radio
                     >
                   </b-col>
                   <!-- patient gender end -->
 
                   <!-- patient neighboarhood start -->
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
-                    <label class="mb-0" for="neighboarhood">МФЙ</label>
+                    <label class="mb-0" for="neighboarhood">{{
+                      $t("МФЙ")
+                    }}</label>
                     <v-select
                       id="neighboarhood"
                       :clearable="true"
@@ -470,7 +485,7 @@
                       v-model="patient_datas.neighboarhood_id"
                       :reduce="name => name.id"
                       label="name"
-                      placeholder="МФЙни танланг..."
+                      :placeholder="$t('МФЙни танланг...')"
                     >
                     </v-select>
                   </b-col>
@@ -480,7 +495,9 @@
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <b-row>
                       <b-col sm="6" md="6" lg="6" xl="6">
-                        <label class="mb-0" for="input-phone">Телефон</label>
+                        <label class="mb-0" for="input-phone">{{
+                          $t("Телефон")
+                        }}</label>
                         <b-form-input
                           id="input-phone"
                           v-model="patient_datas.phone"
@@ -507,12 +524,14 @@
 
                   <!-- patient address start -->
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
-                    <label class="mb-0" for="input-address">Уй</label>
+                    <label class="mb-0" for="input-address">{{
+                      $t("Уй")
+                    }}</label>
                     <b-form-input
                       id="input-address"
                       type="text"
                       v-model="patient_datas.address"
-                      placeholder="Уйни тўлдиринг"
+                      :placeholder="$t('Уйни тўлдиринг')"
                       class="form-control"
                     ></b-form-input>
                   </b-col>
@@ -528,7 +547,7 @@
                           v-model="patient_datas.d_control"
                           class="mt-2"
                         >
-                          Д-назорат
+                          {{ $t("Д-назорат") }}
                         </b-form-checkbox>
                       </b-col>
                       <b-col sm="6" md="6" lg="6" xl="6">
@@ -538,7 +557,7 @@
                           v-model="patient_datas.disability"
                           class="mt-2"
                         >
-                          Ногиронлиги
+                          {{ $t("Ногиронлиги") }}
                         </b-form-checkbox>
                       </b-col>
                     </b-row>
@@ -549,22 +568,26 @@
                   <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <b-row>
                       <b-col sm="6" md="6" lg="6" xl="6">
-                        <label class="mb-0" for="input-height">Бўйи</label>
+                        <label class="mb-0" for="input-height">{{
+                          $t("Бўйи")
+                        }}</label>
                         <b-form-input
                           id="input-height"
                           type="text"
                           v-model="data.height"
-                          placeholder="Бўйини тўлдиринг"
+                          :placeholder="$t('Бўйини тўлдиринг')"
                           class="form-control"
                         ></b-form-input>
                       </b-col>
                       <b-col sm="6" md="6" lg="6" xl="6">
-                        <label class="mb-0" for="input-weight">Оғирлиги</label>
+                        <label class="mb-0" for="input-weight">{{
+                          $t("Оғирлиги")
+                        }}</label>
                         <b-form-input
                           id="input-weight"
                           type="text"
                           v-model="data.weight"
-                          placeholder="Оғирлигини тўлдиринг"
+                          :placeholder="$t('Оғирлигини тўлдиринг')"
                           class="form-control"
                         ></b-form-input>
                       </b-col>
@@ -594,7 +617,7 @@
                     >
                       <b-spinner small v-if="patient_sending"></b-spinner>
                       <b-icon icon="clipboard-check"></b-icon>
-                      Сақлаш
+                      {{ $t("Сақлаш") }}
                     </b-button>
                   </b-col>
                   <!-- button end -->
@@ -605,7 +628,7 @@
           <!-- patient datas end -->
           <!-- doctors section start -->
           <b-tab
-            title="Шифокор кўриги"
+            :title="$t('Шифокор кўриги')"
             :title-link-class="linkClass(1)"
             class="pt-2"
             v-if="
@@ -628,16 +651,16 @@
                       class="mt-2"
                     >
                       <b-icon icon="person-lines-fill"></b-icon>
-                      Шифокорлар
+                      {{ $t("Шифокорлар") }}
                     </b-button>
                   </b-col>
                   <!-- button end -->
 
                   <!-- complaint input start -->
                   <b-col sm="10" md="10" lg="10" xl="10">
-                    <label for="input-complaint" class="m-0"
-                      >Бемор Шикояти</label
-                    >
+                    <label for="input-complaint" class="m-0">{{
+                      $t("Бемор Шикояти")
+                    }}</label>
                     <b-form-input
                       id="input-complaint"
                       type="text"
@@ -651,7 +674,7 @@
               <!-- doctor list modal start -->
               <b-modal
                 v-model="modalDoctorShow"
-                title="Шифокорлар"
+                :title="$t('Шифокорлар')"
                 size="lg"
                 center="false"
                 hide-footer
@@ -672,7 +695,7 @@
                   >
                     <table class="table table-bordered table-sm">
                       <tr>
-                        <th>ФИШ</th>
+                        <th>{{ $t("ФИШ") }}</th>
                       </tr>
                       <tr
                         @click="AddDoctor(index, indexx)"
@@ -699,10 +722,10 @@
                   <thead>
                     <tr class="table-primary">
                       <th>#</th>
-                      <th>Шифокор</th>
-                      <th>Бўлим</th>
-                      <th>Хона</th>
-                      <th>Филиал</th>
+                      <th>{{ $t("Шифокор") }}</th>
+                      <th>{{ $t("Бўлим") }}</th>
+                      <th>{{ $t("Хона Рақами") }}</th>
+                      <th>{{ $t("Филиал") }}</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -739,7 +762,9 @@
                           style="cursor: pointer;"
                           variant="danger"
                           font-scale="1.2"
-                          v-b-tooltip.hover.v-danger.right="'Шифокорни Ўчириш'"
+                          v-b-tooltip.hover.v-danger.right="
+                            $t('Шифокорни Ўчириш')
+                          "
                           @click="RemoveDoctor(index)"
                           v-if="
                             role === $store.state.REGISTRATION ||
@@ -758,7 +783,7 @@
           <!-- doctors section end -->
           <!-- ispections start -->
           <b-tab
-            title="Текширувлар"
+            :title="$t('Текширувлар')"
             :title-link-class="linkClass(2)"
             class="pt-2"
           >
@@ -777,7 +802,7 @@
                 "
               >
                 <b-icon icon="journal-medical"></b-icon>
-                Текширувлар
+                {{ $t("Текширувлар") }}
               </b-button>
 
               <!-- inspections modal start -->
@@ -785,7 +810,7 @@
                 v-model="modalInspectionShow"
                 size="lg"
                 hide-footer
-                title="Текширувлар Рўйҳати"
+                :title="$t('Текширувлар Рўйҳати')"
               >
                 <div class="d-block">
                   <!-- toggle link start -->
@@ -806,7 +831,7 @@
                     >
                       <table class="table table-bordered table-sm">
                         <tr>
-                          <th>Номи</th>
+                          <th>{{ $t("Номи") }}</th>
                         </tr>
                         <tr
                           @click="AddInspectionList(index, indexx)"
@@ -845,7 +870,7 @@
                         variant="danger"
                         icon="trash"
                         @click="RemoveIns(index)"
-                        v-b-tooltip.hover.v-danger.top="'Текширувни Ўчириш'"
+                        v-b-tooltip.hover.v-danger.top="$t('Текширувни Ўчириш')"
                         style="cursor:pointer"
                         v-if="
                           role === $store.state.REGISTRATION ||
@@ -869,12 +894,12 @@
                                   : item.inspection.type == true
                               "
                             >
-                              Танлаш
+                              {{ $t("Танлаш") }}
                             </th>
-                            <th>Анализ</th>
-                            <th>Натижа</th>
-                            <th style="width: 100px;">Расм</th>
-                            <th>Норма</th>
+                            <th>{{ $t("Анализ") }}</th>
+                            <th>{{ $t("Натижа") }}</th>
+                            <th style="width: 100px;">{{ $t("Расм") }}</th>
+                            <th>{{ $t("Норма") }}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -912,8 +937,12 @@
                               ></b-form-textarea>
                             </td>
                             <td style="width: 100px; text-align:center">
-                              <label :for="'ins_' + index + '_files_' + indeks" class="btn btn-primary btn-sm">
-                                <b-icon icon="cloud-arrow-up-fill"></b-icon>Юклаш
+                              <label
+                                :for="'ins_' + index + '_files_' + indeks"
+                                class="btn btn-primary btn-sm"
+                              >
+                                <b-icon icon="cloud-arrow-up-fill"></b-icon
+                                >{{ $t("Юклаш") }}
                               </label>
                               <input
                                 style="display: none;"
@@ -950,7 +979,7 @@
                       <b-modal
                         size="lg"
                         hide-footer
-                        title="Расм"
+                        :title="$t('Расм')"
                         v-model="modalImageShow"
                       >
                         <div class="text-center">
@@ -974,7 +1003,7 @@
           <!-- ispections end -->
           <!-- diagnosis section start -->
           <b-tab
-            title="Ташхис"
+            :title="$t('Ташхис')"
             :title-link-class="linkClass(3)"
             class="pt-2"
             v-if="role === $store.state.DOCTOR || role === $store.state.ITMED"
@@ -1232,7 +1261,7 @@
                       <label
                         for="textarea-illness-history"
                         class="rmk-label-doctor"
-                        >Касаллик тарихи(Анамнез)</label
+                        >{{ $t("Касаллик тарихи(Анамнез)") }}</label
                       >
                       <b-form-textarea
                         id="textarea-illness-history"
@@ -1257,7 +1286,7 @@
                       <label
                         for="textarea-objective-survey"
                         class="rmk-label-doctor"
-                        >Объектив кўрув</label
+                        >{{ $t("Объектив кўрув") }}</label
                       >
                       <b-form-textarea
                         id="textarea-objective-survey"
@@ -1282,7 +1311,7 @@
                       <label
                         for="textarea-labaratory-entry"
                         class="rmk-label-doctor"
-                        >Инструментал текшириш</label
+                        >{{ $t("Инструментал текшириш") }}</label
                       >
                       <b-form-textarea
                         id="textarea-labaratory-entry"
@@ -1307,7 +1336,7 @@
                       <label
                         for="textarea-main-diagnosis"
                         class="rmk-label-doctor"
-                        >Aсосий ташхис
+                        >{{ $t("Aсосий ташхис") }}
                         <b-button
                           variant="light"
                           size="sm"
@@ -1345,8 +1374,10 @@
                       offset-xl="1"
                       xl="11"
                     >
-                      <label for="textarea-procedure" class="rmk-label-doctor"
-                        >Даволаш</label
+                      <label
+                        for="textarea-procedure"
+                        class="rmk-label-doctor"
+                        >{{ $t("Даволаш") }}</label
                       >
                       <b-form-textarea
                         id="textarea-procedure"
@@ -1368,8 +1399,10 @@
                       offset-xl="1"
                       xl="11"
                     >
-                      <label for="textarea-recommended" class="rmk-label-doctor"
-                        >Тавсия</label
+                      <label
+                        for="textarea-recommended"
+                        class="rmk-label-doctor"
+                        >{{ $t("Тавсия") }}</label
                       >
                       <b-form-textarea
                         id="textarea-recommended"
@@ -1582,7 +1615,7 @@
           <!-- diagnosis section end -->
           <!-- recipe section start -->
           <b-tab
-            title="Рецеп"
+            :title="$t('Рецепт')"
             :title-link-class="linkClass(4)"
             class="pt-1"
             v-if="role === $store.state.DOCTOR || role === $store.state.ITMED"
@@ -1593,16 +1626,16 @@
               @click="modalDrugShow = !modalDrugShow"
             >
               <b-icon icon="circle-half"></b-icon>
-              Дори қўшиш
+              {{ $t("Дори қўшиш") }}
             </b-button>
             <!-- add drug modal start -->
             <b-modal
               hide-footer
               size="lg"
-              title="Дори қўшиш"
+              :title="$t('Дори қўшиш')"
               v-model="modalDrugShow"
             >
-              <label for="drug-input">Дори номи</label>
+              <label for="drug-input">{{ $t("Дори номи") }}</label>
               <b-form-input
                 id="drug-input"
                 v-model="drug.name"
@@ -1616,7 +1649,7 @@
               >
                 <b-spinner small type="grow" v-if="drug_save"></b-spinner>
                 <b-icon icon="clipboard-check"></b-icon>
-                Сақлаш
+                {{ $t("Сақлаш") }}
               </b-button>
             </b-modal>
             <!-- add drug modal end -->
@@ -1629,13 +1662,13 @@
               "
             >
               <b-icon icon="receipt"></b-icon>
-              Дорилар рўйҳати
+              {{ $t("Дорилар рўйҳати") }}
             </b-button>
             <!-- drug list modal start -->
             <b-modal
               hide-footer
               size="xl"
-              title="Дорилар рўйҳати"
+              :title="$t('Дорилар рўйҳати')"
               v-model="modalDrugList"
             >
               <b-container fluid>
@@ -1643,7 +1676,7 @@
                 <b-row>
                   <b-col sm="6" md="6" lg="6" xl="6">
                     <b-form-group
-                      label="Қидирув"
+                      :label="$t('Қидирув')"
                       label-for="filter-input"
                       label-align-sm="left"
                       label-size="sm"
@@ -1654,7 +1687,6 @@
                           id="filter-input"
                           v-model="filterDrug"
                           type="search"
-                          placeholder="Қидириш..."
                         ></b-form-input>
 
                         <b-input-group-append>
@@ -1663,7 +1695,7 @@
                             size="sm"
                             :disabled="!filterDrug"
                             @click="filterDrug = ''"
-                            >Тозалаш</b-button
+                            >{{ $t("Тозалаш") }}</b-button
                           >
                         </b-input-group-append>
                       </b-input-group>
@@ -1672,7 +1704,7 @@
 
                   <b-col sm="6" md="6" lg="6" xl="6">
                     <b-form-group
-                      label="Ҳар бир сахифада"
+                      :label="$t('Ҳар бир сахифада')"
                       label-for="per-page-select"
                       label-align-sm="left"
                       label-size="sm"
@@ -1740,7 +1772,9 @@
                   >
                     ×
                   </button>
-                  <span><b>Дори Қўшилди!</b></span>
+                  <span
+                    ><b>{{ $t("Дори Қўшилди!") }}</b></span
+                  >
                 </div>
               </div>
             </div>
@@ -1770,15 +1804,15 @@
                                 variant="info"
                                 size="sm"
                                 v-b-tooltip.hover.v-info.topright
-                                title="Қатор қўшиш"
+                                :title="$t('Қатор қўшиш')"
                                 :disabled="item.doctor.id !== doctor_id"
                                 >+</b-button
                               >
                             </th>
-                            <th style="width:400px">Дори</th>
-                            <th>Кун</th>
-                            <th>Маҳал</th>
-                            <th>Қўшимчалар</th>
+                            <th style="width:400px">{{ $t("Дори") }}</th>
+                            <th>{{ $t("Кун") }}</th>
+                            <th>{{ $t("Маҳал") }}</th>
+                            <th>{{ $t("Қўшимчалар") }}</th>
                             <th></th>
                           </tr>
                         </thead>
@@ -1794,7 +1828,7 @@
                                 :options="drugs"
                                 v-model="item2.pill_id"
                                 :reduce="name => name.id"
-                                placeholder="Танланг..."
+                                :placeholder="$t('Танланг...')"
                                 label="name"
                                 :disabled="item.doctor.id !== doctor_id"
                                 @input="
@@ -1844,7 +1878,7 @@
                                 variant="danger"
                                 font-scale="1.2"
                                 v-b-tooltip.hover.v-danger.right="
-                                  'Дорини Ўчириш'
+                                  $t('Дорини Ўчириш')
                                 "
                                 v-if="item.doctor.id === doctor_id"
                                 @click="RemoveDrug(index, index2)"
@@ -1862,7 +1896,7 @@
           <!-- recipe section end -->
           <!-- tashxis section start -->
           <b-tab
-            title="Ташхис Файллар"
+            :title="$t('Ташхис Файллар')"
             :title-link-class="linkClass(5)"
             class="pt-1"
             v-if="
@@ -1880,7 +1914,7 @@
                     <thead>
                       <tr class="table-primary">
                         <th>#</th>
-                        <th>Файллар</th>
+                        <th>{{ $t("Файллар") }}</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -1893,7 +1927,9 @@
                             :href="'http://localhost:3000/upload/' + item.href"
                             target="_blank"
                             class="btn btn-info btn-sm text-white"
-                            ><i class="fas fa-eye"></i>&ensp;Кўриш</a
+                            ><i class="fas fa-eye"></i>&ensp;{{
+                              $t("Кўриш")
+                            }}</a
                           >
                         </td>
                       </tr>
@@ -2321,6 +2357,12 @@ export default {
     }
   },
   methods: {
+    switchLocale(locale) {
+      if (this.$i18n.locale !== locale) {
+        this.$i18n.locale = locale;
+        this.$store.state.lang = locale;
+      }
+    },
     Close() {
       this.$router.push({ path: "/patient/index" });
       window.close();
@@ -3132,5 +3174,10 @@ export default {
 .rmk-input {
   border: 1px solid #3c8dbc;
   border-radius: 3px;
+}
+.change-lang {
+  font-size: 18px;
+  margin: 0 8px;
+  cursor: pointer;
 }
 </style>

@@ -22,7 +22,7 @@
           style="color: #fff;"
         >
           <b-icon icon="person-plus"></b-icon>
-          Қўшиш</b-button
+          {{ $t("Қўшиш") }}</b-button
         >
       </b-col>
       <b-col sm="2" md="2" lg="2" xl="2">
@@ -34,7 +34,7 @@
           @click="Data()"
         >
           <b-icon icon="arrow-clockwise"></b-icon>
-          Янгилаш</b-button
+          {{ $t("Янгилаш") }}</b-button
         >
       </b-col>
       <b-col
@@ -58,7 +58,7 @@
               id="filter-input"
               v-model="filter"
               type="search"
-              placeholder="Қидирув"
+              :placeholder="$t('Қидирув')"
             ></b-form-input>
 
             <b-input-group-append>
@@ -66,7 +66,7 @@
                 :disabled="!filter"
                 @click="filter = ''"
                 variant="danger"
-                >Тозалаш</b-button
+                >{{ $t("Тозалаш") }}</b-button
               >
             </b-input-group-append>
           </b-input-group>
@@ -115,7 +115,7 @@
               style="color: #1E90FF"
               :to="{ path: '/patient/update/' + row.item.id }"
               v-b-tooltip.hover.top.v-primary
-              title="Таҳрирлаш"
+              :title="$t('Таҳрирлаш')"
             >
               <b-icon icon="Pencil" font-scale="0.9"></b-icon>
             </b-button>
@@ -139,43 +139,45 @@
 import moment from "moment";
 export default {
   name: "patient-index",
-  data: () => ({
-    role: null,
-    users: [],
-    filter: null,
-    totalRows: 1,
-    currentPage: 1,
-    checkTable: false,
-    perPage: 50,
-    fields: [
-      {
-        key: "index",
-        label: "#",
-        sortable: false
-      },
-      {
-        key: "created_at",
-        label: "Келган Вақти",
-        formatter: (value, key, item) => {
-          return moment.unix(value).format("DD.MM.YYYY HH:mm:ss");
+  data: function() {
+    return {
+      role: null,
+      users: [],
+      filter: null,
+      totalRows: 1,
+      currentPage: 1,
+      checkTable: false,
+      perPage: 50,
+      fields: [
+        {
+          key: "index",
+          label: "#",
+          sortable: false
+        },
+        {
+          key: "created_at",
+          label: this.$i18n.t("Келган Вақти"),
+          formatter: (value, key, item) => {
+            return moment.unix(value).format("DD.MM.YYYY HH:mm:ss");
+          }
+        },
+        {
+          key: "patient.fullname",
+          label: this.$i18n.t("Бемор"),
+          sortable: true
+        },
+        {
+          key: "user.username",
+          label: this.$i18n.t("Ходим"),
+          sortable: true
+        },
+        {
+          key: "actions",
+          label: ""
         }
-      },
-      {
-        key: "patient.fullname",
-        label: "Бемор",
-        sortable: true
-      },
-      {
-        key: "user.username",
-        label: "Рўйҳатга олган ходим",
-        sortable: true
-      },
-      {
-        key: "actions",
-        label: ""
-      }
-    ]
-  }),
+      ]
+    };
+  },
   async mounted() {
     this.role = localStorage.getItem("role");
     await this.Data();

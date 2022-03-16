@@ -42,8 +42,9 @@ Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
 Vue.use(Notifications);
 import { store } from "./store";
+import i18n from "./i18n";
 window.axios = require("axios");
-window.axios.defaults.baseURL = "http://localhost:3000/";
+window.axios.defaults.baseURL = "http://fveak.uz:3000/";
 // window.axios.defaults.baseURL = 'http://192.168.0.126:8081/';
 
 window.axios.interceptors.request.use(req => {
@@ -77,5 +78,6 @@ new Vue({
   el: "#app",
   render: h => h(App),
   router,
+  i18n,
   store
 });

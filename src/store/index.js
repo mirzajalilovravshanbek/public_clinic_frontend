@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
     WAITING: "waiting",
     COMPLETE: "complete",
     DELETED: "deleted",
-    errors: ""
+    errors: "",
+    lang: "uz"
   }
 });

@@ -11,13 +11,13 @@
         <p class="rmk-margin">
           <b-icon icon="columns-gap" font-scale="1.5"></b-icon>
         </p>
-        <p>Навбатлар Рўйҳати</p>
+        <p>{{ $t("Навбатлар Рўйҳати") }}</p>
       </sidebar-link>
       <sidebar-link to="/patient/index">
         <p class="rmk-margin">
           <b-icon icon="person-lines-fill" font-scale="1.7"></b-icon>
         </p>
-        <p>Регистрация</p>
+        <p>{{ $t("Регистрация") }}</p>
       </sidebar-link>
       <div class="mt-2" v-if="role === $store.state.ITMED">
         <sidebar-link to="/patientcrud/index">

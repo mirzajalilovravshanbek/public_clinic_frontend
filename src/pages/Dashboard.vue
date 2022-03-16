@@ -1,16 +1,16 @@
 <template>
   <b-container fluid class="div-body">
-    <h3 class="text-center my-1">Навбатлар Рўйҳати</h3>
+    <h3 class="text-center my-1">{{ $t("Навбатлар Рўйҳати") }}</h3>
     <b-row>
       <b-col sm="12" md="6" lg="6" xl="6">
         <table class="table table-bordered table-sm text-center">
           <thead>
             <tr class="table-primary">
               <th>#</th>
-              <th>Шифокор</th>
-              <th>Хона Рақами</th>
-              <th>Бемор</th>
-              <th>Навбат Рақами</th>
+              <th>{{ $t("Шифокор") }}</th>
+              <th>{{ $t("Хона Рақами") }}</th>
+              <th>{{ $t("Бемор") }}</th>
+              <th>{{ $t("Навбат Рақами") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -29,10 +29,10 @@
           <thead>
             <tr class="table-primary">
               <th>#</th>
-              <th>Шифокор</th>
-              <th>Хона Рақами</th>
-              <th>Бемор</th>
-              <th>Навбат Рақами</th>
+              <th>{{ $t("Шифокор") }}</th>
+              <th>{{ $t("Хона Рақами") }}</th>
+              <th>{{ $t("Бемор") }}</th>
+              <th>{{ $t("Навбат Рақами") }}</th>
             </tr>
           </thead>
           <tbody>
