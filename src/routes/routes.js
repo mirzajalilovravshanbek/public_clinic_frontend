@@ -129,41 +129,41 @@ const routes = [
         name: "Беморни Таҳрирлаш",
         component: () => import("@/pages/PatientCrud/Update.vue")
       },
-      {
-        path: "/reports/index",
-        name: "Ҳисоботлар",
-        component: () => import("@/pages/Reports/Index.vue")
-      },
-      {
-        path: "/reports/kassa",
-        name: "Касса Китоби",
-        component: () => import("@/pages/Reports/Kassa.vue")
-      },
-      {
-        path: "/reports/patientxisobot",
-        name: "Бемор Ҳисоботи",
-        component: () => import("@/pages/Reports/PatientXisobot.vue")
-      },
-      {
-        path: "/reports/patient/:id",
-        name: "Бемор Сверкаси",
-        component: () => import("@/pages/Reports/Patient.vue")
-      },
-      {
-        path: "/reports/employeesxisobot",
-        name: "Ҳодим Ҳисоботи",
-        component: () => import("@/pages/Reports/EmployeesXisobot.vue")
-      },
-      {
-        path: "/reports/employees/:id",
-        name: "Ҳодим Сверкаси",
-        component: () => import("@/pages/Reports/Employees.vue")
-      },
-      {
-        path: "/room/index",
-        name: "Хоналар",
-        component: () => import("@/pages/Room/Index.vue")
-      },
+      // {
+      //   path: "/reports/index",
+      //   name: "Ҳисоботлар",
+      //   component: () => import("@/pages/Reports/Index.vue")
+      // },
+      // {
+      //   path: "/reports/kassa",
+      //   name: "Касса Китоби",
+      //   component: () => import("@/pages/Reports/Kassa.vue")
+      // },
+      // {
+      //   path: "/reports/patientxisobot",
+      //   name: "Бемор Ҳисоботи",
+      //   component: () => import("@/pages/Reports/PatientXisobot.vue")
+      // },
+      // {
+      //   path: "/reports/patient/:id",
+      //   name: "Бемор Сверкаси",
+      //   component: () => import("@/pages/Reports/Patient.vue")
+      // },
+      // {
+      //   path: "/reports/employeesxisobot",
+      //   name: "Ҳодим Ҳисоботи",
+      //   component: () => import("@/pages/Reports/EmployeesXisobot.vue")
+      // },
+      // {
+      //   path: "/reports/employees/:id",
+      //   name: "Ҳодим Сверкаси",
+      //   component: () => import("@/pages/Reports/Employees.vue")
+      // },
+      // {
+      //   path: "/room/index",
+      //   name: "Хоналар",
+      //   component: () => import("@/pages/Room/Index.vue")
+      // },
       {
         path: "/room/doctorroom/index",
         name: "Шифокор Хоналари",
@@ -179,21 +179,21 @@ const routes = [
         name: "Хонани Таҳрирлаш ",
         component: () => import("@/pages/Room/DoctorRoom/Update.vue")
       },
-      {
-        path: "/room/patientroom/index",
-        name: "Бемор Хоналари",
-        component: () => import("@/pages/Room/PatientRoom/Index.vue")
-      },
-      {
-        path: "/room/patientroom/create",
-        name: "Хона Қўшиш",
-        component: () => import("@/pages/Room/PatientRoom/Create.vue")
-      },
-      {
-        path: "/room/patientroom/update/:id",
-        name: "Хонани Таҳрирлаш",
-        component: () => import("@/pages/Room/PatientRoom/Update.vue")
-      },
+      // {
+      //   path: "/room/patientroom/index",
+      //   name: "Бемор Хоналари",
+      //   component: () => import("@/pages/Room/PatientRoom/Index.vue")
+      // },
+      // {
+      //   path: "/room/patientroom/create",
+      //   name: "Хона Қўшиш",
+      //   component: () => import("@/pages/Room/PatientRoom/Create.vue")
+      // },
+      // {
+      //   path: "/room/patientroom/update/:id",
+      //   name: "Хонани Таҳрирлаш",
+      //   component: () => import("@/pages/Room/PatientRoom/Update.vue")
+      // },
       {
         path: "/inspections/index",
         name: "Текширувлар",
@@ -245,6 +245,11 @@ const routes = [
     path: "/patient/checkprint",
     name: "Чек",
     component: () => import("@/pages/Patient/CheckPrint.vue")
+  },
+  {
+    path: "/patient/dischargepatient",
+    name: "Выписка",
+    component: () => import("@/pages/Patient/DischargePatient.vue")
   },
   {
     path: "/404",

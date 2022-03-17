@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid="lg">
+  <b-container fluid>
     <md-card>
       <md-card-header data-background-color="green">
         <b-row>

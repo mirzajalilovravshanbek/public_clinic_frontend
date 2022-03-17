@@ -482,7 +482,7 @@
                       <label
                         for="textarea-illness-history"
                         class="rmk-label-doctor"
-                        >История болезни(Анамнез)</label
+                        >Касаллик тарихи(Анамнез)</label
                       >
                       <b-form-textarea
                         id="textarea-illness-history"
@@ -494,10 +494,23 @@
                       ></b-form-textarea>
                     </b-col>
                     <b-col sm="12" md="12" lg="12" xl="12">
+                      <label for="textarea-complaint" class="rmk-label-doctor"
+                        >Бемор Шикояти</label
+                      >
+                      <b-form-textarea
+                        id="textarea-complaint"
+                        rows="3"
+                        v-model="item.complaint"
+                        max-rows="8"
+                        class="px-1 rmk-textarea"
+                        disabled
+                      ></b-form-textarea>
+                    </b-col>
+                    <b-col sm="12" md="12" lg="12" xl="12">
                       <label
                         for="textarea-objective-survey"
                         class="rmk-label-doctor"
-                        >Объективный осмотр</label
+                        >Объектив кўрув</label
                       >
                       <b-form-textarea
                         id="textarea-objective-survey"
@@ -512,7 +525,7 @@
                       <label
                         for="textarea-labaratory-entry"
                         class="rmk-label-doctor"
-                        >Инструментальные обследование</label
+                        >Инструментал текшириш</label
                       >
                       <b-form-textarea
                         id="textarea-labaratory-entry"
@@ -527,7 +540,7 @@
                       <label
                         for="textarea-main-diagnosis"
                         class="rmk-label-doctor"
-                        >Главный диагноз
+                        >Aсосий ташхис
                         <b-button
                           variant="light"
                           size="sm"
@@ -551,7 +564,7 @@
                     </b-col>
                     <b-col sm="12" md="12" lg="12" xl="12">
                       <label for="textarea-procedure" class="rmk-label-doctor"
-                        >Лечение</label
+                        >Даволаш</label
                       >
                       <b-form-textarea
                         id="textarea-procedure"
@@ -564,7 +577,7 @@
                     </b-col>
                     <b-col sm="12" md="12" lg="12" xl="12">
                       <label for="textarea-recommended" class="rmk-label-doctor"
-                        >Рекомендация</label
+                        >Тавсия</label
                       >
                       <b-form-textarea
                         id="textarea-recommended"

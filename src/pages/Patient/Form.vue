@@ -332,7 +332,7 @@
 
     <!-- navbar start -->
     <b-container fluid class="mt-2" v-if="checkBody">
-      <b-card no-body style="height:520px;">
+      <b-card no-body style="height:580px;">
         <b-tabs v-model="tabIndex" card>
           <!-- patient datas start -->
           <b-tab
@@ -344,7 +344,7 @@
               <b-container fluid>
                 <b-row>
                   <!-- patient lastname start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-0">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <label class="mb-0" for="input-lastname"
                       >{{ $t("Фамилия")
                       }}<sup class="text-danger">*</sup></label
@@ -364,7 +364,7 @@
                   <!-- patient lastname end -->
 
                   <!-- patient name start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-0">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <label class="mb-0" for="input-name"
                       >{{ $t("Исм") }}<sup class="text-danger">*</sup></label
                     >
@@ -383,7 +383,7 @@
                   <!-- patient name end -->
 
                   <!-- patient patronymic start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
                     <label class="mb-0" for="input-patronymic"
                       >{{ $t("Отасини Исми")
                       }}<sup class="text-danger">*</sup></label
@@ -403,7 +403,7 @@
                   <!-- patient patronymic end -->
 
                   <!-- patient region start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
                     <label class="mb-0" for="region">{{ $t("Вилоят") }}</label>
                     <v-select
                       id="region"
@@ -420,7 +420,7 @@
                   <!-- patient region end -->
 
                   <!-- patient birthday start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
                     <label class="mb-0" for="input-date">{{
                       $t("Туғилган сана")
                     }}</label
@@ -439,7 +439,7 @@
                   <!-- patient birthday end -->
 
                   <!-- patient district start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
                     <label class="mb-0" for="district">{{ $t("Туман") }}</label>
                     <v-select
                       id="district"
@@ -456,7 +456,7 @@
                   <!-- patient district end -->
 
                   <!-- patient gender start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
                     <p class="m-0 p-0">{{ $t("Жинси") }}</p>
                     <md-radio
                       class="my-1"
@@ -474,7 +474,7 @@
                   <!-- patient gender end -->
 
                   <!-- patient neighboarhood start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
                     <label class="mb-0" for="neighboarhood">{{
                       $t("МФЙ")
                     }}</label>
@@ -492,7 +492,7 @@
                   <!-- patient neighboarhood end -->
 
                   <!-- patient phone and passport start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
                     <b-row>
                       <b-col sm="6" md="6" lg="6" xl="6">
                         <label class="mb-0" for="input-phone">{{
@@ -523,7 +523,7 @@
                   <!-- patient phone and passport end -->
 
                   <!-- patient address start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
                     <label class="mb-0" for="input-address">{{
                       $t("Уй")
                     }}</label>
@@ -538,7 +538,7 @@
                   <!-- patient address end -->
 
                   <!-- patient d_control and disability start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
                     <b-row>
                       <b-col sm="6" md="6" lg="6" xl="6">
                         <b-form-checkbox
@@ -565,7 +565,7 @@
                   <!-- patient d_control and disability end -->
 
                   <!-- patient height and weight start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
                     <b-row>
                       <b-col sm="6" md="6" lg="6" xl="6">
                         <label class="mb-0" for="input-height">{{
@@ -601,7 +601,7 @@
                     md="6"
                     lg="6"
                     xl="6"
-                    class="pt-1"
+                    class="pt-1 mt-1"
                     v-if="
                       role === $store.state.REGISTRATION ||
                         role === $store.state.DOCTOR ||
@@ -714,7 +714,7 @@
               <b-container
                 v-if="data.doctor.length > 0"
                 fluid
-                style="height: 400px; overflow-y: auto;"
+                style="height: 440px; overflow-y: auto;"
               >
                 <table
                   class="table table-bordered table-striped table-hover table-bordered table-sm mt-2"
@@ -880,7 +880,7 @@
                       ></b-icon>
                     </h5>
                     <!-- table start -->
-                    <b-container fluid style="height: 312px; overflow-y: auto;">
+                    <b-container fluid style="height: 380px; overflow-y: auto;">
                       <table
                         class="table table-bordered table-striped table-hover table-bordered table-sm mt-1"
                       >
@@ -1016,7 +1016,7 @@
                 :title-link-class="linkDoctorClass(index)"
                 class="pt-2"
               >
-                <b-container fluid style="height: 385px; overflow-y: auto;">
+                <b-container fluid style="height: 440px; overflow-y: auto;">
                   <b-row>
                     <b-col sm="1" md="1" lg="1" xl="1">
                       <b-button
@@ -1271,6 +1271,31 @@
                         class="px-1 rmk-textarea"
                         :disabled="item.doctor.id !== doctor_id"
                         @blur="CheckStatusDoctor(item.doctor_id, index)"
+                      ></b-form-textarea>
+                    </b-col>
+                    <b-col
+                      offset-sm="1"
+                      sm="11"
+                      offset-md="1"
+                      md="11"
+                      offset-lg="1"
+                      lg="11"
+                      offset-xl="1"
+                      xl="11"
+                    >
+                      <label
+                        for="textarea-complaint"
+                        class="rmk-label-doctor"
+                        >{{ $t("Бемор Шикояти") }}</label
+                      >
+                      <b-form-textarea
+                        id="textarea-complaint"
+                        rows="3"
+                        v-model="item.complaint"
+                        max-rows="8"
+                        class="px-1 rmk-textarea"
+                        :disabled="item.doctor.id !== doctor_id"
+                        @change="CheckStatusDoctor(item.doctor_id, index)"
                       ></b-form-textarea>
                     </b-col>
                     <b-col
@@ -1788,7 +1813,7 @@
                 :title-link-class="linkRecipeClass(index)"
                 class="pt-2"
               >
-                <b-container fluid style="height: 335px; overflow-y: auto;">
+                <b-container fluid style="height: 410px; overflow-y: auto;">
                   <b-row>
                     <b-col sm="12" md="12" lg="12" xl="12">
                       <table
@@ -1905,7 +1930,11 @@
                 role === $store.state.REGISTRATION
             "
           >
-            <b-container fluid style="height: 450px; overflow-y: auto;">
+            <b-container
+              fluid
+              v-if="data.files.length > 0"
+              style="height: 510px; overflow-y: auto;"
+            >
               <b-row>
                 <b-col sm="12" md="12" lg="12" xl="12">
                   <table
@@ -1924,7 +1953,9 @@
                         <td>{{ item.href }}</td>
                         <td>
                           <a
-                            :href="'http://localhost:3000/upload/' + item.href"
+                            :href="
+                              `${axios.defaults.baseURL}upload/` + item.href
+                            "
                             target="_blank"
                             class="btn btn-info btn-sm text-white"
                             ><i class="fas fa-eye"></i>&ensp;{{
@@ -1940,10 +1971,33 @@
             </b-container>
           </b-tab>
           <!-- tashxis section end -->
+          <!-- print section start -->
+          <b-tab
+            :title="$t('Печат')"
+            :title-link-class="linkClass(6)"
+            v-if="
+              role === $store.state.DOCTOR ||
+                role === $store.state.ITMED ||
+                role === $store.state.REGISTRATION
+            "
+          >
+            <b-card-text>
+              <b-button
+                variant="primary"
+                @click="DischargePatient()"
+                :disabled="discharge"
+              >
+                <b-spinner small v-if="discharge"></b-spinner>
+                <b-icon icon="printer-fill"></b-icon>
+                Выписка
+              </b-button>
+            </b-card-text>
+          </b-tab>
+          <!-- print section end -->
           <!-- room section start -->
           <b-tab
             title="Хона бириктириш"
-            :title-link-class="linkClass(6)"
+            :title-link-class="linkClass(7)"
             v-if="role === 'dasturchi'"
           >
             <b-card-text>
@@ -2328,7 +2382,8 @@ export default {
     ins_child: [],
     saving: false,
     save_template: false,
-    checkTemplateName: false
+    checkTemplateName: false,
+    discharge: false
   }),
   async mounted() {
     let self = this;
@@ -3110,6 +3165,23 @@ export default {
     },
     ShowImage(image) {
       this.modalImage = image;
+    },
+    DischargePatient() {
+      let self = this;
+      var doctor = [];
+      self.data.doctor.forEach(element => {
+        if (element.doctor_id == self.doctor_id) {
+          doctor = element;
+        }
+      });
+      localStorage.setItem("patient", JSON.stringify(self.patient_datas));
+      localStorage.setItem("doctor", JSON.stringify(doctor));
+      localStorage.setItem("created_at", JSON.stringify(self.data.created_at));
+      localStorage.setItem("updated_at", JSON.stringify(self.data.updated_at));
+      const route = self.$router.resolve({
+        path: "/patient/dischargepatient"
+      });
+      window.open(route.href, "_blank");
     }
   },
   computed: {
@@ -3133,9 +3205,9 @@ export default {
 .rmk-patient-form {
   width: 100%;
   background-color: #d1e5f1 !important;
-  padding-top: 5px;
+  padding-top: 10px;
   margin: 0;
-  height: 100%;
+  height: 100vh;
 }
 .rmk-close-button {
   float: right;
@@ -3148,7 +3220,7 @@ export default {
 .rmk-card {
   background-color: #3c8dbc;
   padding: 10px;
-  margin: 8px 1px 0px 1px;
+  margin: 20px 1px;
   border-radius: 10px;
 }
 .rmk-label {

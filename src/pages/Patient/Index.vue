@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid="sm" class="all-div-height">
+  <b-container fluid class="all-div-height">
     <!-- button panel start -->
     <b-row>
       <b-col
@@ -236,7 +236,7 @@ export default {
   margin: 0;
 }
 .div-body {
-  height: 95vh;
+  height: 100vh;
   overflow-y: auto;
 }
 </style>

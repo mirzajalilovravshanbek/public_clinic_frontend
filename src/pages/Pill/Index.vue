@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid="sm" class="all-div-height">
+  <b-container fluid class="all-div-height">
     <md-card>
       <md-card-header data-background-color="green">
         <h4 class="title">Дорилар рўйҳати</h4>

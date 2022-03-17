@@ -230,7 +230,7 @@ export default {
   height: 520px;
   position: absolute;
   top: 5%;
-  left: 35%;
+  left: 40%;
   border-radius: 10px;
   background-color: #7579ff !important;
 }
