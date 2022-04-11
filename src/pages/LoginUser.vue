@@ -23,7 +23,7 @@
     </div>
     <!-- alert end -->
 
-    <b-container>
+    <b-container fluid class="rmk-back">
       <md-card class="rmk-login-box">
         <b-row>
           <b-col md="12" sm="12" lg="12" xl="12" style="height: 150px">
@@ -225,12 +225,14 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
 }
+.rmk-back {
+  text-align: center;
+  height: 100vh;
+}
 .rmk-login-box {
   width: 400px;
   height: 520px;
-  position: absolute;
   top: 5%;
-  left: 40%;
   border-radius: 10px;
   background-color: #7579ff !important;
 }

@@ -211,6 +211,7 @@
                     id="filter-input"
                     v-model="filter"
                     type="search"
+                    @keyup="SearchPatient()"
                   ></b-form-input>
 
                   <b-input-group-append>
@@ -218,7 +219,7 @@
                       variant="danger"
                       size="sm"
                       :disabled="!filter"
-                      @click="filter = ''"
+                      @click="filter = '', SearchPatient()"
                       >{{ $t("Тозалаш") }}</b-button
                     >
                   </b-input-group-append>
@@ -331,20 +332,20 @@
     <!-- spinner end -->
 
     <!-- navbar start -->
-    <b-container fluid class="mt-2" v-if="checkBody">
-      <b-card no-body style="height:580px;">
+    <b-container fluid class="mt-1" v-if="checkBody">
+      <b-card no-body style="height:73vh;">
         <b-tabs v-model="tabIndex" card>
           <!-- patient datas start -->
           <b-tab
             :title="$t('Бемор маълумотлари')"
             :title-link-class="linkClass(0)"
-            class="pt-1"
+            class="py-1"
           >
             <b-card-text>
               <b-container fluid>
                 <b-row>
                   <!-- patient lastname start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-0">
                     <label class="mb-0" for="input-lastname"
                       >{{ $t("Фамилия")
                       }}<sup class="text-danger">*</sup></label
@@ -364,7 +365,7 @@
                   <!-- patient lastname end -->
 
                   <!-- patient name start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-0">
                     <label class="mb-0" for="input-name"
                       >{{ $t("Исм") }}<sup class="text-danger">*</sup></label
                     >
@@ -383,7 +384,7 @@
                   <!-- patient name end -->
 
                   <!-- patient patronymic start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <label class="mb-0" for="input-patronymic"
                       >{{ $t("Отасини Исми")
                       }}<sup class="text-danger">*</sup></label
@@ -403,7 +404,7 @@
                   <!-- patient patronymic end -->
 
                   <!-- patient region start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <label class="mb-0" for="region">{{ $t("Вилоят") }}</label>
                     <v-select
                       id="region"
@@ -420,7 +421,7 @@
                   <!-- patient region end -->
 
                   <!-- patient birthday start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <label class="mb-0" for="input-date">{{
                       $t("Туғилган сана")
                     }}</label
@@ -439,7 +440,7 @@
                   <!-- patient birthday end -->
 
                   <!-- patient district start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <label class="mb-0" for="district">{{ $t("Туман") }}</label>
                     <v-select
                       id="district"
@@ -456,7 +457,7 @@
                   <!-- patient district end -->
 
                   <!-- patient gender start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <p class="m-0 p-0">{{ $t("Жинси") }}</p>
                     <md-radio
                       class="my-1"
@@ -474,7 +475,7 @@
                   <!-- patient gender end -->
 
                   <!-- patient neighboarhood start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <label class="mb-0" for="neighboarhood">{{
                       $t("МФЙ")
                     }}</label>
@@ -492,7 +493,7 @@
                   <!-- patient neighboarhood end -->
 
                   <!-- patient phone and passport start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <b-row>
                       <b-col sm="6" md="6" lg="6" xl="6">
                         <label class="mb-0" for="input-phone">{{
@@ -523,7 +524,7 @@
                   <!-- patient phone and passport end -->
 
                   <!-- patient address start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <label class="mb-0" for="input-address">{{
                       $t("Уй")
                     }}</label>
@@ -538,7 +539,7 @@
                   <!-- patient address end -->
 
                   <!-- patient d_control and disability start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1">
                     <b-row>
                       <b-col sm="6" md="6" lg="6" xl="6">
                         <b-form-checkbox
@@ -565,7 +566,7 @@
                   <!-- patient d_control and disability end -->
 
                   <!-- patient height and weight start -->
-                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 mt-1">
+                  <b-col sm="6" md="6" lg="6" xl="6" class="pt-1 m-0">
                     <b-row>
                       <b-col sm="6" md="6" lg="6" xl="6">
                         <label class="mb-0" for="input-height">{{
@@ -601,7 +602,7 @@
                     md="6"
                     lg="6"
                     xl="6"
-                    class="pt-1 mt-1"
+                    class="pt-0"
                     v-if="
                       role === $store.state.REGISTRATION ||
                         role === $store.state.DOCTOR ||
@@ -714,7 +715,7 @@
               <b-container
                 v-if="data.doctor.length > 0"
                 fluid
-                style="height: 440px; overflow-y: auto;"
+                style="height: 51vh; overflow-y: auto;"
               >
                 <table
                   class="table table-bordered table-striped table-hover table-bordered table-sm mt-2"
@@ -861,7 +862,7 @@
                   :title="item.name ? item.name : item.inspection.name"
                   :title-link-class="link_Class(index)"
                   active
-                  class="pt-2"
+                  class="py-1"
                 >
                   <b-card-text>
                     <h5 class="text-center m-0">
@@ -880,9 +881,12 @@
                       ></b-icon>
                     </h5>
                     <!-- table start -->
-                    <b-container fluid style="height: 380px; overflow-y: auto;">
+                    <b-container
+                      fluid
+                      style="height: 42vh; overflow-y: auto; margin: 0;"
+                    >
                       <table
-                        class="table table-bordered table-striped table-hover table-bordered table-sm mt-1"
+                        class="table table-bordered table-striped table-hover table-bordered table-sm"
                       >
                         <thead>
                           <tr class="table-primary">
@@ -1014,9 +1018,9 @@
                 :key="index"
                 :title="item.doctor.name != null ? item.doctor.name : ''"
                 :title-link-class="linkDoctorClass(index)"
-                class="pt-2"
+                class="py-0"
               >
-                <b-container fluid style="height: 440px; overflow-y: auto;">
+                <b-container fluid style="height: 53vh; overflow-y: auto;">
                   <b-row>
                     <b-col sm="1" md="1" lg="1" xl="1">
                       <b-button
@@ -1260,7 +1264,7 @@
                     <b-col sm="11" md="11" lg="11" xl="11">
                       <label
                         for="textarea-illness-history"
-                        class="rmk-label-doctor"
+                        class="rmk-label-doctor mt-1"
                         >{{ $t("Касаллик тарихи(Анамнез)") }}</label
                       >
                       <b-form-textarea
@@ -1384,6 +1388,31 @@
                             : ''
                         "
                         max-rows="3"
+                        class="px-1 rmk-textarea"
+                        :disabled="item.doctor.id !== doctor_id"
+                        @change="CheckStatusDoctor(item.doctor_id, index)"
+                      ></b-form-textarea>
+                    </b-col>
+                    <b-col
+                      offset-sm="1"
+                      sm="11"
+                      offset-md="1"
+                      md="11"
+                      offset-lg="1"
+                      lg="11"
+                      offset-xl="1"
+                      xl="11"
+                    >
+                      <label
+                        for="textarea-concomitant"
+                        class="rmk-label-doctor"
+                        >{{ $t("Хамрох диагноз") }}</label
+                      >
+                      <b-form-textarea
+                        id="textarea-concomitant"
+                        rows="3"
+                        v-model="item.concomitant"
+                        max-rows="8"
                         class="px-1 rmk-textarea"
                         :disabled="item.doctor.id !== doctor_id"
                         @change="CheckStatusDoctor(item.doctor_id, index)"
@@ -1642,7 +1671,7 @@
           <b-tab
             :title="$t('Рецепт')"
             :title-link-class="linkClass(4)"
-            class="pt-1"
+            class="py-1"
             v-if="role === $store.state.DOCTOR || role === $store.state.ITMED"
           >
             <b-button
@@ -1811,9 +1840,9 @@
                 :key="index"
                 :title="item.doctor.name != null ? item.doctor.name : ''"
                 :title-link-class="linkRecipeClass(index)"
-                class="pt-2"
+                class="py-1"
               >
-                <b-container fluid style="height: 410px; overflow-y: auto;">
+                <b-container fluid style="height: 47vh; overflow-y: auto;">
                   <b-row>
                     <b-col sm="12" md="12" lg="12" xl="12">
                       <table
@@ -1933,7 +1962,7 @@
             <b-container
               fluid
               v-if="data.files.length > 0"
-              style="height: 510px; overflow-y: auto;"
+              style="height: 60vh; overflow-y: auto;"
             >
               <b-row>
                 <b-col sm="12" md="12" lg="12" xl="12">
@@ -2149,7 +2178,7 @@
               <b-container
                 v-if="data.room.length > 0"
                 fluid
-                style="height: 370px; overflow-y: auto;"
+                style="height: 100vh; overflow-y: auto; border: 1px solid green;"
               >
                 <table
                   class="table table-bordered table-striped table-hover table-bordered table-sm mt-2"
@@ -2402,13 +2431,19 @@ export default {
           "api/registration/id/" + self.$route.params.id
         );
         self.data = response.data;
-        await self.GetPatientById(response.data.patient_id);
-        await self.GetMKB(0);
+        self.patient_datas = response.data.patient;
+        self.data.patient_name = response.data.patient.fullname;
+        self.patient_datas.birthday = response.data.patient.birthday
+          ? response.data.patient.birthday.toString()
+          : null;
+        await self.GetDistricts();
+        await self.GetNeighboarhood();
         // self.checkSpinner = false;
         self.checkBody = true;
       } catch (error) {
         self.$store.state.errors = error;
       }
+      await self.GetMKB(0);
     }
   },
   methods: {
@@ -2425,6 +2460,21 @@ export default {
     async Save() {
       let self = this;
       self.saving = true;
+      
+      if (!self.patient_datas.id) { 
+        try {
+          const response = await self.axios({
+            url: "api/patient",
+            method: "post",
+            data: self.patient_datas
+          });
+          self.data.patient_id = parseInt(response.data.id);
+          self.data.patient_name = response.data.fullname;
+        } catch (error) {
+          // self.$store.state.errors = error;
+        }
+      }
+
       if (self.$route.path == "/patient/create") {
         var methods = "post";
         var action = "api/registration";
@@ -2589,22 +2639,6 @@ export default {
         self.$bvModal.hide("my-template-" + index);
       });
     },
-    //update doc
-    async GetPatientById(id) {
-      let self = this;
-      try {
-        const response = await self.axios.get("api/patient/id/" + id);
-        self.patient_datas = response.data;
-        self.data.patient_name = response.data.fullname;
-        self.patient_datas.birthday = response.data.birthday
-          ? response.data.birthday.toString()
-          : null;
-        await self.GetDistricts();
-        await self.GetNeighboarhood();
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
-    },
     CheckOperator() {
       let self = this;
       self.data.user_id == null
@@ -2757,6 +2791,7 @@ export default {
         medical_history: "",
         objective_vision: "",
         instrumental: "",
+        concomitant: "",
         //mkb-10 id si
         diagnos: null,
         diagnos_name: { name: "" },
@@ -2858,6 +2893,21 @@ export default {
         const response = await self.axios({
           url: "api/patient",
           method: "get"
+        });
+        self.patients = response.data;
+        self.totalRows = self.patients.length;
+      } catch (error) {
+        self.$store.state.errors = error;
+      }
+    },
+    async SearchPatient() {
+      let self = this;
+      //bemorni qidirish
+      try {
+        const response = await self.axios({
+          url: "api/patient/search",
+          method: "post",
+          data: {"search": self.filter}
         });
         self.patients = response.data;
         self.totalRows = self.patients.length;
@@ -3220,7 +3270,7 @@ export default {
 .rmk-card {
   background-color: #3c8dbc;
   padding: 10px;
-  margin: 20px 1px;
+  margin: 10px 1px;
   border-radius: 10px;
 }
 .rmk-label {

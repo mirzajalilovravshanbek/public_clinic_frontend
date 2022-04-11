@@ -563,6 +563,19 @@
                       ></b-form-input>
                     </b-col>
                     <b-col sm="12" md="12" lg="12" xl="12">
+                      <label for="textarea-concomitant" class="rmk-label-doctor"
+                        >Хамрох диагноз</label
+                      >
+                      <b-form-textarea
+                        id="textarea-concomitant"
+                        rows="3"
+                        v-model="item.concomitant"
+                        max-rows="8"
+                        class="px-1 rmk-textarea"
+                        disabled
+                      ></b-form-textarea>
+                    </b-col>
+                    <b-col sm="12" md="12" lg="12" xl="12">
                       <label for="textarea-procedure" class="rmk-label-doctor"
                         >Даволаш</label
                       >
