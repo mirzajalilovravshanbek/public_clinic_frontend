@@ -1,68 +1,72 @@
 <template>
   <div class="pl-5 pr-4 py-2">
+    <h2 class="text-center m-0">
+      Ўзбекистон Республикаси Соғлиқни Сақлаш Вазирлиги
+    </h2>
     <h2 class="text-center m-0">Олтиариқ Тумани</h2>
     <h3 class="text-center m-0">
+      Муассаса номи:&ensp;
       {{ doctor_data.doctor != null ? doctor_data.doctor.branch.name : "" }}
     </h3>
-    <h4 class="text-center m-0">Амбулатор осмотр доктора</h4>
-    <table class="table table-borderless table-md">
+    <h4 class="text-center m-0">№____ Амбулатор шифокор текшируви</h4>
+    <table class="table table-borderless table-md myFormat">
       <tbody>
         <tr>
-          <th>ФИО:</th>
+          <th>ФИШ:</th>
           <td>{{ patient_data != null ? patient_data.fullname : "" }}</td>
-          <th>Год рождения:</th>
+          <th>Туғилган сана:</th>
           <td>{{ patient_data.birthday | moment }}</td>
         </tr>
         <tr>
           <th>Телефон:</th>
           <td>{{ patient_data.phone != null ? patient_data.phone : "" }}</td>
-          <th>Паспорт серии:</th>
+          <th>Паспорт серия:</th>
           <td>
             {{ patient_data.passport != null ? patient_data.passport : "" }}
           </td>
         </tr>
         <tr>
-          <th>Время прибытия:</th>
+          <th>Келган вақти:</th>
           <td>{{ created_at | moment }}</td>
-          <th>Время выбытия:</th>
+          <th>Кетган вақти:</th>
           <td>{{ updated_at | moment }}</td>
         </tr>
         <tr>
-          <th>Диагноз:</th>
+          <th>Ташхис:</th>
           <td colspan="3">
-            {{
-              doctor_data.diagnos_name != null
-                ? doctor_data.diagnos_name.name
-                : ""
-            }}
+            {{ doctor_data.diagnos }}
           </td>
         </tr>
         <tr>
-          <th>Жалоба Пациента:</th>
+          <th>Бемор шикояти:</th>
           <td colspan="3">{{ doctor_data.complaint }}</td>
         </tr>
         <tr>
-          <th>История болезни (Анамнез):</th>
+          <th>Касаллик тарихи (Анамнез):</th>
           <td colspan="3">{{ doctor_data.medical_history }}</td>
         </tr>
         <tr>
-          <th>Объективный осмотр:</th>
+          <th>Объектив кўрув:</th>
           <td colspan="3">{{ doctor_data.objective_vision }}</td>
         </tr>
         <tr>
-          <th>Инструментальные обследование:</th>
+          <th>Инструментал текшириш:</th>
           <td colspan="3">{{ doctor_data.instrumental }}</td>
         </tr>
         <tr>
-          <th>Лечение:</th>
+          <th>Хамрох диагноз:</th>
+          <td colspan="3">{{ doctor_data.concomitant }}</td>
+        </tr>
+        <tr>
+          <th>Даволаш:</th>
           <td colspan="3">{{ doctor_data.procedure }}</td>
         </tr>
         <tr>
-          <th>Рекомендация:</th>
+          <th>Тавсия:</th>
           <td colspan="3">{{ doctor_data.recommended }}</td>
         </tr>
         <tr>
-          <th colspan="2">Врач:</th>
+          <th colspan="2">Шифокор:</th>
           <th colspan="2">
             {{ doctor_data.doctor != null ? doctor_data.doctor.name : "" }}
           </th>
@@ -108,4 +112,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+table.myFormat tr th td {
+  font-size: 14pt;
+}
+</style>

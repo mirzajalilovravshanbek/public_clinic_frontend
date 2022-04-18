@@ -6,6 +6,7 @@
     "Қидирув": "Find",
     "Тозалаш": "Clear",
     "Таҳрирлаш": "Update",
+    "Ўчириш": "Delete",
     "Келган Вақти": "Arrival Time",
     "Бемор": "Patient",
     "Ходим": "Employee",
@@ -99,5 +100,10 @@
     "Файллар": "Files",
     "Кўриш": "View",
     "Беморни Қидириш": "Search patient",
-    "Беморнинг Касаллик Тарихи": "Patient's Medical History"
+    "Беморнинг Касаллик Тарихи": "Patient's Medical History",
+    "Шаблонлар": "Templates",
+    "Шаблон қўшиш": "Add template",
+    "Шаблон яратиш": "Add template",
+    "Шаблон Номи": "Template Name",
+    "Шаблон Номини тўлдириш шарт": "Must fill in the template name"
 }

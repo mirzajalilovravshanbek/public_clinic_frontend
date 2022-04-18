@@ -219,7 +219,7 @@
                       variant="danger"
                       size="sm"
                       :disabled="!filter"
-                      @click="filter = '', SearchPatient()"
+                      @click="(filter = ''), SearchPatient()"
                       >{{ $t("Тозалаш") }}</b-button
                     >
                   </b-input-group-append>
@@ -1026,9 +1026,9 @@
                       <b-button
                         variant="primary"
                         block
-                        style="display: none"
+                        v-if="item.doctor.id === doctor_id"
                         v-b-tooltip.hover.v-primary.bottom
-                        title="Шаблонлар"
+                        :title="$t('Шаблонлар')"
                         v-b-modal="'my-template-' + index"
                         @click="GetTemplates(index)"
                         ><b-icon icon="layers-fill"></b-icon>
@@ -1037,7 +1037,7 @@
                       <b-modal
                         :id="'my-template-' + index"
                         hide-footer
-                        title="Шаблонлар"
+                        :title="$t('Шаблонлар')"
                         size="lg"
                       >
                         <b-row>
@@ -1046,7 +1046,7 @@
                               variant="success"
                               class="mb-1"
                               v-b-tooltip.hover.v-success.topright
-                              title="Шаблон қўшиш"
+                              :title="$t('Шаблон қўшиш')"
                               @click="modalAddTemplate = !modalAddTemplate"
                             >
                               <b-icon icon="plus"></b-icon>
@@ -1054,33 +1054,36 @@
                             <!-- Template form modal start -->
                             <b-modal
                               hide-footer
-                              title="Шаблон яратиш"
+                              :title="$t('Шаблон яратиш')"
                               size="lg"
                               v-model="modalAddTemplate"
                             >
                               <b-row>
                                 <b-col sm="12" md="12" lg="12" xl="12">
                                   <label for="template-name" class="mb-0"
-                                    >Шаблон Номи</label
+                                    >{{ $t("Шаблон Номи")
+                                    }}<sup class="text-danger">*</sup></label
                                   >
                                   <b-form-input
                                     id="template-name"
                                     type="text"
-                                    v-model="doctor_template.template_name"
+                                    v-model="doctor_template.name"
                                     class="px-1 mb-1 rmk-input"
                                     @blur="CheckTemplateName()"
                                   ></b-form-input>
                                   <span
                                     style="color: red;"
                                     v-if="checkTemplateName"
-                                    >"Шаблон Номи"ни тўлдириш шарт</span
+                                    >{{
+                                      $t("Шаблон Номини тўлдириш шарт")
+                                    }}</span
                                   >
                                 </b-col>
                                 <b-col sm="12" md="12" lg="12" xl="12">
                                   <label
                                     for="template-patient-complaint"
                                     class="mb-0"
-                                    >Бемор шикояти</label
+                                    >{{ $t("Бемор Шикояти") }}</label
                                   >
                                   <b-form-textarea
                                     id="template-patient-complaint"
@@ -1092,12 +1095,12 @@
                                 </b-col>
                                 <b-col sm="12" md="12" lg="12" xl="12">
                                   <label
-                                    for="template-illness-history"
+                                    for="template-medical-history"
                                     class="mb-0"
-                                    >Касаллик тарихи</label
+                                    >{{ $t("Касаллик тарихи(Анамнез)") }}</label
                                   >
                                   <b-form-textarea
-                                    id="template-illness-history"
+                                    id="template-medical-history"
                                     rows="3"
                                     max-rows="8"
                                     class="px-1 rmk-input"
@@ -1106,12 +1109,12 @@
                                 </b-col>
                                 <b-col sm="12" md="12" lg="12" xl="12">
                                   <label
-                                    for="template-objective-survey"
+                                    for="template-objective-vision"
                                     class="mb-0"
-                                    >Объектив текшириш</label
+                                    >{{ $t("Объектив кўрув") }}</label
                                   >
                                   <b-form-textarea
-                                    id="template-objective-survey"
+                                    id="template-objective-vision"
                                     rows="3"
                                     max-rows="8"
                                     class="px-1 rmk-input"
@@ -1120,12 +1123,12 @@
                                 </b-col>
                                 <b-col sm="12" md="12" lg="12" xl="12">
                                   <label
-                                    for="template-labaratory-entry"
+                                    for="template-instrumental"
                                     class="mb-0"
-                                    >Инструментал текшириш</label
+                                    >{{ $t("Инструментал текшириш") }}</label
                                   >
                                   <b-form-textarea
-                                    id="template-labaratory-entry"
+                                    id="template-instrumental"
                                     rows="3"
                                     max-rows="8"
                                     class="px-1 rmk-input"
@@ -1133,13 +1136,11 @@
                                   ></b-form-textarea>
                                 </b-col>
                                 <b-col sm="12" md="12" lg="12" xl="12">
-                                  <label
-                                    for="template-main-diagnosis"
-                                    class="mb-0"
-                                    >Aсосий ташхис</label
-                                  >
+                                  <label for="template-diagnos" class="mb-0">{{
+                                    $t("Aсосий ташхис")
+                                  }}</label>
                                   <b-form-textarea
-                                    id="template-main-diagnosis"
+                                    id="template-diagnos"
                                     rows="3"
                                     max-rows="8"
                                     class="px-1 rmk-input"
@@ -1147,8 +1148,24 @@
                                   ></b-form-textarea>
                                 </b-col>
                                 <b-col sm="12" md="12" lg="12" xl="12">
-                                  <label for="template-procedure" class="mb-0"
-                                    >Даволаш</label
+                                  <label
+                                    for="template-concomitant"
+                                    class="mb-0"
+                                    >{{ $t("Хамрох диагноз") }}</label
+                                  >
+                                  <b-form-textarea
+                                    id="template-concomitant"
+                                    rows="3"
+                                    max-rows="8"
+                                    class="px-1 rmk-input"
+                                    v-model="doctor_template.concomitant"
+                                  ></b-form-textarea>
+                                </b-col>
+                                <b-col sm="12" md="12" lg="12" xl="12">
+                                  <label
+                                    for="template-procedure"
+                                    class="mb-0"
+                                    >{{ $t("Даволаш") }}</label
                                   >
                                   <b-form-textarea
                                     id="template-procedure"
@@ -1159,8 +1176,10 @@
                                   ></b-form-textarea>
                                 </b-col>
                                 <b-col sm="12" md="12" lg="12" xl="12">
-                                  <label for="template-recommended" class="mb-0"
-                                    >Тавсия</label
+                                  <label
+                                    for="template-recommended"
+                                    class="mb-0"
+                                    >{{ $t("Тавсия") }}</label
                                   >
                                   <b-form-textarea
                                     id="template-recommended"
@@ -1181,7 +1200,7 @@
                                       small
                                       v-if="save_template"
                                     ></b-spinner>
-                                    Сақлаш
+                                    {{ $t("Сақлаш") }}
                                   </b-button>
                                 </b-col>
                               </b-row>
@@ -1200,7 +1219,6 @@
                                   id="filter-input-template"
                                   v-model="filterTemplate"
                                   type="search"
-                                  placeholder="Қидириш..."
                                 ></b-form-input>
 
                                 <b-input-group-append>
@@ -1209,7 +1227,7 @@
                                     size="sm"
                                     :disabled="!filterTemplate"
                                     @click="filterTemplate = ''"
-                                    >Тозалаш</b-button
+                                    >{{ $t("Тозалаш") }}</b-button
                                   >
                                 </b-input-group-append>
                               </b-input-group>
@@ -1231,8 +1249,8 @@
                             @row-clicked="AddTemplate"
                             @filtered="onFilteredTemplate"
                           >
-                            <template #cell(name)="row">
-                              {{ row.value.template_name }}
+                            <template #cell(items)="row">
+                              {{ row.value.name }}
                             </template>
                             <template #cell(action)="row">
                               <b-button
@@ -1241,7 +1259,7 @@
                                 style="color: #1E90FF"
                                 @click="UpdateTemplate(row.item.id)"
                                 v-b-tooltip.hover.left.v-primary
-                                title="Таҳрирлаш"
+                                :title="$t('Таҳрирлаш')"
                               >
                                 <b-icon icon="Pencil"></b-icon>
                               </b-button>
@@ -1250,7 +1268,7 @@
                                 size="sm"
                                 @click="DeleteTemplate(row.item.id)"
                                 v-b-tooltip.hover.right.v-danger
-                                title="Ўчириш"
+                                :title="$t('Ўчириш')"
                               >
                                 <b-icon icon="trash"></b-icon>
                               </b-button>
@@ -1381,17 +1399,27 @@
                       </label>
                       <b-form-textarea
                         id="textarea-main-diagnosis"
-                        rows="1"
-                        :value="
-                          item.diagnos_name != null
-                            ? item.diagnos_name.name
-                            : ''
-                        "
-                        max-rows="3"
+                        rows="3"
+                        v-model="item.diagnos"
+                        max-rows="8"
                         class="px-1 rmk-textarea"
                         :disabled="item.doctor.id !== doctor_id"
                         @change="CheckStatusDoctor(item.doctor_id, index)"
                       ></b-form-textarea>
+                      <div class="mkb-input" v-if="item.diagnostics.length > 0">
+                        <span
+                          class="mkb-name"
+                          v-for="(el, i) in item.diagnostics"
+                          :key="i"
+                          >{{ el.diagnos != null ? el.diagnos.name : "" }}
+                          <span
+                            class="badge badge-danger"
+                            style="cursor:pointer"
+                            @click="DelTemplate(index, i)"
+                            >×
+                          </span>
+                        </span>
+                      </div>
                     </b-col>
                     <b-col
                       offset-sm="1"
@@ -2310,16 +2338,6 @@ export default {
     doctors: [],
     rooms: [],
     images: [],
-    doctor_template: {
-      template_name: "",
-      complaint: "",
-      medical_history: "",
-      objective_vision: "",
-      instrumental: "",
-      diagnos: "",
-      recommended: "",
-      procedure: ""
-    },
     //patient search
     patients: [],
     fields: [
@@ -2379,11 +2397,22 @@ export default {
     currentPageRoom: 1,
     perPageRoom: 50,
     totalRowsRoom: 1,
+    doctor_template: {
+      name: "",
+      complaint: "",
+      medical_history: "",
+      objective_vision: "",
+      instrumental: "",
+      diagnos: "",
+      concomitant: "",
+      recommended: "",
+      procedure: ""
+    },
     templates: [],
     filterTemplate: null,
     fieldsTemplate: [
       {
-        key: "template_name",
+        key: "name",
         label: "Шаблон Номи",
         sortable: true
       },
@@ -2455,13 +2484,12 @@ export default {
     },
     Close() {
       this.$router.push({ path: "/patient/index" });
-      window.close();
     },
     async Save() {
       let self = this;
       self.saving = true;
-      
-      if (!self.patient_datas.id) { 
+
+      if (!self.patient_datas.id) {
         try {
           const response = await self.axios({
             url: "api/patient",
@@ -2488,11 +2516,11 @@ export default {
           url: action,
           data: self.data
         });
-        self.saving = false;
-        window.close();
+        self.$router.push({ path: "/patient/index" });
       } catch (error) {
         // self.$store.state.errors = error;
       }
+      self.saving = false;
     },
     async print() {
       let self = this;
@@ -2513,7 +2541,6 @@ export default {
             url: action,
             data: self.data
           });
-          self.printing = false;
           if (response) {
             try {
               const response1 = await self.axios.get(
@@ -2524,47 +2551,45 @@ export default {
                 path: "/patient/checkprint"
               });
               window.open(route.href, "_blank");
-              setTimeout(() => {
-                window.close();
-              }, 3000);
             } catch (error) {
               // self.$store.state.errors = error;
             }
           }
+          self.$router.push({ path: "/patient/index" });
         } catch (error) {
           // self.$store.state.errors = error;
         }
+        self.printing = false;
       }
     },
     CheckTemplateName() {
       let self = this;
-      self.doctor_template.template_name == ""
+      self.doctor_template.name == ""
         ? (self.checkTemplateName = true)
         : (self.checkTemplateName = false);
     },
-    SaveTemplate() {
+    async SaveTemplate() {
       let self = this;
       self.CheckTemplateName();
       if (self.checkTemplateName == false) {
         self.save_template = true;
+
         if (self.doctor_template.id) {
-          var urlx = "staff/update_template";
-          var id = self.doctor_template.id;
+          var urlx = "api/doctor_template/id/" + self.doctor_template.id;
+          var methods = "patch";
         } else {
-          var urlx = "staff/add_template";
-          var id = "";
+          var urlx = "api/doctor_template";
+          var methods = "post";
         }
-        axios({
-          url: urlx,
-          method: "post",
-          params: {
-            id: id
-          },
-          data: self.doctor_template
-        }).then(function(response) {
-          self.save_template = false;
+        self.doctor_template.doctor_id = self.doctor_id;
+        try {
+          const response = await self.axios({
+            url: urlx,
+            method: methods,
+            data: self.doctor_template
+          });
           self.modalAddTemplate = false;
-          (self.doctor_template.template_name = ""),
+          (self.doctor_template.name = ""),
             (self.doctor_template.complaint = ""),
             (self.doctor_template.medical_history = ""),
             (self.doctor_template.objective_vision = ""),
@@ -2572,72 +2597,66 @@ export default {
             (self.doctor_template.diagnos = ""),
             (self.doctor_template.recommended = ""),
             (self.doctor_template.procedure = ""),
+            (self.doctor_template.concomitant = ""),
             self.GetTemplates();
-        });
+        } catch (error) {
+          self.$store.state.errors = error.response.data.message;
+        }
+        self.save_template = false;
       }
     },
-    GetTemplates(index) {
+    async GetTemplates(index) {
       let self = this;
       if (typeof index != "undefined" && index !== null) {
-        localStorage.setItem("i", index);
+        localStorage.setItem("doci", index);
       }
       //get list of templates => shablonlarni olish
-      axios({
-        url: "staff/get_templates",
-        method: "get"
-      }).then(function(response) {
-        self.templates = response.data.data;
-      });
+      try {
+        const template = await self.axios(
+          "api/doctor_template/doctor/" + self.doctor_id
+        );
+        self.templates = template.data;
+      } catch (error) {
+        self.$store.state.errors = error.response.data.message;
+      }
     },
-    DeleteTemplate(id) {
+    async DeleteTemplate(id) {
       let self = this;
-
-      axios({
-        url: "staff/delete_template",
-        method: "post",
-        params: {
-          id: id
-        }
-      }).then(function(response) {
+      try {
+        await self.axios.delete("api/doctor_template/id/" + id);
         self.GetTemplates();
-      });
+      } catch (error) {
+        self.$store.state.errors = error.response.data.message;
+      }
     },
-    UpdateTemplate(id) {
+    async UpdateTemplate(id) {
       let self = this;
-
-      axios({
-        url: "staff/get_template",
-        method: "get",
-        params: {
-          id: id
-        }
-      }).then(function(response) {
-        self.doctor_template = response.data.data;
+      try {
+        const update_template = await self.axios.get(
+          "api/doctor_template/id/" + id
+        );
+        self.doctor_template = update_template.data;
         self.modalAddTemplate = true;
-      });
+      } catch (error) {
+        self.$store.state.errors = error.response.data.message;
+      }
+    },
+    DelTemplate(doctor_index, mkb_index) {
+      this.data.doctor[doctor_index].diagnostics.splice(mkb_index, 1);
     },
     AddTemplate(item) {
       let self = this;
-      //get one template => shablonni olish
-      axios({
-        url: "staff/get_template",
-        method: "get",
-        params: {
-          id: item.id
-        }
-      }).then(function(response) {
-        let index = localStorage.getItem("i");
-        self.data.doctor[index].complaint = response.data.data.complaint;
-        self.data.doctor[index].medical_history =
-          response.data.data.medical_history;
-        self.data.doctor[index].objective_vision =
-          response.data.data.objective_vision;
-        self.data.doctor[index].instrumental = response.data.data.instrumental;
-        self.data.doctor[index].diagnos = response.data.data.diagnos;
-        self.data.doctor[index].recommended = response.data.data.recommended;
-        self.data.doctor[index].procedure = response.data.data.procedure;
-        self.$bvModal.hide("my-template-" + index);
-      });
+      let index = localStorage.getItem("doci");
+      self.data.doctor[index].complaint = item.complaint;
+      self.data.doctor[index].medical_history = item.medical_history;
+      self.data.doctor[index].objective_vision = item.objective_vision;
+      self.data.doctor[index].instrumental = item.instrumental;
+      self.data.doctor[index].diagnos = item.diagnos;
+      self.data.doctor[index].concomitant = item.concomitant;
+      self.data.doctor[index].recommended = item.recommended;
+      self.data.doctor[index].procedure = item.procedure;
+      localStorage.removeItem("doci");
+      self.$bvModal.hide("my-template-" + index);
     },
     CheckOperator() {
       let self = this;
@@ -2736,7 +2755,6 @@ export default {
           children.status = self.$store.state.WAITING;
           children.registration_id = self.registration_id;
 
-          // console.log(children);
           self.ins_child.push({ ...children });
         });
         ins_data.child = self.ins_child;
@@ -2793,8 +2811,8 @@ export default {
         instrumental: "",
         concomitant: "",
         //mkb-10 id si
-        diagnos: null,
-        diagnos_name: { name: "" },
+        diagnos: "",
+        diagnostics: [],
         procedure: "",
         recommended: "",
         reciept: []
@@ -2907,7 +2925,7 @@ export default {
         const response = await self.axios({
           url: "api/patient/search",
           method: "post",
-          data: {"search": self.filter}
+          data: { search: self.filter }
         });
         self.patients = response.data;
         self.totalRows = self.patients.length;
@@ -2943,7 +2961,6 @@ export default {
     },
     AddRoom(item) {
       let self = this;
-      // console.log(item)
       item.begin_date = self.attach_room.begin_date;
       item.add_date = self.attach_room.add_date;
       item.end_date = self.attach_room.end_date;
@@ -2985,8 +3002,11 @@ export default {
     SetMKB(item) {
       let self = this;
       let index = parseInt(localStorage.getItem("index"));
-      self.data.doctor[index].diagnos = item.id;
-      self.data.doctor[index].diagnos_name = item;
+      self.data.doctor[index].diagnos += item.name;
+      self.data.doctor[index].diagnostics.push({
+        diagnos_id: item.id,
+        diagnos: { name: item.name }
+      });
       self.modalMKBShow = false;
       localStorage.removeItem("index");
     },
@@ -3108,7 +3128,6 @@ export default {
             id: patient_id
           }
         });
-        // console.log(response.data);
         if (response.data.level === 1) {
           self.patient_datas = response.data.data;
           self.patient_datas.birthday = response.data.data.birthday.toString();
@@ -3295,6 +3314,20 @@ export default {
 }
 .rmk-input {
   border: 1px solid #3c8dbc;
+  border-radius: 3px;
+}
+.mkb-input {
+  border: 1px solid #3c8dbc;
+  width: 100%;
+  height: auto;
+  padding: 1px;
+  margin-bottom: 5px;
+}
+.mkb-name {
+  height: 5px;
+  border: 1px solid #759daa;
+  margin: 2px;
+  padding: 1px;
   border-radius: 3px;
 }
 .change-lang {

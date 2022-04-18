@@ -1,7 +1,7 @@
 <template>
   <div class="rmk-bg">
     <!-- alert start -->
-    <div class="container-fluid">
+    <div class="container-fluid" style="position:absolute;">
       <div class="row justify-content-md-center">
         <div
           class="col-lg-10 col-md-10 col-sm-10 col-xl-10 alert alert-danger text-center p-1"
@@ -202,11 +202,11 @@ export default {
             localStorage.setItem("role", response.data.role);
             localStorage.setItem("t", response.data.token);
             self.$router.push({ path: "/patient/index" });
-            self.sending = false;
           }
         } catch (e) {
           self.datas.password = null;
         }
+        self.sending = false;
       }
     },
     Clear() {

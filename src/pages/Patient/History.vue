@@ -550,17 +550,14 @@
                           >МКБ-10</b-button
                         >
                       </label>
-                      <b-form-input
+                      <b-form-textarea
                         id="textarea-main-diagnosis"
-                        type="text"
-                        :value="
-                          item.diagnos_name != null
-                            ? item.diagnos_name.name
-                            : ''
-                        "
+                        rows="3"
+                        v-model="item.diagnos"
+                        max-rows="8"
+                        class="px-1 rmk-textarea"
                         disabled
-                        class="form-control rmk-input px-1"
-                      ></b-form-input>
+                      ></b-form-textarea>
                     </b-col>
                     <b-col sm="12" md="12" lg="12" xl="12">
                       <label for="textarea-concomitant" class="rmk-label-doctor"

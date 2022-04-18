@@ -17,7 +17,6 @@
           variant="success"
           block
           class="m-2"
-          target="_blank"
           :to="{ path: '/patient/create' }"
           style="color: #fff;"
         >
@@ -110,7 +109,6 @@
           <template #cell(actions)="row">
             <b-button
               variant="outline-primary"
-              target="_blank"
               size="sm"
               style="color: #1E90FF"
               :to="{ path: '/patient/update/' + row.item.id }"
@@ -207,11 +205,7 @@ export default {
       }
     },
     UpdatePatient(item) {
-      let self = this;
-      const route = self.$router.resolve({
-        path: "/patient/update/" + item.id
-      });
-      window.open(route.href, "_blank");
+      this.$router.push({ path: "/patient/update/" + item.id });
     },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
