@@ -102,6 +102,7 @@ export default {
       localStorage.removeItem("role");
       localStorage.removeItem("oid");
       localStorage.removeItem("did");
+      localStorage.removeItem("doci");
       this.$router.push("/loginuser");
     }
   }

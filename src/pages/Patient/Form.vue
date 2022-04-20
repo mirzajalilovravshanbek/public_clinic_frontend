@@ -142,14 +142,14 @@
             >&emsp;
             <b-icon icon="patch-check-fill" variant="success"></b-icon>
           </span>
-        </span>
         <span class="change-lang" @click="switchLocale('uz')">ЎЗБ</span>
         <span class="change-lang" @click="switchLocale('ru')">РУС</span>
+        </span>
 
         <b-button
           style="color: #fff; float:right;"
           variant="danger"
-          @click="Close()"
+          :to="{ path: '/patient/index' }"
           size="sm"
         >
           <b-icon icon="x"></b-icon>
@@ -334,7 +334,7 @@
     <!-- navbar start -->
     <b-container fluid class="mt-1" v-if="checkBody">
       <b-card no-body style="height:73vh;">
-        <b-tabs v-model="tabIndex" card>
+        <b-tabs v-model="tabIndex" card> 
           <!-- patient datas start -->
           <b-tab
             :title="$t('Бемор маълумотлари')"
@@ -2035,19 +2035,48 @@
             v-if="
               role === $store.state.DOCTOR ||
                 role === $store.state.ITMED ||
-                role === $store.state.REGISTRATION
+                role === $store.state.LABARATORY
             "
           >
             <b-card-text>
-              <b-button
-                variant="primary"
-                @click="DischargePatient()"
-                :disabled="discharge"
-              >
-                <b-spinner small v-if="discharge"></b-spinner>
-                <b-icon icon="printer-fill"></b-icon>
-                Выписка
-              </b-button>
+              <b-row class="justify-content-md-center">
+                <b-col sm="2" md="2" lg="2" xl="2">
+                  <b-button
+                    variant="primary"
+                    @click="DischargePatient()"
+                    :disabled="discharge"
+                    block
+                  >
+                    <b-spinner small v-if="discharge"></b-spinner>
+                    <b-icon icon="printer-fill"></b-icon>
+                    Выписка
+                  </b-button>
+                </b-col>
+                <b-col sm="2" md="2" lg="2" xl="2">
+                  <b-button
+                    variant="primary"
+                    @click="Xray()"
+                    :disabled="xray"
+                    block
+                  >
+                    <b-spinner small v-if="xray"></b-spinner>
+                    <b-icon icon="ui-checks"></b-icon>
+                    УЗИ
+                  </b-button>
+                </b-col>
+                <b-col sm="2" md="2" lg="2" xl="2">
+                  <b-button
+                    variant="primary"
+                    @click="InspectionPrint()"
+                    :disabled="inpectionprint"
+                    block
+                  >
+                    <b-spinner small v-if="inpectionprint"></b-spinner>
+                    <b-icon icon="card-list"></b-icon>
+                    Текширувлар
+                  </b-button>
+                </b-col>
+              </b-row>
             </b-card-text>
           </b-tab>
           <!-- print section end -->
@@ -2441,7 +2470,9 @@ export default {
     saving: false,
     save_template: false,
     checkTemplateName: false,
-    discharge: false
+    discharge: false,
+    xray: false,
+    inpectionprint: false
   }),
   async mounted() {
     let self = this;
@@ -2481,9 +2512,6 @@ export default {
         this.$i18n.locale = locale;
         this.$store.state.lang = locale;
       }
-    },
-    Close() {
-      this.$router.push({ path: "/patient/index" });
     },
     async Save() {
       let self = this;
@@ -3249,6 +3277,43 @@ export default {
       localStorage.setItem("updated_at", JSON.stringify(self.data.updated_at));
       const route = self.$router.resolve({
         path: "/patient/dischargepatient"
+      });
+      window.open(route.href, "_blank");
+    },
+    Xray() {
+      let self = this;
+      var inspection = [];
+      var branch = self.branches.find(x => x.id == self.branch_id);
+      self.data.inspection.forEach(element => {
+        if (element.user_id == self.ins_user_id) {
+          inspection.push({...element});
+        }
+      });
+      localStorage.setItem("patient", JSON.stringify(self.patient_datas));
+      localStorage.setItem("inspection", JSON.stringify(inspection));
+      localStorage.setItem("branch", JSON.stringify(branch));
+      localStorage.setItem("created_at", JSON.stringify(self.data.created_at));
+      localStorage.setItem("updated_at", JSON.stringify(self.data.updated_at));
+      const route = self.$router.resolve({
+        path: "/patient/xray"
+      });
+      window.open(route.href, "_blank");
+    },
+    InspectionPrint() {
+      let self = this;
+      var inspection = [];
+      var branch = self.branches.find(x => x.id == self.branch_id);
+      self.data.inspection.forEach(element => {
+        if (element.user_id == self.ins_user_id) {
+          inspection.push({...element});
+        }
+      });
+      localStorage.setItem("patient", JSON.stringify(self.patient_datas));
+      localStorage.setItem("inspection", JSON.stringify(inspection));
+      localStorage.setItem("branch", JSON.stringify(branch));
+      localStorage.setItem("created_at", JSON.stringify(self.data.created_at));
+      const route = self.$router.resolve({
+        path: "/patient/inspection"
       });
       window.open(route.href, "_blank");
     }

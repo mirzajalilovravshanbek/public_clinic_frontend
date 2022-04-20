@@ -10,7 +10,7 @@
       <b-icon icon="x"></b-icon>
     </b-button>
     <h2 class="text-center">{{ $t("Беморнинг Касаллик Тарихи") }}</h2>
-    <div class="container-fluid" v-for="(doc, number) in doc" :key="number">
+    <div class="container-fluid" v-for="(doc, number) in docx" :key="number">
       <p>
         <span class="font-weight-bold">Ҳужжат Сақланган Сана:</span>
         {{ doc.created_at | moment }}
@@ -351,7 +351,6 @@
             <b-card-text>
               <!-- inspections table start -->
               <b-tabs
-                v-model="tableIndex"
                 card
                 v-if="doc.inspection.length > 0"
               >
@@ -467,7 +466,7 @@
           <!-- ispections end -->
           <!-- diagnosis section start -->
           <b-tab title="Ташхис" :title-link-class="linkClass(3)" class="pt-2">
-            <b-tabs v-model="tabDoctorIndex" card v-if="doc.doctor.length > 0">
+            <b-tabs  card v-if="doc.doctor.length > 0">
               <b-tab
                 v-for="(item, index) in doc.doctor"
                 :key="index"
@@ -607,7 +606,7 @@
           <!-- diagnosis section end -->
           <!-- recipe section start -->
           <b-tab title="Рецеп" :title-link-class="linkClass(4)" class="pt-1">
-            <b-tabs v-model="tabRecipeIndex" card v-if="doc.doctor.length > 0">
+            <b-tabs  card v-if="doc.doctor.length > 0">
               <b-tab
                 v-for="(item, index) in doc.doctor"
                 :key="index"
@@ -732,7 +731,7 @@
 import moment from "moment";
 export default {
   data: () => ({
-    doc: [],
+    docx: [],
     lang: {
       formatLocale: {
         firstDayOfWeek: 1
@@ -752,7 +751,7 @@ export default {
       const response = await self.axios.get(
         "api/registration/patient/" + self.$route.params.id
       );
-      self.doc = response.data;
+      self.docx = response.data;
     } catch (error) {
       self.$store.state.errors = error;
     }
@@ -776,8 +775,8 @@ export default {
       }
     },
     link_Class(idx) {
-      if (this.tableIndex == idx) {
-        return ["bg-primary", "text-light"];
+      if (this.tableIndex === idx) {
+        return ["bg-light", "text-info"];
       } else {
         return ["bg-light", "text-info"];
       }

@@ -252,6 +252,16 @@ const routes = [
     component: () => import("@/pages/Patient/DischargePatient.vue")
   },
   {
+    path: "/patient/xray",
+    name: "УЗИ Печат",
+    component: () => import("@/pages/Patient/Xray.vue")
+  },
+  {
+    path: "/patient/inspection",
+    name: "Текширув Печат",
+    component: () => import("@/pages/Patient/Inspection.vue")
+  },
+  {
     path: "/404",
     name: "Not Found",
     component: () => import("@/pages/404.vue")
