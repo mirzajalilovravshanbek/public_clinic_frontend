@@ -8,8 +8,8 @@
               Ўзбекистон Республикаси Соғлиқни сақлаш вазирлиги Олтиариқ тумани
               Муассаса номи:&ensp; {{ branch != null ? branch.name : "" }}
             </th>
-            <th style="width: 25%"></th>
-            <th style="width: 35%">
+            <th style="width: 28%"></th>
+            <th style="width: 32%">
               Ўзбекистон Республикаси Соғлиқни сақлаш вазирининг 2020 йил 31
               декабрдаги № 363-сонли буйруғи билан тасдиқланган &nbsp;___-рақамли тиббий
               хужжат шакли
@@ -19,7 +19,7 @@
       </table>
 
       <h3 style="text-align: center; font-weight: 700; font-color: black">
-        № ____ {{ item.inspection != null ? item.inspection.name : item.name }}
+        № <u>{{ item.registration_id }}</u> {{ item.inspection != null ? item.inspection.name : item.name }}
       </h3>
 
       <table class="table table-borderless table-md myFormat">

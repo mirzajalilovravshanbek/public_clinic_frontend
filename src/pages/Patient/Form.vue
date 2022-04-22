@@ -2055,6 +2055,16 @@
                 <b-col sm="2" md="2" lg="2" xl="2">
                   <b-button
                     variant="primary"
+                    @click="ExamPatient()"
+                    block
+                  >
+                    <b-icon icon="printer-fill"></b-icon>
+                    Осмотр
+                  </b-button>
+                </b-col>
+                <b-col sm="2" md="2" lg="2" xl="2">
+                  <b-button
+                    variant="primary"
                     @click="Xray()"
                     :disabled="xray"
                     block
@@ -3266,6 +3276,7 @@ export default {
     DischargePatient() {
       let self = this;
       var doctor = [];
+      let title = "Амбулатор шифокор текшируви";
       self.data.doctor.forEach(element => {
         if (element.doctor_id == self.doctor_id) {
           doctor = element;
@@ -3273,6 +3284,26 @@ export default {
       });
       localStorage.setItem("patient", JSON.stringify(self.patient_datas));
       localStorage.setItem("doctor", JSON.stringify(doctor));
+      localStorage.setItem("title", JSON.stringify(title));
+      localStorage.setItem("created_at", JSON.stringify(self.data.created_at));
+      localStorage.setItem("updated_at", JSON.stringify(self.data.updated_at));
+      const route = self.$router.resolve({
+        path: "/patient/dischargepatient"
+      });
+      window.open(route.href, "_blank");
+    },
+    ExamPatient() {
+      let self = this;
+      var doctor = [];
+      let title = "Шифокор текшируви";
+      self.data.doctor.forEach(element => {
+        if (element.doctor_id == self.doctor_id) {
+          doctor = element;
+        }
+      });
+      localStorage.setItem("patient", JSON.stringify(self.patient_datas));
+      localStorage.setItem("doctor", JSON.stringify(doctor));
+      localStorage.setItem("title", JSON.stringify(title));
       localStorage.setItem("created_at", JSON.stringify(self.data.created_at));
       localStorage.setItem("updated_at", JSON.stringify(self.data.updated_at));
       const route = self.$router.resolve({

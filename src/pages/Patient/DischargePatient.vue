@@ -1,14 +1,27 @@
 <template>
   <div class="pl-5 pr-4 py-2">
-    <h2 class="text-center m-0">
-      Ўзбекистон Республикаси Соғлиқни Сақлаш Вазирлиги
-    </h2>
-    <h2 class="text-center m-0">Олтиариқ Тумани</h2>
-    <h3 class="text-center m-0">
-      Муассаса номи:&ensp;
-      {{ doctor_data.doctor != null ? doctor_data.doctor.branch.name : "" }}
+
+    <table class="table table-borderless table-md myFormat">
+        <tbody style="text-align: center">
+            <tr>
+            <th style="width: 30%">
+                Ўзбекистон Республикаси Соғлиқни сақлаш вазирлиги Олтиариқ тумани
+                Муассаса номи:&ensp; {{ doctor_data.doctor != null ? doctor_data.doctor.branch.name : "" }}
+            </th>
+            <th style="width: 28%"></th>
+            <th style="width: 32%">
+                Ўзбекистон Республикаси Соғлиқни сақлаш вазирининг 2020 йил 31
+                декабрдаги № 363-сонли буйруғи билан тасдиқланган &nbsp;___-рақамли тиббий
+                хужжат шакли
+            </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 style="text-align: center; font-weight: 700; font-color: black">
+        № <u>{{doctor_data.registration_id}}</u> {{title}}
     </h3>
-    <h4 class="text-center m-0">№____ Амбулатор шифокор текшируви</h4>
+    
     <table class="table table-borderless table-md myFormat">
       <tbody>
         <tr>
@@ -65,9 +78,33 @@
           <th>Тавсия:</th>
           <td colspan="3">{{ doctor_data.recommended }}</td>
         </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-bordered table-md myFormat">
+        <tbody>
+            <tr>
+                <th style="width:2%">№</th>
+                <th>Дори номи</th>
+                <th>Кун</th>
+                <th>Махал</th>
+                <th>Қўшимчалар</th>
+            </tr>
+            <tr v-for="(item, index) in doctor_data.reciept" :key="index">
+                <td>{{index + 1}}</td>
+                <td>{{item.pill != null ? item.pill.name : ""}}</td>
+                <td>{{item.day}}</td>
+                <td>{{item.time}}</td>
+                <td>{{item.comment}}</td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <table class="table table-borderless table-md myFormat">
+      <tbody>
         <tr>
-          <th colspan="2">Шифокор:</th>
-          <th colspan="2">
+          <th>Шифокор:</th>
+          <th style="text-align:right">
             {{ doctor_data.doctor != null ? doctor_data.doctor.name : "" }}
           </th>
         </tr>
@@ -82,6 +119,7 @@ export default {
   data: () => ({
     patient_data: [],
     doctor_data: [],
+    title: "",
     created_at: null,
     updated_at: null
   }),
@@ -89,11 +127,13 @@ export default {
     let self = this;
     self.patient_data = JSON.parse(localStorage.getItem("patient"));
     self.doctor_data = JSON.parse(localStorage.getItem("doctor"));
+    self.title = JSON.parse(localStorage.getItem("title"));
     self.created_at = JSON.parse(localStorage.getItem("created_at"));
     self.updated_at = JSON.parse(localStorage.getItem("updated_at"));
     window.print();
     localStorage.removeItem("patient");
     localStorage.removeItem("doctor");
+    localStorage.removeItem("title");
     localStorage.removeItem("created_at");
     localStorage.removeItem("updated_at");
     setTimeout(() => {

@@ -12,8 +12,12 @@
     <h2 class="text-center">{{ $t("Беморнинг Касаллик Тарихи") }}</h2>
     <div class="container-fluid" v-for="(doc, number) in docx" :key="number">
       <p>
-        <span class="font-weight-bold">Ҳужжат Сақланган Сана:</span>
-        {{ doc.created_at | moment }}
+        <span class="font-weight-bold">Ҳужжат Рақами:</span>
+        № {{ doc.id }}
+        <span class="float-right">
+          <span class="font-weight-bold">Ҳужжат Сақланган Сана:</span>
+          {{ doc.created_at | moment }}
+        </span>
       </p>
       <b-card no-body style="height:520px;">
         <b-tabs v-model="tabIndex" card>
