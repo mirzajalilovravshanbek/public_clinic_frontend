@@ -10,6 +10,11 @@ const routes = [
         component: () => import("@/pages/Patient/Index.vue")
       },
       {
+        path: "/archive/index",
+        name: "Архив",
+        component: () => import("@/pages/Archive/Index.vue")
+      },
+      {
         path: "/employees/index",
         name: "Ҳодимлар",
         component: () => import("@/pages/Employees/Index.vue")
@@ -260,6 +265,11 @@ const routes = [
     path: "/patient/inspection",
     name: "Текширув Печат",
     component: () => import("@/pages/Patient/Inspection.vue")
+  },
+  {
+    path: "/archive/update/:id",
+    name: "Бемор архиви",
+    component: () => import("@/pages/Archive/Update.vue")
   },
   {
     path: "/404",

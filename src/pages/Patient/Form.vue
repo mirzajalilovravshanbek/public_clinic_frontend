@@ -2526,37 +2526,27 @@ export default {
     async Save() {
       let self = this;
       self.saving = true;
+      if(!self.data.patient_name){
+        self.$store.state.errors = "Беморни сақланг ёки танланг!";
+      } else {
 
-      if (!self.patient_datas.id) {
+        if (self.$route.path == "/patient/create") {
+          var methods = "post";
+          var action = "api/registration";
+        } else {
+          var methods = "patch";
+          var action = "api/registration/id/" + self.$route.params.id;
+        }
         try {
           const response = await self.axios({
-            url: "api/patient",
-            method: "post",
-            data: self.patient_datas
+            method: methods,
+            url: action,
+            data: self.data
           });
-          self.data.patient_id = parseInt(response.data.id);
-          self.data.patient_name = response.data.fullname;
+          self.$router.push({ path: "/patient/index" });
         } catch (error) {
           // self.$store.state.errors = error;
         }
-      }
-
-      if (self.$route.path == "/patient/create") {
-        var methods = "post";
-        var action = "api/registration";
-      } else {
-        var methods = "patch";
-        var action = "api/registration/id/" + self.$route.params.id;
-      }
-      try {
-        const response = await self.axios({
-          method: methods,
-          url: action,
-          data: self.data
-        });
-        self.$router.push({ path: "/patient/index" });
-      } catch (error) {
-        // self.$store.state.errors = error;
       }
       self.saving = false;
     },

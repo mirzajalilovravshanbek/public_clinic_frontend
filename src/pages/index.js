@@ -1,4 +1,5 @@
 import PatientForm from "../pages/Patient/Form.vue";
+import ArchiveForm from "../pages/Archive/Form.vue";
 import EmployeesForm from "../pages/Employees/Form.vue";
 import DoctorCategoryForm from "../pages/DoctorCategory/Form.vue";
 import InspectionCategoryForm from "../pages/InspectionCategory/Form.vue";
@@ -13,6 +14,7 @@ import PatientCrudForm from "../pages/PatientCrud/Form.vue";
 
 export {
   PatientForm,
+  ArchiveForm,
   EmployeesForm,
   DoctorRoomForm,
   PatientRoomForm,

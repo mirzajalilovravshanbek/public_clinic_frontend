@@ -19,6 +19,12 @@
         </p>
         <p>{{ $t("Регистрация") }}</p>
       </sidebar-link>
+      <sidebar-link to="/archive/index">
+        <p class="rmk-margin">
+          <b-icon icon="archive-fill" font-scale="1.7"></b-icon>
+        </p>
+        <p>{{ $t("Архив") }}</p>
+      </sidebar-link>
       <div class="mt-2" v-if="role === $store.state.ITMED">
         <sidebar-link to="/patientcrud/index">
           <p class="mr-2">

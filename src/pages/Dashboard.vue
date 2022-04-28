@@ -73,7 +73,7 @@ export default {
       let self = this;
       self.queuepolling = setInterval(async () => {
         await self.Data();
-      }, 60000);
+      }, 120000);
     },
     async Data() {
       let self = this;
