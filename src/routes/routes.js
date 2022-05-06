@@ -213,6 +213,11 @@ const routes = [
         path: "/inspections/update/:id",
         name: "Текширувни Таҳрирлаш ",
         component: () => import("@/pages/Inspections/Update.vue")
+      },
+      {
+        path: "/inspections/copy/:id",
+        name: "Текширувни Нусхалаш",
+        component: () => import("@/pages/Inspections/Copy.vue")
       }
     ]
   },

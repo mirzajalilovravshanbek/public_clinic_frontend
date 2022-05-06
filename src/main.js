@@ -44,9 +44,7 @@ Vue.use(Notifications);
 import { store } from "./store";
 import i18n from "./i18n";
 window.axios = require("axios");
-// window.axios.defaults.baseURL = "http://fveak.uz:3000/";
 window.axios.defaults.baseURL = "http://localhost:3000/";
-// window.axios.defaults.baseURL = "http://92.53.97.230:3000/";
 // window.axios.defaults.baseURL = "http://185.196.214.171:3000/";
 
 window.axios.interceptors.request.use(req => {

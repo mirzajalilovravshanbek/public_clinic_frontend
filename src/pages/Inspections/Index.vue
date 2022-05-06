@@ -104,6 +104,17 @@
                 </b-button>
 
                 <b-button
+                  variant="outline-success"
+                  size="sm"
+                  :to="{ path: '/inspections/copy/' + row.item.id }"
+                  v-b-tooltip.hover.topleft.v-success
+                  style="color: #00C851"
+                  title="Нусха олиш"
+                >
+                  <b-icon icon="files" font-scale="0.9"></b-icon>
+                </b-button>
+
+                <b-button
                   size="sm"
                   @click="Delete(row.item.id)"
                   variant="outline-danger"

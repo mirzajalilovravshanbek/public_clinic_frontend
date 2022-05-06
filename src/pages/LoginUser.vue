@@ -17,7 +17,7 @@
             ×
           </button>
           <p><i class="fas fa-exclamation-triangle"></i>&nbsp; Хатолик</p>
-          <span>{{ $store.state.errors }}</span>
+          <div>{{ $store.state.errors }}</div>
         </div>
       </div>
     </div>
