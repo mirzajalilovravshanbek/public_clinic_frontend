@@ -1,7 +1,10 @@
 <template>
   <div class="pl-5 pr-4 py-2">
-    <div v-for="(item, index) in inspection_data" :key="index" style="page-break-before: always">
-  
+    <div
+      v-for="(item, index) in inspection_data"
+      :key="index"
+      style="page-break-before: always"
+    >
       <table class="table table-borderless table-md myFormat">
         <tbody style="text-align: center">
           <tr>
@@ -12,15 +15,16 @@
             <th style="width: 28%"></th>
             <th style="width: 32%">
               Ўзбекистон Республикаси Соғлиқни сақлаш вазирининг 2020 йил 31
-              декабрдаги № 363-сонли буйруғи билан тасдиқланган &nbsp;___-рақамли тиббий
-              хужжат шакли
+              декабрдаги № 363-сонли буйруғи билан тасдиқланган
+              &nbsp;___-рақамли тиббий хужжат шакли
             </th>
           </tr>
         </tbody>
       </table>
 
       <h3 style="text-align: center; font-weight: 700; font-color: black">
-        № <u>{{ item.registration_id }}</u> {{ item.inspection != null ? item.inspection.name : item.name }}
+        № <u>{{ item.registration_id }}</u>
+        {{ item.inspection != null ? item.inspection.name : item.name }}
       </h3>
 
       <table class="table table-borderless table-md myFormat">
@@ -45,7 +49,7 @@
           </tr>
         </tbody>
       </table>
-      
+
       <table class="table table-bordered table-md myFormat">
         <tbody>
           <tr>
@@ -106,21 +110,21 @@ export default {
     }, 3000);
   },
   filters: {
-    moment: function (date) {
+    moment: function(date) {
       if (date != null) {
         return moment.unix(date).format("DD.MM.YYYY");
       } else {
         return "";
       }
     },
-    moment_time: function (date) {
+    moment_time: function(date) {
       if (date != null) {
         return moment.unix(date).format("DD.MM.YYYY HH:mm");
       } else {
         return "";
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

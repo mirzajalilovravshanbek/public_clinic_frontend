@@ -14,13 +14,7 @@
           {{ $t("Янгилаш") }}</b-button
         >
       </b-col>
-      <b-col
-        sm="2"
-        md="2"
-        lg="2"
-        xl="2"
-      >
-      </b-col>
+      <b-col sm="2" md="2" lg="2" xl="2"> </b-col>
       <b-col sm="8" md="8" lg="8" xl="8">
         <b-form-group
           label-for="filter-input"
@@ -164,11 +158,14 @@ export default {
       //get list of documents => hujjatlarni olish
       if (this.role == this.$store.state.REGISTRATION) {
         var urlx =
-          "api/registration_history/branch/" + localStorage.getItem("branch_id");
+          "api/registration_history/branch/" +
+          localStorage.getItem("branch_id");
       } else if (this.role == this.$store.state.DOCTOR) {
-        var urlx = "api/registration_history/doctor/" + localStorage.getItem("oid");
+        var urlx =
+          "api/registration_history/doctor/" + localStorage.getItem("oid");
       } else if (this.role == this.$store.state.LABARATORY) {
-        var urlx = "api/registration_history/inspection/" + localStorage.getItem("oid");
+        var urlx =
+          "api/registration_history/inspection/" + localStorage.getItem("oid");
       } else {
         var urlx = "api/registration_history";
       }

@@ -334,14 +334,17 @@ export default {
       if (self.$route.path == "/inspections/create") {
         var methods = "post";
         var action = "api/inspection";
-      } else if(self.$route.path == "/inspections/update/"+self.$route.params.id) {
+      } else if (
+        self.$route.path ==
+        "/inspections/update/" + self.$route.params.id
+      ) {
         var methods = "patch";
         var action = "api/inspection/id/" + self.$route.params.id;
       } else {
         var methods = "post";
         var action = "api/inspection";
         self.datas.id = null;
-        self.datas.child.forEach((element) => {
+        self.datas.child.forEach(element => {
           element.id = null;
         });
       }

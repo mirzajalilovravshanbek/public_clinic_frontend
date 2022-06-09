@@ -136,7 +136,7 @@
     <!-- navbar start -->
     <b-container fluid class="mt-1">
       <b-card no-body style="height:73vh;">
-        <b-tabs v-model="tabIndex" card> 
+        <b-tabs v-model="tabIndex" card>
           <!-- patient datas start -->
           <b-tab
             :title="$t('Бемор маълумотлари')"
@@ -995,11 +995,7 @@
                   </b-button>
                 </b-col>
                 <b-col sm="2" md="2" lg="2" xl="2">
-                  <b-button
-                    variant="primary"
-                    @click="ExamPatient()"
-                    block
-                  >
+                  <b-button variant="primary" @click="ExamPatient()" block>
                     <b-icon icon="printer-fill"></b-icon>
                     Осмотр
                   </b-button>
@@ -1290,7 +1286,7 @@ export default {
       var branch = self.branches.find(x => x.id == self.branch_id);
       self.data.inspection.forEach(element => {
         if (element.user_id == self.ins_user_id) {
-          inspection.push({...element});
+          inspection.push({ ...element });
         }
       });
       localStorage.setItem("patient", JSON.stringify(self.patient_datas));
@@ -1309,7 +1305,7 @@ export default {
       var branch = self.branches.find(x => x.id == self.branch_id);
       self.data.inspection.forEach(element => {
         if (element.user_id == self.ins_user_id) {
-          inspection.push({...element});
+          inspection.push({ ...element });
         }
       });
       localStorage.setItem("patient", JSON.stringify(self.patient_datas));

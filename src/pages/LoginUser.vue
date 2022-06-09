@@ -198,6 +198,7 @@ export default {
             localStorage.setItem("oid", response.data.id);
             localStorage.setItem("branch_id", response.data.branch_id);
             localStorage.setItem("did", response.data.doctor_id);
+            localStorage.setItem("cid", response.data.inspection_category_id);
             localStorage.setItem("username", response.data.username);
             localStorage.setItem("role", response.data.role);
             localStorage.setItem("t", response.data.token);

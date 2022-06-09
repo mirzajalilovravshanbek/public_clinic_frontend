@@ -354,10 +354,7 @@
           >
             <b-card-text>
               <!-- inspections table start -->
-              <b-tabs
-                card
-                v-if="doc.inspection.length > 0"
-              >
+              <b-tabs card v-if="doc.inspection.length > 0">
                 <b-tab
                   v-for="(item, index) in doc.inspection"
                   :key="index"
@@ -470,7 +467,7 @@
           <!-- ispections end -->
           <!-- diagnosis section start -->
           <b-tab title="Ташхис" :title-link-class="linkClass(3)" class="pt-2">
-            <b-tabs  card v-if="doc.doctor.length > 0">
+            <b-tabs card v-if="doc.doctor.length > 0">
               <b-tab
                 v-for="(item, index) in doc.doctor"
                 :key="index"
@@ -610,7 +607,7 @@
           <!-- diagnosis section end -->
           <!-- recipe section start -->
           <b-tab title="Рецеп" :title-link-class="linkClass(4)" class="pt-1">
-            <b-tabs  card v-if="doc.doctor.length > 0">
+            <b-tabs card v-if="doc.doctor.length > 0">
               <b-tab
                 v-for="(item, index) in doc.doctor"
                 :key="index"
@@ -753,7 +750,7 @@ export default {
     let self = this;
     try {
       const response = await self.axios.get(
-        "api/registration/patient/" + self.$route.params.id
+        "api/registration_history/patient/" + self.$route.params.id
       );
       self.docx = response.data;
     } catch (error) {

@@ -1,27 +1,29 @@
 <template>
   <div class="pl-5 pr-4 py-2">
-
     <table class="table table-borderless table-md myFormat">
-        <tbody style="text-align: center">
-            <tr>
-            <th style="width: 30%">
-                Ўзбекистон Республикаси Соғлиқни сақлаш вазирлиги Олтиариқ тумани
-                Муассаса номи:&ensp; {{ doctor_data.doctor != null ? doctor_data.doctor.branch.name : "" }}
-            </th>
-            <th style="width: 28%"></th>
-            <th style="width: 32%">
-                Ўзбекистон Республикаси Соғлиқни сақлаш вазирининг 2020 йил 31
-                декабрдаги № 363-сонли буйруғи билан тасдиқланган &nbsp;___-рақамли тиббий
-                хужжат шакли
-            </th>
-            </tr>
-        </tbody>
+      <tbody style="text-align: center">
+        <tr>
+          <th style="width: 30%">
+            Ўзбекистон Республикаси Соғлиқни сақлаш вазирлиги Олтиариқ тумани
+            Муассаса номи:&ensp;
+            {{
+              doctor_data.doctor != null ? doctor_data.doctor.branch.name : ""
+            }}
+          </th>
+          <th style="width: 28%"></th>
+          <th style="width: 32%">
+            Ўзбекистон Республикаси Соғлиқни сақлаш вазирининг 2020 йил 31
+            декабрдаги № 363-сонли буйруғи билан тасдиқланган &nbsp;___-рақамли
+            тиббий хужжат шакли
+          </th>
+        </tr>
+      </tbody>
     </table>
 
     <h3 style="text-align: center; font-weight: 700; font-color: black">
-        № <u>{{doctor_data.registration_id}}</u> {{title}}
+      № <u>{{ doctor_data.registration_id }}</u> {{ title }}
     </h3>
-    
+
     <table class="table table-borderless table-md myFormat">
       <tbody>
         <tr>
@@ -82,24 +84,24 @@
     </table>
 
     <table class="table table-bordered table-md myFormat">
-        <tbody>
-            <tr>
-                <th style="width:2%">№</th>
-                <th>Дори номи</th>
-                <th>Кун</th>
-                <th>Махал</th>
-                <th>Қўшимчалар</th>
-            </tr>
-            <tr v-for="(item, index) in doctor_data.reciept" :key="index">
-                <td>{{index + 1}}</td>
-                <td>{{item.pill != null ? item.pill.name : ""}}</td>
-                <td>{{item.day}}</td>
-                <td>{{item.time}}</td>
-                <td>{{item.comment}}</td>
-            </tr>
-        </tbody>
+      <tbody>
+        <tr>
+          <th style="width:2%">№</th>
+          <th>Дори номи</th>
+          <th>Кун</th>
+          <th>Махал</th>
+          <th>Қўшимчалар</th>
+        </tr>
+        <tr v-for="(item, index) in doctor_data.reciept" :key="index">
+          <td>{{ index + 1 }}</td>
+          <td>{{ item.pill != null ? item.pill.name : "" }}</td>
+          <td>{{ item.day }}</td>
+          <td>{{ item.time }}</td>
+          <td>{{ item.comment }}</td>
+        </tr>
+      </tbody>
     </table>
-        
+
     <table class="table table-borderless table-md myFormat">
       <tbody>
         <tr>

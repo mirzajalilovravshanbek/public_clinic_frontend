@@ -142,8 +142,8 @@
             >&emsp;
             <b-icon icon="patch-check-fill" variant="success"></b-icon>
           </span>
-        <span class="change-lang" @click="switchLocale('uz')">ЎЗБ</span>
-        <span class="change-lang" @click="switchLocale('ru')">РУС</span>
+          <span class="change-lang" @click="switchLocale('uz')">ЎЗБ</span>
+          <span class="change-lang" @click="switchLocale('ru')">РУС</span>
         </span>
 
         <b-button
@@ -334,7 +334,7 @@
     <!-- navbar start -->
     <b-container fluid class="mt-1" v-if="checkBody">
       <b-card no-body style="height:73vh;">
-        <b-tabs v-model="tabIndex" card> 
+        <b-tabs v-model="tabIndex" card>
           <!-- patient datas start -->
           <b-tab
             :title="$t('Бемор маълумотлари')"
@@ -930,10 +930,16 @@
                                 max-rows="5"
                                 v-model="field.text"
                                 class="form-control"
-                                :readonly="item.user_id != ins_user_id"
+                                :readonly="
+                                  (item.inspection != null
+                                    ? item.inspection.category_id
+                                    : item.user_id) != category_id
+                                "
                                 @change="
                                   CheckStatusInspection(
-                                    item.user_id,
+                                    item.inspection != null
+                                      ? item.inspection.category_id
+                                      : item.user_id,
                                     index,
                                     indeks
                                   )
@@ -955,7 +961,9 @@
                                 @change="
                                   onInsUpload(indeks, index);
                                   CheckStatusInspection(
-                                    item.user_id,
+                                    item.inspection != null
+                                      ? item.inspection.category_id
+                                      : item.user_id,
                                     index,
                                     indeks
                                   );
@@ -2053,11 +2061,7 @@
                   </b-button>
                 </b-col>
                 <b-col sm="2" md="2" lg="2" xl="2">
-                  <b-button
-                    variant="primary"
-                    @click="ExamPatient()"
-                    block
-                  >
+                  <b-button variant="primary" @click="ExamPatient()" block>
                     <b-icon icon="printer-fill"></b-icon>
                     Осмотр
                   </b-button>
@@ -2348,7 +2352,7 @@ export default {
     },
     doctor_id: parseInt(localStorage.getItem("did")),
     branch_id: parseInt(localStorage.getItem("branch_id")),
-    ins_user_id: parseInt(localStorage.getItem("oid")),
+    category_id: parseInt(localStorage.getItem("cid")),
     drug: { name: null },
     drug_save: false,
     drug_alert: false,
@@ -2526,10 +2530,9 @@ export default {
     async Save() {
       let self = this;
       self.saving = true;
-      if(!self.data.patient_name){
+      if (!self.data.patient_name) {
         self.$store.state.errors = "Беморни сақланг ёки танланг!";
       } else {
-
         if (self.$route.path == "/patient/create") {
           var methods = "post";
           var action = "api/registration";
@@ -2805,9 +2808,9 @@ export default {
       }
       self.modalInspectionShow = false;
     },
-    CheckStatusInspection(user_id, index, indeks) {
+    CheckStatusInspection(id, index, indeks) {
       let self = this;
-      if (user_id == self.ins_user_id) {
+      if (id == self.category_id) {
         self.data.inspection[index].status = null;
         self.data.inspection[index].child[indeks].status = null;
         self.data.inspection[index].status = "complete";
@@ -3306,8 +3309,8 @@ export default {
       var inspection = [];
       var branch = self.branches.find(x => x.id == self.branch_id);
       self.data.inspection.forEach(element => {
-        if (element.user_id == self.ins_user_id) {
-          inspection.push({...element});
+        if (element.inspection.category_id == self.category_id) {
+          inspection.push({ ...element });
         }
       });
       localStorage.setItem("patient", JSON.stringify(self.patient_datas));
@@ -3325,8 +3328,8 @@ export default {
       var inspection = [];
       var branch = self.branches.find(x => x.id == self.branch_id);
       self.data.inspection.forEach(element => {
-        if (element.user_id == self.ins_user_id) {
-          inspection.push({...element});
+        if (element.inspection.category_id == self.category_id) {
+          inspection.push({ ...element });
         }
       });
       localStorage.setItem("patient", JSON.stringify(self.patient_datas));
