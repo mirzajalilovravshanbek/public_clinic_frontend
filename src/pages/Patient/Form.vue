@@ -865,8 +865,9 @@
                   class="py-1"
                 >
                   <b-card-text>
-                    <h5 class="text-center m-0">
-                      {{ item.name ? item.name : item.inspection.name }} &emsp;
+                    <h5 class="m-0">
+                      <span class="m-0 pl-3">
+                        {{ item.name ? item.name : item.inspection.name }} &emsp;
                       <b-icon
                         variant="danger"
                         icon="trash"
@@ -879,6 +880,8 @@
                             role === $store.state.ITMED
                         "
                       ></b-icon>
+                      </span>
+                      <span class="float-right mr-2">Жўнатувчи: {{item.user ? item.user.username : ""}}</span>
                     </h5>
                     <!-- table start -->
                     <b-container
@@ -2792,6 +2795,9 @@ export default {
         self.ins_child = [];
         ins_data.inspection_id = ins_data.id;
         ins_data.registration_id = 0;
+        ins_data.user = {};
+        ins_data.user_id = parseInt(localStorage.getItem("oid"));
+        ins_data.user.username = localStorage.getItem("username");
         ins_data.status = self.$store.state.WAITING;
 
         if (self.$route.path != "/patient/create") {
