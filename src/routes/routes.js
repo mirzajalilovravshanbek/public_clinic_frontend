@@ -134,11 +134,11 @@ const routes = [
         name: "Беморни Таҳрирлаш",
         component: () => import("@/pages/PatientCrud/Update.vue")
       },
-      // {
-      //   path: "/reports/index",
-      //   name: "Ҳисоботлар",
-      //   component: () => import("@/pages/Reports/Index.vue")
-      // },
+      {
+        path: "/reports/index",
+        name: "Ҳисоботлар",
+        component: () => import("@/pages/Reports/Index.vue")
+      },
       // {
       //   path: "/reports/kassa",
       //   name: "Касса Китоби",
@@ -154,11 +154,16 @@ const routes = [
       //   name: "Бемор Сверкаси",
       //   component: () => import("@/pages/Reports/Patient.vue")
       // },
-      // {
-      //   path: "/reports/employeesxisobot",
-      //   name: "Ҳодим Ҳисоботи",
-      //   component: () => import("@/pages/Reports/EmployeesXisobot.vue")
-      // },
+      {
+        path: "/reports/inspectionxisobot",
+        name: "Текширув Ҳисоботи",
+        component: () => import("@/pages/Reports/InspectionXisobot.vue")
+      },
+      {
+        path: "/reports/employeesxisobot",
+        name: "Ҳодим Ҳисоботи",
+        component: () => import("@/pages/Reports/EmployeesXisobot.vue")
+      },
       // {
       //   path: "/reports/employees/:id",
       //   name: "Ҳодим Сверкаси",

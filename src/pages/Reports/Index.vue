@@ -2,9 +2,9 @@
   <b-container fluid class="all-div-height">
     <b-row>
       <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33"
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-50"
       >
-        <router-link :to="{ path: '/reports/patientxisobot' }">
+        <router-link :to="{ path: '/reports/inspectionxisobot' }">
           <stats-card data-background-color="green">
             <template slot="header">
               <b-iconstack font-scale="4">
@@ -19,14 +19,14 @@
             </template>
 
             <template slot="content">
-              <h5 class="title">Бемор Ҳисоботи</h5>
+              <h5 class="title">Текширувлар Ҳисоботи</h5>
             </template>
           </stats-card>
         </router-link>
       </div>
 
       <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33"
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-50"
       >
         <router-link :to="{ path: '/reports/employeesxisobot' }">
           <stats-card data-background-color="blue">
@@ -41,7 +41,7 @@
         </router-link>
       </div>
 
-      <div
+      <!-- <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33"
       >
         <router-link :to="{ path: '/reports/kassa' }">
@@ -55,7 +55,7 @@
             </template>
           </stats-card>
         </router-link>
-      </div>
+      </div> -->
     </b-row>
     <!-- <b-row>
       <div

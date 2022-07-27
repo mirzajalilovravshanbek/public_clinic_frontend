@@ -1,6 +1,6 @@
 <template>
   <b-container fluid class="all-div-height">
-    <h5 class="text-center">Ходим Ҳисоботи</h5>
+    <h5 class="text-center">Текширувлар Ҳисоботи</h5>
     <b-row class="justify-content-md-center">
       <b-col md="3" sm="3" lg="3" xl="3">
         <date-picker
@@ -55,14 +55,14 @@
             <thead>
               <tr class="table-primary">
                 <th>#</th>
-                <th>Ҳодим</th>
+                <th>Текширув Номи</th>
                 <th>Беморлар Сони</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(item, index) in employee_kassa" :key="index">
                 <th>{{ index + 1 }}</th>
-                <td> {{ item.doctor.name }}</td>
+                <td> {{ item.inspection.name }}</td>
                 <td> {{ item.count }}</td>
               </tr>
               <tr>
@@ -118,7 +118,7 @@ export default {
       self.employee_sending = true;
       axios({
         method: "post",
-        url: "api/registration/report/doctor",
+        url: "api/registration/report/inspection",
         data: self.datas
       }).then(function(response) {
         self.employee_sending = false;

@@ -2101,7 +2101,6 @@
           <b-tab
             title="Хона бириктириш"
             :title-link-class="linkClass(7)"
-            v-if="role === 'dasturchi'"
           >
             <b-card-text>
               <b-row>

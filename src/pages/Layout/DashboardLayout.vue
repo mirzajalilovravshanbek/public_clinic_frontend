@@ -26,16 +26,16 @@
         <p>{{ $t("Архив") }}</p>
       </sidebar-link>
       <div class="mt-2" v-if="role === $store.state.ITMED">
+        <sidebar-link to="/reports/index">
+          <p class="mr-2"><b-icon icon="journals" font-scale="1.7"></b-icon></p>
+          <p>Ҳисоботлар</p>
+        </sidebar-link>
         <sidebar-link to="/patientcrud/index">
           <p class="mr-2">
             <b-icon icon="person-plus-fill" font-scale="1.7"></b-icon>
           </p>
           <p>Беморлар</p>
         </sidebar-link>
-        <!-- <sidebar-link to="/reports/index">
-          <p class="mr-2"><b-icon icon="journals" font-scale="1.7"></b-icon></p>
-          <p>Ҳисоботлар</p>
-        </sidebar-link> -->
         <sidebar-link to="/branch/index">
           <p class="mr-2"><b-icon icon="building" font-scale="1.7"></b-icon></p>
           <p>Филиаллар</p>
