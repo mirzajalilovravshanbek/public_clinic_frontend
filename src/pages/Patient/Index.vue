@@ -200,9 +200,7 @@ export default {
         self.users = response.data;
         self.totalRows = self.users.length;
         self.checkTable = false;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     UpdatePatient(item) {
       this.$router.push({ path: "/patient/update/" + item.id });

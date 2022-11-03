@@ -1,48 +1,60 @@
 <template>
   <b-container fluid class="rmk-patient-form">
-    <!-- alert start -->
-    <div class="container-fluid" style="position:absolute;">
-      <div class="row justify-content-md-center">
-        <div
-          class="col-lg-10 col-md-10 col-sm-10 col-xl-10 alert alert-danger text-center p-1"
-          style="z-index: 5;"
-          v-if="$store.state.errors != ''"
-        >
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="$store.state.errors = ''"
-          >
-            ×
-          </button>
-          <p>
-            <i class="fas fa-exclamation-triangle"></i>&nbsp;
-            {{ $t("Хатолик") }}
-          </p>
-          <p class="text-center">{{ $store.state.errors }}</p>
-        </div>
-        <div
-          class="col-lg-10 col-md-10 col-sm-10 col-xl-10 alert alert-success text-center p-1"
-          style="z-index: 5;"
-          v-if="checkPatientStatus"
-        >
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="checkPatientStatus = false"
-          >
-            ×
-          </button>
-          <p>
-            <i class="fas fa-check-circle"></i>&nbsp; {{ $t("Муваффақиятли") }}
-          </p>
-          <p class="text-center">{{ PatientStatusText }}</p>
-        </div>
-      </div>
+
+    <!-- error alert start -->
+    <div
+      :class="
+        $store.state.errors != ''
+          ? 'alert alert-danger text-center p-1 notifications active'
+          : ''
+      "
+      v-if="$store.state.errors != ''"
+    >
+      <button
+        type="button"
+        aria-hidden="true"
+        class="close"
+        @click="$store.state.errors = ''"
+      >
+        <b-icon font-scale="2" icon="x"></b-icon>
+      </button>
+      <h4>
+        <i class="fas fa-exclamation-triangle"></i>&nbsp;
+        {{ $t("Хатолик") }} {{ Interval() }}
+      </h4>
+      <p class="text-center">{{ $store.state.errors }}</p>
+      <ul v-if="$store.state.arr_errors.length > 0 && $store.state.arr_errors != undefined">
+        <li v-for="(item, index) in $store.state.arr_errors" :key="index">
+          {{msg}}
+        </li>
+      </ul>
     </div>
-    <!-- alert end -->
+    <!-- error alert end -->
+
+    <!-- success alert start -->
+    <div
+      :class="
+        checkPatientStatus == true
+          ? 'alert alert-success text-center p-1 notifications active'
+          : ''
+      "
+      v-if="checkPatientStatus"
+    >
+
+      <button
+        type="button"
+        aria-hidden="true"
+        class="close"
+        @click="checkPatientStatus = false"
+      >
+        <b-icon font-scale="2" icon="x"></b-icon>
+      </button>
+      <h4>
+        <i class="fas fa-check-circle"></i>&nbsp; {{ $t("Муваффақиятли") }} {{ Interval() }}
+      </h4>
+      <p class="text-center">{{ PatientStatusText }}</p>
+    </div>
+    <!-- success alert end -->
 
     <!-- button group start -->
     <b-row class="justify-content-md-center">
@@ -2517,13 +2529,18 @@ export default {
         await self.GetNeighboarhood();
         // self.checkSpinner = false;
         self.checkBody = true;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
       await self.GetMKB(0);
     }
   },
   methods: {
+    Interval() {
+      setTimeout(() => {
+        this.$store.state.errors = "";
+        this.$store.state.arr_errors = [];
+        this.checkPatientStatus = false;
+      }, 5000);
+    },
     switchLocale(locale) {
       if (this.$i18n.locale !== locale) {
         this.$i18n.locale = locale;
@@ -2550,9 +2567,7 @@ export default {
             data: self.data
           });
           self.$router.push({ path: "/patient/index" });
-        } catch (error) {
-          // self.$store.state.errors = error;
-        }
+        } catch (error) {}
       }
       self.saving = false;
     },
@@ -2585,14 +2600,10 @@ export default {
                 path: "/patient/checkprint"
               });
               window.open(route.href, "_blank");
-            } catch (error) {
-              // self.$store.state.errors = error;
-            }
+            } catch (error) {}
           }
           self.$router.push({ path: "/patient/index" });
-        } catch (error) {
-          // self.$store.state.errors = error;
-        }
+        } catch (error) {}
         self.printing = false;
       }
     },
@@ -2633,9 +2644,7 @@ export default {
             (self.doctor_template.procedure = ""),
             (self.doctor_template.concomitant = ""),
             self.GetTemplates();
-        } catch (error) {
-          self.$store.state.errors = error.response.data.message;
-        }
+        } catch (error) {}
         self.save_template = false;
       }
     },
@@ -2650,18 +2659,14 @@ export default {
           "api/doctor_template/doctor/" + self.doctor_id
         );
         self.templates = template.data;
-      } catch (error) {
-        self.$store.state.errors = error.response.data.message;
-      }
+      } catch (error) {}
     },
     async DeleteTemplate(id) {
       let self = this;
       try {
         await self.axios.delete("api/doctor_template/id/" + id);
         self.GetTemplates();
-      } catch (error) {
-        self.$store.state.errors = error.response.data.message;
-      }
+      } catch (error) {}
     },
     async UpdateTemplate(id) {
       let self = this;
@@ -2671,9 +2676,7 @@ export default {
         );
         self.doctor_template = update_template.data;
         self.modalAddTemplate = true;
-      } catch (error) {
-        self.$store.state.errors = error.response.data.message;
-      }
+      } catch (error) {}
     },
     DelTemplate(doctor_index, mkb_index) {
       this.data.doctor[doctor_index].diagnostics.splice(mkb_index, 1);
@@ -2705,9 +2708,7 @@ export default {
       try {
         const response = await self.axios.get("api/user");
         self.operators = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     AddDate() {
       let firstDay = this.attach_room.begin_date;
@@ -2750,9 +2751,7 @@ export default {
       try {
         const response = await self.axios.get("api/branch/inspection");
         self.inspections = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     RemoveIns(index) {
       let self = this;
@@ -2809,9 +2808,7 @@ export default {
         self.data.inspection.push({
           ...ins_data
         });
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
       self.modalInspectionShow = false;
     },
     CheckStatusInspection(id, index, indeks) {
@@ -2936,9 +2933,7 @@ export default {
           self.data.patient_id = parseInt(response.data.id);
           self.data.patient_name = response.data.fullname;
           self.checkPatientStatus = true;
-        } catch (error) {
-          // self.$store.state.errors = error;
-        }
+        } catch (error) {}
       }
     },
     async GetPatient() {
@@ -2951,9 +2946,7 @@ export default {
         });
         self.patients = response.data;
         self.totalRows = self.patients.length;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async SearchPatient() {
       let self = this;
@@ -2966,9 +2959,7 @@ export default {
         });
         self.patients = response.data;
         self.totalRows = self.patients.length;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async GetDoctors() {
       let self = this;
@@ -2976,9 +2967,7 @@ export default {
       try {
         const response = await self.axios.get("api/branch/doctor");
         self.doctors = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async GetRoom() {
       let self = this;
@@ -2989,9 +2978,7 @@ export default {
           self.rooms = response.data.data;
           self.modalRoomShow = true;
           self.totalRowsRoom = self.rooms.length;
-        } catch (error) {
-          self.$store.state.errors = error;
-        }
+        } catch (error) {}
       } else {
         self.checkRoom = true;
       }
@@ -3032,9 +3019,7 @@ export default {
           self.drug.name = null;
           self.drug_alert = true;
         }
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     SetMKB(item) {
       let self = this;
@@ -3059,9 +3044,7 @@ export default {
           element.child = [];
         });
         self.mkb = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async GetMKBChild(item, index) {
       let self = this;
@@ -3074,9 +3057,7 @@ export default {
           element.grandchild = [];
         });
         self.mkb[index].child = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async GetMKBGrandChild(item_child, index_parent, index_child) {
       let self = this;
@@ -3089,9 +3070,7 @@ export default {
           element.grandgrandchild = [];
         });
         self.mkb[index_parent].child[index_child].grandchild = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async GetMKBGrandGrandChild(
       item_grandchild,
@@ -3108,9 +3087,7 @@ export default {
         self.mkb[index_parent].child[index_child].grandchild[
           index_grandchild
         ].grandgrandchild = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async GetDrug() {
       let self = this;
@@ -3119,9 +3096,7 @@ export default {
         const response = await self.axios.get("api/pill");
         self.drugs = response.data;
         self.totalRowsDrug = self.drugs.length;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     onFilteredRoom(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
@@ -3150,9 +3125,7 @@ export default {
         await self.GetNeighboarhood();
         self.data.patient_name = response.data.fullname;
         self.data.patient_id = response.data.id;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async AddUpdatePatient(patient_id) {
       let self = this;
@@ -3179,9 +3152,7 @@ export default {
         } else if (response.data.level === 4) {
           window.close();
         }
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async GetRegions() {
       let self = this;
@@ -3189,9 +3160,7 @@ export default {
       try {
         const response = await self.axios.get("api/region");
         self.regions = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async GetDistricts() {
       let self = this;
@@ -3202,9 +3171,7 @@ export default {
             "api/district/region/" + self.patient_datas.region_id
           );
           self.districts = response.data;
-        } catch (error) {
-          self.$store.state.errors = error;
-        }
+        } catch (error) {}
       }
     },
     async GetNeighboarhood() {
@@ -3216,9 +3183,7 @@ export default {
             "api/neighboarhood/district/" + self.patient_datas.district_id
           );
           self.neighboarhoods = response.data;
-        } catch (error) {
-          self.$store.state.errors = error;
-        }
+        } catch (error) {}
       }
     },
     async GetBranches() {
@@ -3227,9 +3192,7 @@ export default {
       try {
         const response = await self.axios.get("api/branch");
         self.branches = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     //tashxis-file
     onUploadTashxis() {
@@ -3366,6 +3329,13 @@ export default {
 };
 </script>
 <style scoped>
+.notifications {
+  z-index: 5;
+  position: absolute;
+  top: 0%;
+  left: 15%;
+  width: 75%;
+}
 .rmk-patient-form {
   width: 100%;
   background-color: #d1e5f1 !important;

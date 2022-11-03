@@ -753,9 +753,7 @@ export default {
         "api/registration_history/patient/" + self.$route.params.id
       );
       self.docx = response.data;
-    } catch (error) {
-      self.$store.state.errors = error;
-    }
+    } catch (error) {}
   },
   methods: {
     Birthday(date) {

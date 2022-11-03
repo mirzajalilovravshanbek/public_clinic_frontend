@@ -87,9 +87,7 @@ export default {
         });
         self.queue = response.data;
         self.avarage_value = Math.ceil(self.queue.length / 2);
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     }
   },
   computed: {

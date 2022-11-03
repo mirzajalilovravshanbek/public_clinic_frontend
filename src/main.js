@@ -58,16 +58,20 @@ window.axios.interceptors.response.use(
     return response;
   },
   error => {
-    if (error.response.status == 401) {
+    if(error.toJSON().message === 'Network Error'){
+      store.state.errors = 'Интернетга уланишда хатолик!';
+    } else if (error.response.status == 401) {
       store.state.errors = error.response.data.message;
       router.push("/loginuser");
     } else if (error.response.status == 400) {
       store.state.errors = error.response.data.message;
+      store.state.arr_errors = error.response.data.errors;
     } else if (error.response.status == 404) {
       router.push("/404");
       store.state.errors = error.response.data.message;
     } else {
       store.state.errors = error.response.data.message;
+      store.state.arr_errors = error.response.data.errors;
     }
     return Promise.reject(error);
   }

@@ -287,9 +287,7 @@ export default {
         self.datas.birthday = response.data.birthday.toString();
         await self.GetDistrics();
         await self.GetNeighboarhoods();
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     }
   },
   methods: {
@@ -300,9 +298,7 @@ export default {
       try {
         const response = await self.axios.get("api/region");
         self.regions = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async GetDistrics() {
       let self = this;
@@ -314,9 +310,7 @@ export default {
             "api/district/region/" + self.datas.region_id
           );
           self.districts = response.data;
-        } catch (error) {
-          self.$store.state.errors = error;
-        }
+        } catch (error) {}
       }
     },
     async GetNeighboarhoods() {
@@ -328,9 +322,7 @@ export default {
             "api/neighboarhood/district/" + self.datas.district_id
           );
           self.neighboarhoods = response.data;
-        } catch (error) {
-          self.$store.state.errors = error;
-        }
+        } catch (error) {}
       }
     },
     async Save() {
@@ -349,11 +341,9 @@ export default {
           url: action,
           data: self.datas
         });
-        self.sending = false;
         self.$router.push("/patientcrud/index");
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
+      self.sending = false;
     },
     Cancel() {
       this.datas.lastname = null;

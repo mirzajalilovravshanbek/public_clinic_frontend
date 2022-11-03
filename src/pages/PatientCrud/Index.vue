@@ -262,9 +262,7 @@ export default {
         self.patients = response.data;
         self.totalRows = self.patients.length;
         self.checkTable = false;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     Delete(id) {
       this.$bvModal
@@ -292,9 +290,7 @@ export default {
             });
           }
         })
-        .catch(err => {
-          // An error occurred
-        });
+        .catch(err => {});
     },
     UpdatePatient(item) {
       let self = this;

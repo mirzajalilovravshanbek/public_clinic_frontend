@@ -20,6 +20,28 @@
         height: 89vh!important;
         overflow-y: auto;
       }
+      .notifications.active{
+        animation: animateAlert 5s linear;
+        pointer-events: all;
+      }
+      @keyframes animateAlert {
+        0%{
+          width: 0px;
+          opacity: 0;
+        }
+        10% {
+          width: 75%;
+          opacity: 1;
+        }
+        90%{
+          width: 75%;
+          opacity: 1;
+        }
+        100%{
+          width: 75%;
+          opacity: 1;
+        }
+      }
     </style>
 </head>
   <body>
