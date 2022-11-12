@@ -233,25 +233,19 @@ export default {
     try {
       const response = await self.axios.get("api/branch");
       self.branches = response.data;
-    } catch (error) {
-      self.$store.state.errors = error;
-    }
+    } catch (error) {}
 
     //get list of doctors => shifokorlar ro'yhatini olish
     try {
       const response = await self.axios.get("api/doctor");
       self.doctors = response.data;
-    } catch (error) {
-      self.$store.state.errors = error;
-    }
+    } catch (error) {}
 
     //get list of inspections category => tekshiruv bo'limlari ro'yhatini olish
     try {
       const response = await self.axios.get("api/inspection_category");
       self.inspection_category = response.data;
-    } catch (error) {
-      self.$store.state.errors = error;
-    }
+    } catch (error) {}
 
     //update employees => xodimni tahrirlash
     if (self.$route.path != "/employees/create") {
@@ -261,9 +255,7 @@ export default {
         const response = await self.axios.get("api/user/id/" + id);
         self.datas = response.data;
         await self.GetRooms();
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     }
   },
   methods: {
@@ -283,11 +275,9 @@ export default {
           url: action,
           data: self.datas
         });
-        self.sending = false;
         self.$router.push("/employees/index");
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
+      self.sending = false;
     },
     Cancel() {
       this.datas.username = null;
@@ -309,9 +299,7 @@ export default {
             "api/room/branch/" + self.datas.branch_id
           );
           self.rooms = response.data;
-        } catch (error) {
-          self.$store.state.errors = error;
-        }
+        } catch (error) {}
       }
     },
     DisDoctor() {

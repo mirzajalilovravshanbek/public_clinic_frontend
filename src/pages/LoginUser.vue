@@ -1,27 +1,34 @@
 <template>
   <div class="rmk-bg">
-    <!-- alert start -->
-    <div class="container-fluid" style="position:absolute;">
-      <div class="row justify-content-md-center">
-        <div
-          class="col-lg-10 col-md-10 col-sm-10 col-xl-10 alert alert-danger text-center p-1"
-          style="z-index: 5;"
-          v-if="$store.state.errors != ''"
-        >
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="$store.state.errors = ''"
-          >
-            ×
-          </button>
-          <p><i class="fas fa-exclamation-triangle"></i>&nbsp; Хатолик</p>
-          <div>{{ $store.state.errors }}</div>
-        </div>
-      </div>
+    <!-- error alert start -->
+    <div
+      :class="
+        $store.state.errors != ''
+          ? 'alert alert-danger text-center p-1 notifications active'
+          : ''
+      "
+      v-if="$store.state.errors != ''"
+    >
+      <button
+        type="button"
+        aria-hidden="true"
+        class="close"
+        @click="$store.state.errors = ''"
+      >
+        <b-icon font-scale="2" icon="x"></b-icon>
+      </button>
+      <h4>
+        <i class="fas fa-exclamation-triangle"></i>&nbsp;
+        {{ $t("Хатолик") }} {{ Interval() }}
+      </h4>
+      <p class="text-center">{{ $store.state.errors }}</p>
+      <ol v-if="$store.state.arr_errors.length > 0 && $store.state.arr_errors != undefined">
+        <li v-for="(item, index) in $store.state.arr_errors" :key="index">
+          {{item.msg}}
+        </li>
+      </ol>
     </div>
-    <!-- alert end -->
+    <!-- error alert end -->
 
     <b-container fluid class="rmk-back">
       <md-card class="rmk-login-box">
@@ -161,6 +168,12 @@ export default {
     }
   },
   methods: {
+    Interval() {
+      setTimeout(() => {
+        this.$store.state.errors = "";
+        this.$store.state.arr_errors = [];
+      }, 5000);
+    },
     async GetUsers() {
       let self = this;
       if (localStorage.getItem("branch_id") === null) {
@@ -229,6 +242,13 @@ export default {
 .rmk-back {
   text-align: center;
   height: 100vh;
+}
+.notifications {
+  z-index: 5;
+  position: absolute;
+  top: 0%;
+  left: 15%;
+  width: 75%;
 }
 .rmk-login-box {
   width: 400px;

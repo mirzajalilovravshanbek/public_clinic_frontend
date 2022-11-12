@@ -90,9 +90,7 @@ export default {
       try {
         const response = await self.axios.get("api/doctor_category/id/" + id);
         self.datas = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     }
   },
   methods: {

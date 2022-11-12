@@ -266,9 +266,7 @@ export default {
         const response = await self.axios.get("api/inspection/id/" + id);
         self.datas = response.data;
         await self.GetUsers();
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     }
   },
   methods: {
@@ -278,9 +276,7 @@ export default {
       try {
         const response = await self.axios.get("api/branch");
         self.branches = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async GetInspectionCategory() {
       let self = this;
@@ -288,9 +284,7 @@ export default {
       try {
         const response = await self.axios.get("api/inspection_category");
         self.categories = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async GetFolders() {
       let self = this;
@@ -298,9 +292,7 @@ export default {
       try {
         const response = await self.axios.get("api/inspection_folder");
         self.inspection_folders = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     async GetUsers() {
       let self = this;
@@ -311,9 +303,7 @@ export default {
             "api/user/branch/" + self.datas.branch_id
           );
           self.users = response.data;
-        } catch (error) {
-          self.$store.state.errors = error;
-        }
+        } catch (error) {}
       }
     },
     Addrow() {
@@ -355,9 +345,7 @@ export default {
           data: self.datas
         });
         self.$router.push("/inspections/index");
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
       self.sending = false;
     },
     Cancel() {

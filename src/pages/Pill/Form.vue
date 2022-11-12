@@ -81,9 +81,7 @@ export default {
       try {
         const response = await self.axios.get("api/pill/id/" + id);
         self.datas = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     }
   },
   methods: {
@@ -103,11 +101,9 @@ export default {
           url: action,
           data: self.datas
         });
-        self.sending = false;
         self.$router.push("/pill/index");
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
+      self.sending = false;
     },
     Cancel() {
       this.datas.name = null;

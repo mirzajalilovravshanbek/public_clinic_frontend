@@ -183,9 +183,7 @@ export default {
         self.doctors = response.data;
         self.totalRows = self.doctors.length;
         self.checkTable = false;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     Delete(id) {
       this.$bvModal

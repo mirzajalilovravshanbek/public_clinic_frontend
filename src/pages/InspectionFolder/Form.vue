@@ -110,17 +110,13 @@ export default {
     try {
       const response = await self.axios.get("api/branch");
       self.branches = response.data;
-    } catch (error) {
-      self.$store.state.errors = error;
-    }
+    } catch (error) {}
 
     //get list of inspections category => tekshiruv bo'limlari ro'yhatini olish
     try {
       const response = await self.axios.get("api/inspection_folder");
       self.inspections_folder = response.data;
-    } catch (error) {
-      self.$store.state.errors = error;
-    }
+    } catch (error) {}
 
     //update inspection folder => tekshiruv papkasini tahrirlash
     if (self.$route.path != "/inspectionfolder/create") {
@@ -129,9 +125,7 @@ export default {
       try {
         const response = await self.axios.get("api/inspection_folder/id/" + id);
         self.datas = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     }
   },
   methods: {
@@ -151,11 +145,9 @@ export default {
           url: action,
           data: self.datas
         });
-        self.sending = false;
         self.$router.push("/inspectionfolder/index");
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
+      self.sending = false;
     },
     Cancel() {
       this.datas.name = null;

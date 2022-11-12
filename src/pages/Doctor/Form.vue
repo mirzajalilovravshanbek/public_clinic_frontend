@@ -110,17 +110,13 @@ export default {
     try {
       const response = await self.axios.get("api/branch");
       self.branches = response.data;
-    } catch (error) {
-      self.$store.state.errors = error;
-    }
+    } catch (error) {}
 
     //shifokor bo'limlari ro'yhati
     try {
       const response = await self.axios.get("api/doctor_category");
       self.categories = response.data;
-    } catch (error) {
-      self.$store.state.errors = error;
-    }
+    } catch (error) {}
 
     //update room => xonani tahrirlash
     if (self.$route.path != "/doctor/create") {
@@ -129,9 +125,7 @@ export default {
       try {
         const response = await self.axios.get("api/doctor/id/" + id);
         self.datas = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     }
   },
   methods: {
@@ -151,11 +145,9 @@ export default {
           url: action,
           data: self.datas
         });
-        self.sending = false;
         self.$router.push("/doctor/index");
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
+      self.sending = false;
     },
     Cancel() {
       this.datas.name = null;

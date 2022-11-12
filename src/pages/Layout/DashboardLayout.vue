@@ -110,7 +110,7 @@
     <div class="main-panel">
       <top-navbar></top-navbar>
 
-      <!-- error alert start -->
+    <!-- error alert start -->
     <div
       :class="
         $store.state.errors != ''

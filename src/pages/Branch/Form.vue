@@ -94,9 +94,7 @@ export default {
     try {
       const response = await self.axios.get("api/district");
       self.districts = response.data;
-    } catch (error) {
-      self.$store.state.errors = error;
-    }
+    } catch (error) {}
 
     //update room => xonani tahrirlash
     if (self.$route.path != "/branch/create") {
@@ -105,9 +103,7 @@ export default {
       try {
         const response = await self.axios.get("api/branch/id/" + id);
         self.datas = response.data;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     }
   },
   methods: {
@@ -127,11 +123,9 @@ export default {
           url: action,
           data: self.datas
         });
-        self.sending = false;
         self.$router.push("/branch/index");
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
+      self.sending = false;
     },
     Cancel() {
       this.datas.name = null;

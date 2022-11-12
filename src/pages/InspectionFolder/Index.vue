@@ -177,9 +177,7 @@ export default {
         self.inspections_folder = response.data;
         self.totalRows = self.inspections_folder.length;
         self.checkTable = false;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     Delete(id) {
       this.$bvModal

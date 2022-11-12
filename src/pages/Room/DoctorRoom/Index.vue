@@ -177,9 +177,7 @@ export default {
         self.doctor_rooms = response.data;
         self.totalRows = self.doctor_rooms.length;
         self.checkTable = false;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     Delete(id) {
       this.$bvModal

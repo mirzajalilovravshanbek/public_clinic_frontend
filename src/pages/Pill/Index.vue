@@ -171,9 +171,7 @@ export default {
         self.pills = response.data;
         self.totalRows = self.pills.length;
         self.checkTable = false;
-      } catch (error) {
-        self.$store.state.errors = error;
-      }
+      } catch (error) {}
     },
     Delete(id) {
       this.$bvModal
