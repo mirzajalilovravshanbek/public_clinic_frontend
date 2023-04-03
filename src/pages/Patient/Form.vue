@@ -739,7 +739,7 @@
                       <th>{{ $t("Бўлим") }}</th>
                       <th>{{ $t("Хона Рақами") }}</th>
                       <th>{{ $t("Филиал") }}</th>
-                      <th></th>
+                      <th v-if="role === $store.state.ITMED"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -769,7 +769,7 @@
                             : ""
                         }}
                       </td>
-                      <td class="text-center">
+                      <td class="text-center" v-if="role === $store.state.ITMED">
                         <b-icon
                           icon="trash"
                           style="cursor: pointer;"
@@ -779,11 +779,6 @@
                             $t('Шифокорни Ўчириш')
                           "
                           @click="RemoveDoctor(index)"
-                          v-if="
-                            role === $store.state.REGISTRATION ||
-                              role === $store.state.DOCTOR ||
-                              role === $store.state.ITMED
-                          "
                         ></b-icon>
                       </td>
                     </tr>

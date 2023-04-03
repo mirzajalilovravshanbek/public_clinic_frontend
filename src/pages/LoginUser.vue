@@ -91,6 +91,7 @@
                     v-model="datas.password"
                     type="password"
                     @blur="CheckPassword()"
+                    @keyup="InputSend"
                   ></md-input>
                 </md-field>
               </md-card>
@@ -186,6 +187,11 @@ export default {
         );
         self.users = response.data;
       } catch (error) {}
+    },
+    InputSend(e){
+      if (e.key === "Enter") {
+        this.Send();
+      }
     },
     CheckUser() {
       let self = this;
