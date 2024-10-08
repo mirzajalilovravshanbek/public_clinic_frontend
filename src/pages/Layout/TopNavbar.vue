@@ -28,9 +28,13 @@
                 РУС
               </div>
             </li>
+            <li class="md-list-item lang-item" @click="switchLocale('en')">
+              <div class="md-list-item-content">
+                ENG
+              </div>
+            </li>
             <md-list-item
               href="#/dashboard"
-              target="_blank"
               id="dashboard-tooltip"
             >
               <b-icon icon="columns-gap" font-scale="1.5"></b-icon>

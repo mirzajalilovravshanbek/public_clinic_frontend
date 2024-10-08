@@ -43,7 +43,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Электрон Амбулатор Карта"
+      default: "Electron Ambulator Card"
     },
     sidebarBackgroundImage: {
       type: String,

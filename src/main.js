@@ -45,7 +45,7 @@ import { store } from "./store";
 import i18n from "./i18n";
 window.axios = require("axios");
 // window.axios.defaults.baseURL = "http://localhost:3000/";
-window.axios.defaults.baseURL = "http://185.196.214.171:3000/";
+window.axios.defaults.baseURL = "http://89.232.184.175:3030/";
 
 window.axios.interceptors.request.use(req => {
   req.headers.authorization = "Bearer " + localStorage.getItem("t");
@@ -59,7 +59,7 @@ window.axios.interceptors.response.use(
   },
   error => {
     if(error.toJSON().message === 'Network Error'){
-      store.state.errors = 'Интернетга уланишда хатолик!';
+      store.state.errors = 'Internet connection error!';
     } else if (error.response.status == 401) {
       store.state.errors = error.response.data.message;
       router.push("/loginuser");

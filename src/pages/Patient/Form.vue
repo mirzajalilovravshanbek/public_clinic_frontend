@@ -156,6 +156,7 @@
           </span>
           <span class="change-lang" @click="switchLocale('uz')">ЎЗБ</span>
           <span class="change-lang" @click="switchLocale('ru')">РУС</span>
+          <span class="change-lang" @click="switchLocale('en')">ENG</span>
         </span>
 
         <b-button
@@ -2047,7 +2048,7 @@
           </b-tab>
           <!-- tashxis section end -->
           <!-- print section start -->
-          <b-tab
+          <!-- <b-tab
             :title="$t('Печат')"
             :title-link-class="linkClass(6)"
             v-if="
@@ -2102,7 +2103,7 @@
                 </b-col>
               </b-row>
             </b-card-text>
-          </b-tab>
+          </b-tab> -->
           <!-- print section end -->
           <!-- room section start -->
           <b-tab
@@ -2216,7 +2217,7 @@
                             size="sm"
                             :disabled="!filterRoom"
                             @click="filterRoom = ''"
-                            >Тозалаш</b-button
+                            >{{ $t("Тозалаш") }}</b-button
                           >
                         </b-input-group-append>
                       </b-input-group>

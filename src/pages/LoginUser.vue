@@ -33,11 +33,11 @@
     <b-container fluid class="rmk-back">
       <md-card class="rmk-login-box">
         <b-row>
-          <b-col md="12" sm="12" lg="12" xl="12" style="height: 150px">
+          <!-- <b-col md="12" sm="12" lg="12" xl="12" style="height: 150px">
             <img src="../assets/img/header.png" class="rmk-login-img" />
-          </b-col>
+          </b-col> -->
           <b-col md="12" sm="12" lg="12" xl="12" class="rmk-label">
-            <span>Кириш Ойнаси</span>
+            <span>Sign In</span>
           </b-col>
           <b-col md="12" sm="12" lg="12" xl="12">
             <div class="rmk-district">
@@ -48,7 +48,7 @@
                   v-model="datas.branch_id"
                   :reduce="name => name.id"
                   label="name"
-                  placeholder="Филиални танланг..."
+                  placeholder="Select branch..."
                   @input="GetUsers()"
                 >
                 </v-select>
@@ -64,7 +64,7 @@
                   v-model="datas.username"
                   :reduce="username => username.username"
                   label="username"
-                  placeholder="Ходимни танланг..."
+                  placeholder="Select employee..."
                   @input="CheckUser()"
                 >
                 </v-select>
@@ -78,7 +78,7 @@
                 </md-field> -->
               </md-card>
               <small class="alert alert-danger d-block p-0 m-0" v-if="checkUser"
-                >Ходимни тўлдириш шарт</small
+                >Must to select an employee</small
               >
             </div>
           </b-col>
@@ -86,7 +86,7 @@
             <div class="rmk-district">
               <md-card class="my-1 p-0">
                 <md-field class="m-0 px-1">
-                  <label style="color:#000!important;">Парол</label>
+                  <label style="color:#000!important;">Password</label>
                   <md-input
                     v-model="datas.password"
                     type="password"
@@ -98,7 +98,7 @@
               <small
                 class="alert alert-danger d-block p-0 m-0"
                 v-if="checkPassword"
-                >Паролни тўлдириш шарт</small
+                >Must to fill password</small
               >
             </div>
           </b-col>
@@ -121,7 +121,7 @@
               @click="Send()"
             >
               <b-spinner small v-if="sending"></b-spinner>
-              Кириш
+              Login
             </b-button>
           </b-col>
           <b-col md="5" sm="5" lg="5" xl="5">
@@ -133,7 +133,7 @@
               style="color:#000"
               @click="Clear()"
             >
-              Бекор Қилиш
+              Cancel
             </b-button>
           </b-col>
         </b-row>
@@ -258,8 +258,9 @@ export default {
 }
 .rmk-login-box {
   width: 400px;
-  height: 520px;
+  height: 400px;
   top: 5%;
+  padding-top: 50px;
   border-radius: 10px;
   background-color: #7579ff !important;
 }

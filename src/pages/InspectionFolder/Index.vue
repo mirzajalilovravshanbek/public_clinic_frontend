@@ -13,7 +13,7 @@
               style="color: #ffffff;"
               variant="success"
               v-b-tooltip.hover.v-success.topright
-              title="Папка қўшиш"
+              :title="$t('Қўшиш')"
             >
               <b-icon icon="plus" font-scale="1.3"></b-icon>
             </b-button>
@@ -23,7 +23,7 @@
               @click="Data()"
               v-b-tooltip.hover.v-primary
               variant="primary"
-              title="Янгилаш"
+              :title="$t('Янгилаш')"
             >
               <b-icon icon="arrow-clockwise"></b-icon>
             </b-button>
@@ -41,7 +41,7 @@
                   id="filter-input"
                   v-model="filter"
                   type="search"
-                  placeholder="Қидирув"
+                  :placeholder="$t('Қидирув')"
                 ></b-form-input>
 
                 <b-input-group-append>
@@ -49,7 +49,7 @@
                     :disabled="!filter"
                     @click="filter = ''"
                     variant="danger"
-                    >Тозалаш</b-button
+                    >{{ $t("Тозалаш") }}</b-button
                   >
                 </b-input-group-append>
               </b-input-group>
@@ -96,7 +96,7 @@
                   :to="{ path: '/inspectionfolder/update/' + row.item.id }"
                   v-b-tooltip.hover.left.v-primary
                   style="color: #1E90FF"
-                  title="Таҳрирлаш"
+                  :title="$t('Таҳрирлаш')"
                 >
                   <b-icon icon="Pencil" font-scale="0.9"></b-icon>
                 </b-button>
@@ -106,7 +106,7 @@
                   @click="Delete(row.item.id)"
                   variant="outline-danger"
                   v-b-tooltip.hover.right.v-danger
-                  title="Ўчириш"
+                  :title="$t('Ўчириш')"
                 >
                   <b-icon icon="trash" font-scale="0.9"></b-icon>
                 </b-button>
@@ -181,14 +181,14 @@ export default {
     },
     Delete(id) {
       this.$bvModal
-        .msgBoxConfirm("Ҳақиқатан ҳам ўчиришни хоҳлайсизми?", {
-          title: "Илтимос тасдиқланг!",
+        .msgBoxConfirm("Are you sure you want to delete?", {
+          title: "Please confirm!",
           size: "md",
           buttonSize: "md",
-          okVariant: "outline-danger",
-          okTitle: "Ҳа",
-          cancelTitle: "Йўқ",
-          cancelVariant: "info",
+          okVariant: "outline-danger m-0 ml-2",
+          okTitle: "Yes",
+          cancelTitle: "No",
+          cancelVariant: "info m-0",
           footerClass: "p-2",
           hideHeaderClose: false,
           centered: false

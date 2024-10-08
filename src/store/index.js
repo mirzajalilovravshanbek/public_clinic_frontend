@@ -13,6 +13,6 @@ export const store = new Vuex.Store({
     DELETED: "deleted",
     errors: "",
     arr_errors: [],
-    lang: "uz"
+    lang: "en"
   }
 });
