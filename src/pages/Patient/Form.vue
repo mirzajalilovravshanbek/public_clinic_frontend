@@ -112,8 +112,8 @@
           {{ $t("Тугатиш") }}
         </b-form-checkbox>
       </b-col>
-      <b-col sm="2" md="2" lg="2" xl="2" class="text-center">
-        <b-button
+      <b-col sm="3" md="3" lg="3" xl="3" class="text-center">
+        <!-- <b-button
           v-if="
             role === $store.state.REGISTRATION ||
               role === $store.state.DOCTOR ||
@@ -127,9 +127,7 @@
           <b-spinner small v-if="printing"></b-spinner>
           <b-icon icon="printer-fill"></b-icon>
           {{ $t("Печат") }}
-        </b-button>
-      </b-col>
-      <b-col sm="4" md="4" lg="4" xl="4" class="text-center">
+        </b-button> -->
         <span
           v-if="
             role === $store.state.REGISTRATION ||
@@ -154,11 +152,20 @@
             >&emsp;
             <b-icon icon="patch-check-fill" variant="success"></b-icon>
           </span>
+        </span>
+      </b-col>
+      <b-col sm="3" md="3" lg="3" xl="3" class="text-center">
+        <span
+          v-if="
+            role === $store.state.REGISTRATION ||
+              role === $store.state.DOCTOR ||
+              role === $store.state.ITMED
+          "
+        >
           <span class="change-lang" @click="switchLocale('uz')">ЎЗБ</span>
           <span class="change-lang" @click="switchLocale('ru')">РУС</span>
           <span class="change-lang" @click="switchLocale('en')">ENG</span>
         </span>
-
         <b-button
           style="color: #fff; float:right;"
           variant="danger"
