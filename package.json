@@ -1,11 +1,12 @@
 {
-  "name": "oltiariq-klinika",
-  "productName": "Elektron Ambulator Karta",
+  "name": "clinic-frontend",
+  "productName": "Electron Ambulator Card",
   "version": "1.0.0",
   "private": true,
-  "description": "Elektron Ambulator Karta dasturi BDM jamoasi tomonidan ishlab chiqilgan",
+  "description": "Electron Ambulator Card",
   "author": {
-    "name": "Biznes Dasturlash Markazi"
+    "name": "Ravshanbek",
+    "email": "ravshanbek.mirzajalilov@iu-study.org"
   },
   "scripts": {
     "serve": "vue-cli-service serve --open",

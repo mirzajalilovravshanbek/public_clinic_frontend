@@ -44,8 +44,7 @@ Vue.use(Notifications);
 import { store } from "./store";
 import i18n from "./i18n";
 window.axios = require("axios");
-// window.axios.defaults.baseURL = "http://localhost:3000/";
-window.axios.defaults.baseURL = "http://89.232.184.175:3030/";
+window.axios.defaults.baseURL = "http://localhost:3030/";
 
 window.axios.interceptors.request.use(req => {
   req.headers.authorization = "Bearer " + localStorage.getItem("t");
