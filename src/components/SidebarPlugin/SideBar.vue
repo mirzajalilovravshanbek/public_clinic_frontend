@@ -7,9 +7,7 @@
   >
     <div class="logo">
       <a href="#" class="simple-text logo-mini">
-        <div class="logo-img">
-          <img :src="imgLogo" style="width: 100%;" alt="" />
-        </div>
+        <img :src="imgLogo" style="width: 100%;" alt="" />
       </a>
 
       <a href="#/" class="simple-text logo-normal">
@@ -43,7 +41,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Electron Ambulator Card"
+      default: "DigiMed"
     },
     sidebarBackgroundImage: {
       type: String,
@@ -85,9 +83,6 @@ export default {
 };
 </script>
 <style>
-.logo-img {
-  margin-top: 15px;
-}
 
 @media screen and (min-width: 991px) {
   .nav-mobile-menu {

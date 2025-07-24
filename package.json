@@ -1,9 +1,9 @@
 {
   "name": "clinic-frontend",
-  "productName": "Electron Ambulator Card",
+  "productName": "DigiMed",
   "version": "1.0.0",
   "private": true,
-  "description": "Electron Ambulator Card",
+  "description": "DigiMed",
   "author": {
     "name": "Ravshanbek",
     "email": "ravshanbek.mirzajalilov@iu-study.org"
